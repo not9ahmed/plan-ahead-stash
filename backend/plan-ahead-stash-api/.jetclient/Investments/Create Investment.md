@@ -9,10 +9,10 @@ id = 'd81a96b8-1f15-4791-beb8-7c4329ec5115'
 type = 'JSON'
 raw = '''
 {
-  "name": "Wakala Deposit",
-  "currency": "BHD", 
-  "startDate": "2025-01-11T20:36:11.783Z",
-  "endDate": "2025-04-11T20:36:11.783Z",
-  "days": 180
+  "name": "Sukuk",
+  "currency": "USD", 
+  "startDate": "2024-01-11T20:36:11.783Z",
+  "endDate": "2024-06-11T20:36:11.783Z",
+  "days": 60
 }'''
 ```

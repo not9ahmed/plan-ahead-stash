@@ -1,5 +1,6 @@
 package com.notahmed.plan_ahead_stash_api.service;
 
+import com.notahmed.plan_ahead_stash_api.exception.ResourceNotFound;
 import com.notahmed.plan_ahead_stash_api.model.Investment;
 import com.notahmed.plan_ahead_stash_api.repository.InvestmentRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class InvestmentService {
         return investmentRepository.findAll();
     }
 
+    public List<Investment> findAllActive() {
+        return investmentRepository.findAllActive();
+    }
+
+    public List<Investment> findAllByCurrency(String name) {
+        return investmentRepository.findAllByCurrency(name);
+    }
+
     public Investment create(Investment investment) {
         return investmentRepository.save(investment);
     }
@@ -35,6 +44,10 @@ public class InvestmentService {
     }
 
     public void delete(Long id) {
+        // verify that it exists first
+        Investment investment = investmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Resource not found"));
+
         investmentRepository.deleteById(id);
     }
 
