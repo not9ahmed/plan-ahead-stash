@@ -11,8 +11,10 @@ import java.util.Objects;
 /**
  * Modify the entity to work with spring security
  * By extending UserDetails class
+ * User entity by spring security is good reference for future modification
  */
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id

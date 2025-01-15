@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 
+
+// Might delete this entity
 @Entity
 @Table(name = "investments")
 public class Investment {

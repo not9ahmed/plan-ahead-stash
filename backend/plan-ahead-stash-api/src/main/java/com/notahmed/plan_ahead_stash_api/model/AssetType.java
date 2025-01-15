@@ -2,6 +2,7 @@ package com.notahmed.plan_ahead_stash_api.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class AssetType {
 
     // TODO: Will be done from service temporarily
     @Column(name = "modified_date")
+    @LastModifiedDate
     private Date modifiedDate;
 
 
