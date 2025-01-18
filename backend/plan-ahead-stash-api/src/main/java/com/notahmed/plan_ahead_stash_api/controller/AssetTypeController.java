@@ -52,13 +52,13 @@ public class AssetTypeController {
                 .body(assetTypeUpdated);
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<AssetType> delete(@PathVariable("id") Long id) {
-
+        assetTypeService.delete(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(null);
     }
+
 
 }

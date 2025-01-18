@@ -2,7 +2,7 @@
 name = 'Update Investment'
 method = 'PUT'
 url = 'http://localhost:8080/investments/1'
-sortWeight = 4000000
+sortWeight = 7500000
 id = '3cc935e7-c947-4417-9161-5e9189b59f0e'
 
 [body]
