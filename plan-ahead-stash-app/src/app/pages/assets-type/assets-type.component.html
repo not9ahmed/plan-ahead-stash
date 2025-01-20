@@ -1,0 +1,33 @@
+<div class="container">
+    <h3>Assets Type Page</h3>
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Modified Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                @for (assetType of assetsType; track $index) {
+                    <tr>
+                      <th scope="row">{{ assetType?.id }}</th>
+                      <td>{{ assetType?.name }}</td>
+                      <td>{{ assetType?.createdDate | date:"dd/MMM/yyyy" }}</td>
+                      <td>{{ assetType?.modifiedDate | date:"dd/MMM/yyyy" }}</td>
+                      <td>
+                        <div class="md-3">
+                            <button type="button" class="btn btn-success">Edit</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                      </td>
+                    </tr>
+                }
+
+            </tbody>
+          </table>    </div>
+</div>
