@@ -12,7 +12,6 @@
               </tr>
             </thead>
             <tbody>
-
                 @for (assetType of assetsType; track $index) {
                     <tr>
                       <th scope="row">{{ assetType?.id }}</th>
@@ -20,13 +19,16 @@
                       <td>{{ assetType?.createdDate | date:"dd/MMM/yyyy" }}</td>
                       <td>{{ assetType?.modifiedDate | date:"dd/MMM/yyyy" }}</td>
                       <td>
-                        <div class="md-3">
+                        <div class="container-fluid">
                             <button type="button" class="btn btn-success">Edit</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" (click)="handleDelete(assetType.id!)" class="btn btn-danger">Delete</button>
                         </div>
                       </td>
                     </tr>
                 }
+
+                <tr>
+
 
             </tbody>
           </table>    </div>
