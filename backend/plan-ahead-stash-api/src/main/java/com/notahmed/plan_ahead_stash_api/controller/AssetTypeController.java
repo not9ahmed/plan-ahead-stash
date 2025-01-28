@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/assetsType")
+@RequestMapping("api/assetsType")
 public class AssetTypeController {
 
     private final AssetTypeService assetTypeService;

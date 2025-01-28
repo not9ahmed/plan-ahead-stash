@@ -8,6 +8,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.util.Date;
 import java.util.Objects;
 
+
+// can be the period of asset and the name like
+// 3 Months
 @Entity
 @Table(name = "assets")
 public class Asset {
@@ -28,6 +31,15 @@ public class Asset {
     @JoinColumn(name = "asset_type_id", nullable = false)
     private AssetType assetType;
 
+    @Column(name = "start_date")
+    private Date startDate;
+
+    @Column(name = "maturity_date")
+    private Date maturityDate;
+
+    @Column(name = "number_of_days")
+    private Integer numberOfDays;
+
 
     @Column(name = "created_date", nullable = false)
     @CreationTimestamp
@@ -41,13 +53,17 @@ public class Asset {
     public Asset() {
     }
 
-    public Asset(Long id, String name, AssetType assetType, Date createdDate, Date modifiedDate) {
+    public Asset(Long id, String name, AssetType assetType, Date startDate, Date maturityDate, Integer numberOfDays, Date createdDate, Date modifiedDate) {
         this.id = id;
         this.name = name;
         this.assetType = assetType;
+        this.startDate = startDate;
+        this.maturityDate = maturityDate;
+        this.numberOfDays = numberOfDays;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }
+
 
     public Long getId() {
         return id;
@@ -73,6 +89,30 @@ public class Asset {
         this.assetType = assetType;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getMaturityDate() {
+        return maturityDate;
+    }
+
+    public void setMaturityDate(Date maturityDate) {
+        this.maturityDate = maturityDate;
+    }
+
+    public Integer getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(Integer numberOfDays) {
+        this.numberOfDays = numberOfDays;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -93,12 +133,12 @@ public class Asset {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Asset asset = (Asset) o;
-        return Objects.equals(id, asset.id) && Objects.equals(name, asset.name) && Objects.equals(assetType, asset.assetType) && Objects.equals(createdDate, asset.createdDate) && Objects.equals(modifiedDate, asset.modifiedDate);
+        return Objects.equals(id, asset.id) && Objects.equals(name, asset.name) && Objects.equals(assetType, asset.assetType) && Objects.equals(startDate, asset.startDate) && Objects.equals(maturityDate, asset.maturityDate) && Objects.equals(numberOfDays, asset.numberOfDays) && Objects.equals(createdDate, asset.createdDate) && Objects.equals(modifiedDate, asset.modifiedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, assetType, createdDate, modifiedDate);
+        return Objects.hash(id, name, assetType, startDate, maturityDate, numberOfDays, createdDate, modifiedDate);
     }
 
     @Override
@@ -107,6 +147,9 @@ public class Asset {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", assetType=" + assetType +
+                ", startDate=" + startDate +
+                ", maturityDate=" + maturityDate +
+                ", numberOfDays=" + numberOfDays +
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 '}';

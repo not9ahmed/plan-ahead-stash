@@ -20,8 +20,7 @@ public class GlobalExceptionHandler extends RuntimeException{
 
         var errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
-                "Internal Server Error",
-                exception.getMessage()
+                "Internal Server Error"
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(errorMessage);
@@ -32,7 +31,6 @@ public class GlobalExceptionHandler extends RuntimeException{
 
         var errorMessage = new ErrorMessage(
                 LocalDateTime.now(),
-                "Resource Not Found",
                 exception.getMessage()
         );
 

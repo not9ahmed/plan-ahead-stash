@@ -7,6 +7,10 @@ import org.hibernate.annotations.Fetch;
 import java.util.Date;
 import java.util.Objects;
 
+// A user can have many portfolios
+// Portfolio can only be to one user
+// Portfolio consists of many assets
+// Asset can be to many Portfolios
 @Entity
 @Table(name = "portfolios")
 public class Portfolio {
@@ -15,21 +19,22 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name ="name")
     private String name;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
 
+    // many to many
+    // @ManyToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = "asset_id")
+    // private Asset asset;
 
     @Column(name = "created_date", nullable = false)
     @CreationTimestamp
     private Date createdDate;
-
 
     // TODO: Will be done from service temporarily
     @Column(name = "modified_date")

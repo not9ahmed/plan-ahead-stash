@@ -1,7 +1,9 @@
 package com.notahmed.plan_ahead_stash_api.controller;
 
+import com.notahmed.plan_ahead_stash_api.dto.request.AssetRequest;
 import com.notahmed.plan_ahead_stash_api.model.Asset;
 import com.notahmed.plan_ahead_stash_api.service.AssetService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/assets")
+@RequestMapping("api/assets")
 public class AssetController {
 
     private final AssetService assetService;
@@ -19,9 +21,19 @@ public class AssetController {
     }
 
     @PostMapping
-    public ResponseEntity<Asset> createAsset(@RequestBody Asset asset) {
+    public ResponseEntity<Asset> createAsset(@RequestBody @Valid AssetRequest asset) {
 
-        Asset assetCreated = assetService.create(asset);
+        Asset newAsset = new Asset(
+                null,
+                asset.name(),
+                asset.assetType(),
+                asset.startDate(),
+                asset.maturityDate(),
+                asset.numberOfDays(),
+                null,
+                null
+        );
+        Asset assetCreated = assetService.create(newAsset);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

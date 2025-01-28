@@ -5,6 +5,7 @@ import com.notahmed.plan_ahead_stash_api.model.Asset;
 
 import java.util.function.Function;
 
+
 public class AssetRequestMapper implements Function<AssetRequest, Asset> {
     @Override
     public Asset apply(AssetRequest assetRequest) {

@@ -2,10 +2,13 @@ package com.notahmed.plan_ahead_stash_api.service;
 
 import com.notahmed.plan_ahead_stash_api.exception.ResourceNotFound;
 import com.notahmed.plan_ahead_stash_api.model.Asset;
+import com.notahmed.plan_ahead_stash_api.model.AssetType;
 import com.notahmed.plan_ahead_stash_api.repository.AssetRepository;
+import com.notahmed.plan_ahead_stash_api.repository.AssetTypeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,19 +16,31 @@ import java.util.Optional;
 public class AssetService {
 
     private final AssetRepository assetRepository;
+    private final AssetTypeRepository assetTypeRepository;
 
-    public AssetService(AssetRepository assetRepository) {
+    public AssetService(AssetRepository assetRepository, AssetTypeRepository assetTypeRepository) {
         this.assetRepository = assetRepository;
+        this.assetTypeRepository = assetTypeRepository;
     }
 
     @Transactional
     public Asset create(Asset asset) {
 
+
+        // first get the asset type
+        AssetType assetType = assetTypeRepository.findById(asset.getAssetType().getId())
+                .orElseThrow(() -> new ResourceNotFound("Asset Type not found"));;
+
+
         // id=null to ensure the asset in db does not get updated
+        // User mapper
         var tempAsset = new Asset(
                 null,
                 asset.getName(),
-                asset.getAssetType(),
+                assetType,
+                asset.getStartDate(),
+                asset.getMaturityDate(),
+                asset.getNumberOfDays(),
                 null,
                 null
         );
@@ -51,15 +66,23 @@ public class AssetService {
     @Transactional
     public Asset update(Long id, Asset asset) {
 
-        assetRepository.findById(id)
+        Asset assetDb = assetRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Asset not found"));
 
+        // get assetType
+        AssetType assetType = assetTypeRepository.findById(asset.getAssetType().getId())
+                .orElseThrow(() -> new ResourceNotFound("Asset Type not found"));;
+
+        // TODO: user mapper from Asset to AssetDTO
         var updatedAsset = new Asset(
                 id,
                 asset.getName(),
-                asset.getAssetType(),
-                asset.getCreatedDate(),
-                asset.getModifiedDate()
+                assetType,
+                asset.getStartDate(),
+                asset.getMaturityDate(),
+                asset.getNumberOfDays(),
+                assetDb.getCreatedDate(),
+                new Date()
         );
         return assetRepository.save(updatedAsset);
     }
