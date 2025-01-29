@@ -26,12 +26,6 @@ public class Portfolio {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-    // many to many
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "asset_id")
-    // private Asset asset;
-
     @Column(name = "created_date", nullable = false)
     @CreationTimestamp
     private Date createdDate;
@@ -90,6 +84,7 @@ public class Portfolio {
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 // TODO: Create DTO for requests, responses
 @RestController
-@RequestMapping("/investments")
+@RequestMapping("api/investments")
 public class InvestmentController {
 
     private final InvestmentService investmentService;

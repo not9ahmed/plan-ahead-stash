@@ -58,4 +58,14 @@ public class PortfolioService {
         return portfolioSaved;
     }
 
+
+    public void delete(Long id) {
+
+        // check if it exists
+        portfolioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFound("Portfolio not found"));
+
+        portfolioRepository.deleteById(id);
+    }
+
 }
