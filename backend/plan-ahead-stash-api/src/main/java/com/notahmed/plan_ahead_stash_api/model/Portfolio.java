@@ -40,6 +40,16 @@ public class Portfolio {
     @Column(name = "modified_date")
     private Date modifiedDate;
 
+    public Portfolio() {
+    }
+
+    public Portfolio(Long id, String name, User user, Date createdDate, Date modifiedDate) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
+    }
 
     public Long getId() {
         return id;

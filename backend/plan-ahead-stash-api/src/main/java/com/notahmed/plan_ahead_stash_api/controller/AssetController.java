@@ -64,12 +64,29 @@ public class AssetController {
                 .body(updatedAsset);
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Asset> delete(@PathVariable("id") Long id) {
         assetService.delete(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(null);
+    }
+
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Asset>> bulkCreate() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(List.of());
+    }
+
+
+    @DeleteMapping("/bulk")
+    public ResponseEntity<List<Asset>> bulkDelete() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(List.of());
     }
 
 }

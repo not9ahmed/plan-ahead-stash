@@ -29,8 +29,7 @@ public class AssetService {
 
         // first get the asset type
         AssetType assetType = assetTypeRepository.findById(asset.getAssetType().getId())
-                .orElseThrow(() -> new ResourceNotFound("Asset Type not found"));;
-
+                .orElseThrow(() -> new ResourceNotFound("Asset Type not found"));
 
         // id=null to ensure the asset in db does not get updated
         // User mapper
@@ -47,10 +46,8 @@ public class AssetService {
 
         Asset assetSaved = assetRepository.save(tempAsset);
 
-        Asset assetDb = assetRepository.findById(assetSaved.getId())
+        return assetRepository.findById(assetSaved.getId())
                 .orElseThrow(() -> new ResourceNotFound("Asset not found"));
-
-        return assetDb;
     }
 
 
@@ -59,6 +56,7 @@ public class AssetService {
                 .orElseThrow(() -> new ResourceNotFound("Asset not found"));
     }
 
+    // TOdO: add pagination
     public List<Asset> findAll() {
         return assetRepository.findAll();
     }
@@ -96,5 +94,17 @@ public class AssetService {
 
         // else delete from db
         assetRepository.deleteById(id);
+    }
+
+
+    @Transactional
+    public List<Asset> saveAll(List<Asset> assets) {
+
+        // transform the assets before save
+        // such as
+
+        List<Asset> savedAssets = assetRepository.saveAll(assets);
+
+        return savedAssets;
     }
 }
