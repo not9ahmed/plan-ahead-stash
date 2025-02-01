@@ -2,7 +2,9 @@ package com.notahmed.plan_ahead_stash_api.service;
 
 import com.notahmed.plan_ahead_stash_api.exception.ResourceNotFound;
 import com.notahmed.plan_ahead_stash_api.model.Portfolio;
+import com.notahmed.plan_ahead_stash_api.model.User;
 import com.notahmed.plan_ahead_stash_api.repository.PortfolioRepository;
+import com.notahmed.plan_ahead_stash_api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,15 +15,28 @@ public class PortfolioService {
 
     private final PortfolioRepository portfolioRepository;
 
-    public PortfolioService(PortfolioRepository portfolioRepository) {
+    private final UserRepository userRepository;
+
+    public PortfolioService(PortfolioRepository portfolioRepository, UserRepository userRepository) {
         this.portfolioRepository = portfolioRepository;
+        this.userRepository = userRepository;
     }
 
     public Portfolio create(Portfolio portfolio) {
 
-        // check if already exists
+        // find the user
+        User user = userRepository.findById(portfolio.getId())
+                .orElseThrow(() -> new ResourceNotFound("User does not exist"));
 
-        return portfolioRepository.save(portfolio);
+        Portfolio portfolioTobeSaved = new Portfolio(
+                portfolio.getId(),
+                portfolio.getName(),
+                user,
+                new Date(),
+                null
+        );
+
+        return portfolioRepository.save(portfolioTobeSaved);
     }
 
     public Portfolio findById(Long id) {

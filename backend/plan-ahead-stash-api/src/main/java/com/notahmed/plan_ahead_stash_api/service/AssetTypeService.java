@@ -20,8 +20,6 @@ public class AssetTypeService {
     }
 
     public AssetType create(AssetType assetType) {
-        // Fields: id, createdDate, modifiedDate
-        // Not needed
         var assetTypeCreate = new AssetType(
                 null,
                 assetType.getName(),

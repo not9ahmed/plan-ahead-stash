@@ -1,16 +1,19 @@
 package com.notahmed.plan_ahead_stash_api.controller;
 
+import com.notahmed.plan_ahead_stash_api.dto.request.PortfolioRequest;
 import com.notahmed.plan_ahead_stash_api.model.Portfolio;
+import com.notahmed.plan_ahead_stash_api.model.User;
 import com.notahmed.plan_ahead_stash_api.repository.PortfolioRepository;
 import com.notahmed.plan_ahead_stash_api.service.PortfolioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/portfolios")
 public class PortfolioController {
 
     private final PortfolioService portfolioService;
@@ -21,8 +24,21 @@ public class PortfolioController {
 
 
     @PostMapping
-    public ResponseEntity<Portfolio> create(@RequestBody Portfolio portfolio) {
-        Portfolio result = portfolioService.create(portfolio);
+    public ResponseEntity<Portfolio> create(@RequestBody PortfolioRequest portfolio) {
+
+        // map PortfolioRequest to Portfolio
+        var tempUser = new User();
+        tempUser.setId(portfolio.userId());
+
+        Portfolio portfolioToBeSaved = new Portfolio(
+                null,
+                portfolio.name(),
+                tempUser,
+                null,
+                null
+        );
+
+        Portfolio result = portfolioService.create(portfolioToBeSaved);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(result);

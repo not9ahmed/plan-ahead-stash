@@ -19,15 +19,15 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(length = 100, nullable = false)
+    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
 
-    @Column(length = 100, nullable = false)
+    @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
 
     @Column(name = "date_of_birth", nullable = false)
@@ -45,7 +45,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String username, String firstName, String lastName, Date dateOfBirth, Date createdDate, Date modifiedDate) {
+    public User(Long id, String username, String firstName, String lastName, Date dateOfBirth, Date createdDate, Date modifiedDate) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -55,20 +55,11 @@ public class User {
         this.modifiedDate = modifiedDate;
     }
 
-    public User(Integer id, String username, String firstName, String lastName, Date dateOfBirth, Date modifiedDate) {
-        this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.modifiedDate = modifiedDate;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
