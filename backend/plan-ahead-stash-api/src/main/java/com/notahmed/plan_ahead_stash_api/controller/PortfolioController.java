@@ -26,10 +26,11 @@ public class PortfolioController {
     @PostMapping
     public ResponseEntity<Portfolio> create(@RequestBody PortfolioRequest portfolio) {
 
-        // map PortfolioRequest to Portfolio
+        // create temp user
         var tempUser = new User();
         tempUser.setId(portfolio.userId());
 
+        // map PortfolioRequest to Portfolio
         Portfolio portfolioToBeSaved = new Portfolio(
                 null,
                 portfolio.name(),
@@ -64,8 +65,21 @@ public class PortfolioController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Portfolio> update(@PathVariable("id") Long id, @RequestBody Portfolio portfolio) {
-        Portfolio result = portfolioService.update(id, portfolio);
+    public ResponseEntity<Portfolio> update(@PathVariable("id") Long id, @RequestBody PortfolioRequest portfolio) {
+        // create temp user
+        var tempUser = new User();
+        tempUser.setId(portfolio.userId());
+
+        // map PortfolioRequest to Portfolio
+        Portfolio portfolioToBeUpdated = new Portfolio(
+                id,
+                portfolio.name(),
+                tempUser,
+                null,
+                null
+        );
+
+        Portfolio result = portfolioService.update(id, portfolioToBeUpdated);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(result);

@@ -2,14 +2,14 @@
 name = 'Create Portfolio'
 method = 'POST'
 url = 'http://localhost:8080/api/portfolios'
-sortWeight = 3000000
+sortWeight = 500000
 id = '76bdfb45-c962-410d-94d2-99aa391fe5fa'
 
 [body]
 type = 'JSON'
 raw = '''
 {
-  "name": "Pension Fund",
-  "userId": 1
+  "name": "Car Business",
+  "userId": 2
 }'''
 ```

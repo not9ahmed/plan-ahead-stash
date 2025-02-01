@@ -25,9 +25,10 @@ public class PortfolioService {
     public Portfolio create(Portfolio portfolio) {
 
         // find the user
-        User user = userRepository.findById(portfolio.getId())
+        User user = userRepository.findById(portfolio.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFound("User does not exist"));
 
+        // cer
         Portfolio portfolioTobeSaved = new Portfolio(
                 portfolio.getId(),
                 portfolio.getName(),
@@ -54,15 +55,19 @@ public class PortfolioService {
 
     public Portfolio update(Long id, Portfolio portfolio) {
 
-        // first find existing in db
+        // find existing portfolio in db
         Portfolio portfolioDb = portfolioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Portfolio not found"));
+
+        // find existing user in db
+        User user = userRepository.findById(portfolio.getUser().getId())
+                .orElseThrow(() -> new ResourceNotFound("User not found"));
 
         // map from db
         var updatedPortfolio = new Portfolio(
                 id,
                 portfolio.getName(),
-                portfolio.getUser(),
+                user,
                 portfolioDb.getCreatedDate(),
                 new Date()
 
