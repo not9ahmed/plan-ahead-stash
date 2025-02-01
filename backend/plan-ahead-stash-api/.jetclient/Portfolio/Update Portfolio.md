@@ -9,7 +9,7 @@ id = '0bacaefc-32ec-4650-b974-a278790aea09'
 type = 'JSON'
 raw = '''
 {
-  "name": "Car Business",
+  "name": "Car Business Updated",
   "userId": 3
 }'''
 ```

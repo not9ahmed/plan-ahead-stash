@@ -2,6 +2,7 @@ package com.notahmed.plan_ahead_stash_api.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
@@ -37,8 +38,8 @@ public class User {
     @CreationTimestamp
     private Date createdDate;
 
-    // TODO: Will be done from service temporarily
     @Column(name = "modified_date")
+    @UpdateTimestamp
     private Date modifiedDate;
 
 

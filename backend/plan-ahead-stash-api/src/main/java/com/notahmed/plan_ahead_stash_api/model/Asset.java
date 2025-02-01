@@ -3,6 +3,7 @@ package com.notahmed.plan_ahead_stash_api.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
@@ -18,7 +19,6 @@ public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     // Ijara, Alsalam, Government Bond
     @Column(nullable = false)
@@ -47,7 +47,7 @@ public class Asset {
 
     // TODO: Will be done from service temporarily
     @Column(name = "modified_date")
-    @LastModifiedDate
+    @UpdateTimestamp
     private Date modifiedDate;
 
     public Asset() {

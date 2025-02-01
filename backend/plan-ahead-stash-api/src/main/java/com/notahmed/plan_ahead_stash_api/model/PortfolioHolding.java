@@ -2,9 +2,9 @@ package com.notahmed.plan_ahead_stash_api.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,7 +16,6 @@ public class PortfolioHolding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @OneToMany
     @JoinColumn(name = "portfolio")
@@ -39,6 +38,7 @@ public class PortfolioHolding {
 
     // TODO: Will be done from service temporarily
     @Column(name = "modified_date")
+    @UpdateTimestamp
     private Date modifiedDate;
 
 

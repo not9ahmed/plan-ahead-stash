@@ -69,7 +69,7 @@ public class PortfolioService {
                 portfolio.getName(),
                 user,
                 portfolioDb.getCreatedDate(),
-                new Date()
+                null
 
         );
 

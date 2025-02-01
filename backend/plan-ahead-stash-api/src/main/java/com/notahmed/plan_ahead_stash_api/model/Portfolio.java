@@ -3,6 +3,7 @@ package com.notahmed.plan_ahead_stash_api.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class Portfolio {
 
     // TODO: Will be done from service temporarily
     @Column(name = "modified_date")
+    @UpdateTimestamp
     private Date modifiedDate;
 
     public Portfolio() {
