@@ -34,7 +34,7 @@ public class User {
     @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable=false)
     @CreationTimestamp
     private Date createdDate;
 

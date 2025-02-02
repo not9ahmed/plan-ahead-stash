@@ -23,7 +23,7 @@ public class AssetType {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable=false)
     @CreationTimestamp
     private Date createdDate;
 

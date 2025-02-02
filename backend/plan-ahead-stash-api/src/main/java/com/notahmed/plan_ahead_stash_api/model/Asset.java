@@ -41,7 +41,7 @@ public class Asset {
     private Integer numberOfDays;
 
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable=false)
     @CreationTimestamp
     private Date createdDate;
 

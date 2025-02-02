@@ -50,7 +50,7 @@ public class PortfolioHoldingService {
         return portfolioHoldingRepository.save(portfolioHoldingUpdated);
     }
 
-    public PortfolioHolding delete(Long id) {
+    public void delete(Long id) {
         portfolioHoldingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("PortfolioHolding not found"));
 

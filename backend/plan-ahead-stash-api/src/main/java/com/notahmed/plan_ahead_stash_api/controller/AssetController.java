@@ -33,6 +33,7 @@ public class AssetController {
                 null,
                 null
         );
+        // TODO: the service will handle the mapping
         Asset assetCreated = assetService.create(newAsset);
 
         return ResponseEntity
@@ -73,20 +74,20 @@ public class AssetController {
                 .body(null);
     }
 
-
     @PostMapping("/bulk")
-    public ResponseEntity<List<Asset>> bulkCreate() {
+    public ResponseEntity<List<Asset>> bulkCreate(@RequestBody List<Asset> assetList) {
+        List<Asset> result = assetService.saveAll(assetList);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(List.of());
+                .body(result);
     }
 
-
     @DeleteMapping("/bulk")
-    public ResponseEntity<List<Asset>> bulkDelete() {
+    public ResponseEntity<?> bulkDelete() {
+        assetService.deleteAll();
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(List.of());
+                .body(null);
     }
 
 }

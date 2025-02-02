@@ -103,8 +103,11 @@ public class AssetService {
         // transform the assets before save
         // such as
 
-        List<Asset> savedAssets = assetRepository.saveAll(assets);
+        return assetRepository.saveAll(assets);
+    }
 
-        return savedAssets;
+    @Transactional
+    public void deleteAll() {
+        assetRepository.deleteAll();
     }
 }

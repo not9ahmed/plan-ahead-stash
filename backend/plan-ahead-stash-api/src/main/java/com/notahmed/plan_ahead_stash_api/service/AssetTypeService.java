@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AssetTypeService {
@@ -67,6 +66,16 @@ public class AssetTypeService {
         assetTypeRepository.deleteById(id);
     }
 
+
+    @Transactional
+    public List<AssetType> saveAll(List<AssetType> assetTypeList) {
+        return assetTypeRepository.saveAll(assetTypeList);
+    }
+
+    @Transactional
+    public void deleteAll() {
+        assetTypeRepository.deleteAll();
+    }
 
 
 }

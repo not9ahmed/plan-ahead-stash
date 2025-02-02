@@ -32,7 +32,7 @@ public class PortfolioHolding {
     private Double purchaseDate;
 
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable=false)
     @CreationTimestamp
     private Date createdDate;
 

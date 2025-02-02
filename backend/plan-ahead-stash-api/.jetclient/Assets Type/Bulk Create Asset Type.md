@@ -8,7 +8,12 @@ id = 'b2e110d5-055d-4c2e-b700-2e3b13e23ad4'
 [body]
 type = 'JSON'
 raw = '''
-{
-  "name": "Sukuk Ijara"
-}'''
+[
+  {
+    "name": "Fixed Deposit"
+  },
+  {
+    "name": "T-Bills"
+  }
+]'''
 ```

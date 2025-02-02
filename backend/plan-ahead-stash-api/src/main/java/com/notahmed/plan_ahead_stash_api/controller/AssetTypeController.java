@@ -61,4 +61,20 @@ public class AssetTypeController {
     }
 
 
+    @PostMapping("/bulk")
+    public ResponseEntity<List<AssetType>> saveAll(@RequestBody List<AssetType> assetTypeList) {
+        List<AssetType> result = assetTypeService.saveAll(assetTypeList);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(result);
+    }
+
+    @DeleteMapping("/bulk")
+    public ResponseEntity<?> deleteAll() {
+        assetTypeService.deleteAll();
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(null);
+    }
+
 }

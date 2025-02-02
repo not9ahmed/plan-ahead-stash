@@ -27,7 +27,7 @@ public class Portfolio {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date", nullable = false, updatable=false)
     @CreationTimestamp
     private Date createdDate;
 
