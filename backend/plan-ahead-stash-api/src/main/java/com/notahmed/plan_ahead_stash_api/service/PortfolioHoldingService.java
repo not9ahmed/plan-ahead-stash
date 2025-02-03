@@ -3,6 +3,7 @@ package com.notahmed.plan_ahead_stash_api.service;
 import com.notahmed.plan_ahead_stash_api.exception.ResourceNotFound;
 import com.notahmed.plan_ahead_stash_api.model.PortfolioHolding;
 import com.notahmed.plan_ahead_stash_api.repository.PortfolioHoldingRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class PortfolioHoldingService {
         this.portfolioHoldingRepository = portfolioHoldingRepository;
     }
 
+    @Transactional
     public PortfolioHolding create(PortfolioHolding portfolioHolding) {
         return portfolioHoldingRepository.save(portfolioHolding);
     }
@@ -29,6 +31,7 @@ public class PortfolioHoldingService {
                 .orElseThrow(() -> new ResourceNotFound("PortfolioHolding not found"));
     }
 
+    @Transactional
     public PortfolioHolding update(Long id, PortfolioHolding portfolioHolding) {
 
         // first find existing
@@ -50,10 +53,23 @@ public class PortfolioHoldingService {
         return portfolioHoldingRepository.save(portfolioHoldingUpdated);
     }
 
+    @Transactional
     public void delete(Long id) {
         portfolioHoldingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("PortfolioHolding not found"));
 
         portfolioHoldingRepository.deleteById(id);
     }
+
+
+    @Transactional
+    public List<PortfolioHolding> bulkCreate(List<PortfolioHolding> portfolioHoldingList) {
+        return portfolioHoldingRepository.saveAll(portfolioHoldingList);
+    }
+
+    @Transactional
+    public void bulkDelete() {
+        portfolioHoldingRepository.deleteAll();
+    }
+
 }

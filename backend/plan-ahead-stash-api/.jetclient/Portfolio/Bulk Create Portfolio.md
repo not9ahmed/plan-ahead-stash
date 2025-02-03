@@ -10,15 +10,11 @@ type = 'JSON'
 raw = '''
 [
   {
-    "name": "Something saving",
+    "name": "Test saving",
     "userId": 1
   },
   {
-    "name": "Pension Fund",
-    "userId": 1
-  },
-  {
-    "name": "Car Business",
+    "name": "Test something",
     "userId": 1
   }
 ]'''
