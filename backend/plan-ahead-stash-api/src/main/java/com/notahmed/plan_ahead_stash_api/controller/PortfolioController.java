@@ -3,13 +3,12 @@ package com.notahmed.plan_ahead_stash_api.controller;
 import com.notahmed.plan_ahead_stash_api.dto.request.PortfolioRequest;
 import com.notahmed.plan_ahead_stash_api.model.Portfolio;
 import com.notahmed.plan_ahead_stash_api.model.User;
-import com.notahmed.plan_ahead_stash_api.repository.PortfolioRepository;
 import com.notahmed.plan_ahead_stash_api.service.PortfolioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+
 import java.util.List;
 
 @RestController
@@ -86,7 +85,36 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Portfolio> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        portfolioService.delete(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(null);
+    }
+
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Portfolio>> bulkCreate(@RequestBody List<PortfolioRequest> portfolios) {
+
+        List<Portfolio> portfolioList = portfolios.stream()
+                .map(p -> new Portfolio(
+                        null,
+                        p.name(),
+                        new User(p.userId(), null, null, null, null, null, null),
+                        null,
+                        null
+                )).toList();
+
+        List<Portfolio> result = portfolioService.bulkCreate(portfolioList);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(result);
+    }
+
+    @DeleteMapping("/bulk")
+    public ResponseEntity<?> bulkDelete() {
+        portfolioService.bulkDelete();
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(null);

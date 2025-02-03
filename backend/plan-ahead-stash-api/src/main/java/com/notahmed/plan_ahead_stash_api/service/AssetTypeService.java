@@ -68,12 +68,12 @@ public class AssetTypeService {
 
 
     @Transactional
-    public List<AssetType> saveAll(List<AssetType> assetTypeList) {
+    public List<AssetType> bulkCreate(List<AssetType> assetTypeList) {
         return assetTypeRepository.saveAll(assetTypeList);
     }
 
     @Transactional
-    public void deleteAll() {
+    public void bulkDelete() {
         assetTypeRepository.deleteAll();
     }
 

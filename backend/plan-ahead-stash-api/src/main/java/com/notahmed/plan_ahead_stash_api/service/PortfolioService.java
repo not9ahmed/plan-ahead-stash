@@ -5,6 +5,7 @@ import com.notahmed.plan_ahead_stash_api.model.Portfolio;
 import com.notahmed.plan_ahead_stash_api.model.User;
 import com.notahmed.plan_ahead_stash_api.repository.PortfolioRepository;
 import com.notahmed.plan_ahead_stash_api.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,13 +23,14 @@ public class PortfolioService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Portfolio create(Portfolio portfolio) {
 
         // find the user
         User user = userRepository.findById(portfolio.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFound("User does not exist"));
 
-        // cer
+        // create new
         Portfolio portfolioTobeSaved = new Portfolio(
                 portfolio.getId(),
                 portfolio.getName(),
@@ -41,11 +43,8 @@ public class PortfolioService {
     }
 
     public Portfolio findById(Long id) {
-
-        Portfolio portfolio = portfolioRepository.findById(id)
+        return portfolioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Portfolio not found"));
-
-        return portfolio;
     }
 
     // Add pagination
@@ -53,6 +52,7 @@ public class PortfolioService {
         return portfolioRepository.findAll();
     }
 
+    @Transactional
     public Portfolio update(Long id, Portfolio portfolio) {
 
         // find existing portfolio in db
@@ -73,19 +73,26 @@ public class PortfolioService {
 
         );
 
-        Portfolio portfolioSaved = portfolioRepository.save(updatedPortfolio);
-
-        return portfolioSaved;
+        return portfolioRepository.save(updatedPortfolio);
     }
 
-
+    @Transactional
     public void delete(Long id) {
-
         // check if it exists
         portfolioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Portfolio not found"));
 
+        // delete from db
         portfolioRepository.deleteById(id);
     }
 
+    @Transactional
+    public List<Portfolio> bulkCreate(List<Portfolio> portfolios) {
+        return portfolioRepository.saveAll(portfolios);
+    }
+
+    @Transactional
+    public void bulkDelete() {
+        portfolioRepository.deleteAll();
+    }
 }

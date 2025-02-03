@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AssetService {
@@ -98,7 +97,7 @@ public class AssetService {
 
 
     @Transactional
-    public List<Asset> saveAll(List<Asset> assets) {
+    public List<Asset> bulkCreate(List<Asset> assets) {
 
         // transform the assets before save
         // such as
@@ -107,7 +106,7 @@ public class AssetService {
     }
 
     @Transactional
-    public void deleteAll() {
+    public void bulkDelete() {
         assetRepository.deleteAll();
     }
 }
