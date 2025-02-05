@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* :root {
+    --p-primary-color: var(--p-primary-800);
+    /* --p-button-primary-background: var(--p-primary-color); */
+/* } */
+
+
+body {
+    background-color: #f8fafc;
+}

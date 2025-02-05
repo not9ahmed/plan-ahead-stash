@@ -22,11 +22,12 @@ public class PortfolioHoldingController {
     @PostMapping("/{id}/holdings")
     public ResponseEntity<List<PortfolioHolding>> create(@PathVariable("id") Long portfolioId, @RequestBody @Valid PortfolioHolding portfolioHolding) {
 
+        System.out.println("portfolioId: "+ portfolioId);
         // portfolioHoldingService.create(portfolioHolding);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(null);
+                .body(List.of());
     }
 
 

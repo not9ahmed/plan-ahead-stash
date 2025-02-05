@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { ManagementComponent } from './pages/management/management.component';
 import { AssetsComponent } from './pages/assets/assets.component';
 import { AssetsTypeComponent } from './pages/assets-type/assets-type.component';
+import { DummyComponent } from './pages/dummy/dummy.component';
 
 export const routes: Routes = [
     {path: 'home', redirectTo: '', pathMatch: 'full'},
@@ -13,8 +14,10 @@ export const routes: Routes = [
     {path: 'management', component: ManagementComponent, children: [
         {path: 'assets', component: AssetsComponent},
         {path: 'assetsType', component: AssetsTypeComponent},
-
+        
     ]},
+    
+    {path: 'dummy', component: DummyComponent},
     
     {path: '**', component: PageNotFoundComponent},
 ];
