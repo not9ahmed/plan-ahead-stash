@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-dummy',
-  imports: [ButtonModule, MenubarModule, ToastModule, AvatarModule],
+  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]
