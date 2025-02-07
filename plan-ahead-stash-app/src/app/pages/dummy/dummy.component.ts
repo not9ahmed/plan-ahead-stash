@@ -8,6 +8,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { TableModule } from 'primeng/table';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { DividerModule } from 'primeng/divider';
+import { FloatLabelModule } from "primeng/floatlabel"
+import { InputTextModule } from 'primeng/inputtext';
+
 
 
 interface Column {
@@ -72,7 +76,7 @@ const serviceProducts: Product[] = [
 
 @Component({
   selector: 'app-dummy',
-  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent, TableModule],
+  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent, TableModule, DividerModule, FloatLabelModule, InputTextModule],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]
