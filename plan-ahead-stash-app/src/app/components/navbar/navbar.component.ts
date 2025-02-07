@@ -1,54 +1,66 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Menubar } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { Ripple } from 'primeng/ripple';
+import { RippleModule } from 'primeng/ripple';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-navbar',
-  imports: [Menubar, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule],
+  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
 
-
   items: MenuItem[] | undefined;
 
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-home',
-      },
-      {
-        label: 'Projects',
-        icon: 'pi pi-search',
-        badge: '3',
-        items: [
-          {
-            label: 'Core',
-            icon: 'pi pi-bolt',
-            shortcut: '⌘+S',
-          },
-          {
-            label: 'Blocks',
-            icon: 'pi pi-server',
-            shortcut: '⌘+B',
-          },
-          {
-            separator: true,
-          },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil',
-            shortcut: '⌘+U',
-          },
-        ],
-      },
-    ];
-  }
+    ngOnInit() {
+        this.items = [
+            {
+                separator: true
+            },
+            {
+                label: 'Documents',
+                items: [
+                    {
+                        label: 'New',
+                        icon: 'pi pi-plus',
+                        shortcut: '⌘+N'
+                    },
+                    {
+                        label: 'Search',
+                        icon: 'pi pi-search',
+                        shortcut: '⌘+S'
+                    }
+                ]
+            },
+            {
+                label: 'Profile',
+                items: [
+                    {
+                        label: 'Settings',
+                        icon: 'pi pi-cog',
+                        shortcut: '⌘+O'
+                    },
+                    {
+                        label: 'Messages',
+                        icon: 'pi pi-inbox',
+                        badge: '2'
+                    },
+                    {
+                        label: 'Logout',
+                        icon: 'pi pi-sign-out',
+                        shortcut: '⌘+Q'
+                    }
+                ]
+            },
+            {
+                separator: true
+            }
+        ];
+    }
 }

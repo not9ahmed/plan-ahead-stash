@@ -1,0 +1,14 @@
+.main-dummy-content {
+    display: flex;
+    flex-direction: row;
+    /* width: 100%;
+    min-height: 100%; */
+    border: 1px solid red;
+    height: 100vh;
+}
+
+.dummy-component {
+    width: 100%;
+    height: max-content;
+    border: 2px solid green;
+}
