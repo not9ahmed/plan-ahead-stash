@@ -4,7 +4,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ManagementComponent } from './pages/management/management.component';
 import { AssetsComponent } from './pages/assets/assets.component';
-import { AssetsTypeComponent } from './pages/assets-type/assets-type.component';
+import { AssetsTypeComponent } from './pages/assets-type-old/assets-type.component';
 import { DummyComponent } from './pages/dummy/dummy.component';
 
 export const routes: Routes = [

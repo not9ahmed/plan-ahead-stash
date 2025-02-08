@@ -13,6 +13,7 @@ import { definePreset } from '@primeng/themes';
 const MyPreset = definePreset(Aura, {
   semantic: {
       colorScheme: {
+          inputVariant: 'outlined' ,
           light: {
               surface: {
                   0: '#ffffff',

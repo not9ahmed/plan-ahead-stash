@@ -11,6 +11,7 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from "primeng/floatlabel"
 import { InputTextModule } from 'primeng/inputtext';
+import { AssetsTypeComponent } from "../assets-type/assets-type.component";
 
 
 
@@ -76,7 +77,7 @@ const serviceProducts: Product[] = [
 
 @Component({
   selector: 'app-dummy',
-  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent, TableModule, DividerModule, FloatLabelModule, InputTextModule],
+  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent, TableModule, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]
