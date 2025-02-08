@@ -2,26 +2,6 @@
     <app-navbar></app-navbar>
     <div class="dummy-component">
 
-        <div class="card">
-            <h1>My App</h1>
-            <p-table [columns]="cols" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template #header let-columns>
-                    <tr>
-                        <th *ngFor="let col of columns">
-                            {{ col.header }}
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-rowData let-columns="columns">
-                    <tr>
-                        <td *ngFor="let col of columns">
-                            {{ rowData[col.field] }}
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-
         
         <div class="card flex justify-center flex-row">
             <p-button label="Check" />
@@ -54,6 +34,10 @@
         <p-divider></p-divider>
 
         <app-assets-type></app-assets-type>
+
+        <p-divider></p-divider>
+        
+        <app-add-asset-type></app-add-asset-type>
     </div>
 
 </div>

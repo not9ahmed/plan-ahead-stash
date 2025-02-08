@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AssetTypeService } from '../../services/asset-type.service';
-import { AssetType } from '../../models/asset-type';
+import { AssetTypeService } from '../../../services/asset-type.service';
+import { AssetType } from '../../../models/asset-type';
 
 @Component({
   selector: 'app-assets-type',

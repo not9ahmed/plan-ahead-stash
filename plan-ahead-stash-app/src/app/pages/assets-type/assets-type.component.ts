@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+
 
 interface Column {
   field: string;
@@ -11,7 +14,7 @@ interface Column {
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css'
 })
@@ -57,6 +60,10 @@ export class AssetsTypeComponent {
       }
     })
 
+  }
+
+  refresh() {
+    this.loadData();
   }
 
 }

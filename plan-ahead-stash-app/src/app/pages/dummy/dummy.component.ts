@@ -12,72 +12,12 @@ import { DividerModule } from 'primeng/divider';
 import { FloatLabelModule } from "primeng/floatlabel"
 import { InputTextModule } from 'primeng/inputtext';
 import { AssetsTypeComponent } from "../assets-type/assets-type.component";
-
-
-
-interface Column {
-  field: string;
-  header: string;
-}
-
-interface Product {
-  id: string,
-  code: string,
-  name: string,
-  description: string,
-  image: string,
-  price: number,
-  category: string,
-  quantity: number,
-  inventoryStatus: string,
-  rating: number
-}
-
-const serviceProducts: Product[] = [
-  {
-    id: '1000',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '2000',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '3000',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-]
-
-
+import { AddAssetTypeComponent } from '../add-asset-type/add-asset-type.component';
 
 
 @Component({
   selector: 'app-dummy',
-  imports: [CommonModule, ButtonModule, MenuModule, ToastModule, AvatarModule, BadgeModule, NavbarComponent, TableModule, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent],
+  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, AddAssetTypeComponent],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]
@@ -133,26 +73,12 @@ export class DummyComponent {
       }
     ];
 
-
-
-    this.products = serviceProducts;
-
-    this.cols = [
-      { field: 'code', header: 'Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' }
-    ];
+ 
   }
 
   show() {
     this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Message Content', life: 3000 });
   }
-
-
-  products!: Product[];
-
-  cols!: Column[];
 
 
 

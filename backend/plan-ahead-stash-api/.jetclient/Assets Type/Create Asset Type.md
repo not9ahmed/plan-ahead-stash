@@ -9,6 +9,6 @@ id = '65422703-7a91-4b60-b1ec-2afea616cd63'
 type = 'JSON'
 raw = '''
 {
-  "name": "Government Bond 3344"
+  "name": "T-Bills"
 }'''
 ```

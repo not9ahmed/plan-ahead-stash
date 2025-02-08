@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AssetType } from '../../models/asset-type';
-import { AssetTypeService } from '../../services/asset-type.service';
+import { AssetTypeService } from '../../../services/asset-type.service';
 import { CommonModule } from '@angular/common';
-import { FloatLabel } from 'primeng/floatlabel';
-import { Button } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AssetType } from '../../../models/asset-type';
 
 @Component({
   selector: 'app-add-asset-type',
-  imports: [CommonModule, ReactiveFormsModule, FloatLabel, Button, InputTextModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-asset-type.component.html',
   styleUrl: './add-asset-type.component.css'
 })
 export class AddAssetTypeComponent {
+
   constructor(private assetTypeService: AssetTypeService){
 
   }
@@ -23,7 +20,6 @@ export class AddAssetTypeComponent {
   assetTypeForm = new FormGroup({
     name: new FormControl('', [Validators.required])
   })
-
 
 
   handleSubmit() {

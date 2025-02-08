@@ -1,8 +1,14 @@
-<div class="container">
-    <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
-    
-        <label class="form-label">Asset Type Name</label>
-        <input type="text" class="form-control" formControlName="name"/>
-        <button type="submit" class="btn btn-success">Add</button>
+<div class="card flex justify-center gap-5 p-5">
+    <div><h2>Add Asset Type</h2></div>
+
+    <form [formGroup]="assetTypeForm" (submit)="handleSubmit()"> 
+        <p-floatlabel>
+            <input id="name" pInputText formControlName="name" />
+            <label for="name">Name</label>
+        </p-floatlabel>
+        
+        <p-button type="submit">Create</p-button>
     </form>
 </div>
+
+

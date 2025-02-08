@@ -1,22 +1,33 @@
 <div class="card">
+    <div class="card"><h2>Assets Type</h2></div>
+    <div class="card">
+        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
+    </div>
     <p-table [columns]="cols" [value]="assetsType" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template #header let-columns>
             <tr>
                 <th *ngFor="let col of columns">
                     {{ col.header }}
                 </th>
+                <th>
+                    Action
+                </th>
             </tr>
         </ng-template>
         <ng-template #body let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    
                     @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
                         {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
                     } @else {
                         {{ rowData[col.field] }}
                     }
-
+                </td>
+                <td>
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <p-button label="Edit" severity="success" />
+                        <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" />
+                    </div>
                 </td>
             </tr>
         </ng-template>
