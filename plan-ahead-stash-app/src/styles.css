@@ -1,12 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* :root {
-    --p-primary-color: var(--p-primary-800);
-    /* --p-button-primary-background: var(--p-primary-color); */
-/* } */
+    --ground-color: var(--p-surface-50);
+} */
 
 @import "primeicons/primeicons.css";
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(/assets/fonts/Roboto-VariableFont_wdth,wght.ttf) format("truetype");
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
 body {
     height: 100vh;
     width: 100vw;
-  }
+    /* background-color: var(--ground-color); */
+}

@@ -10,7 +10,7 @@ import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule],
+  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
