@@ -1,4 +1,10 @@
-<div class="card">
+<div class="card flex-col gap-5">
+    
+    <!-- Dialog box related to delete -->
+    <p-toast />
+    <p-confirmdialog />
+
+
     <div class="card"><h2>Assets Type</h2></div>
     <div class="card">
         <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
@@ -25,9 +31,14 @@
                 </td>
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
-                        <p-button label="Edit" severity="success" />
+                        <p-button label="Edit" severity="success" [outlined]="true" />
                         <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" />
-                    </div>
+
+                        <!-- use this for deletion -->
+                         <!-- will pass id also -->
+                        <p-button (click)="confirm2($event, rowData.id)" label="Delete" severity="danger" [outlined]="true" />
+
+                    </div>                    
                 </td>
             </tr>
         </ng-template>

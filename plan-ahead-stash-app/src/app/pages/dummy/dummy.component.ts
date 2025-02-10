@@ -13,11 +13,12 @@ import { FloatLabelModule } from "primeng/floatlabel"
 import { InputTextModule } from 'primeng/inputtext';
 import { AssetsTypeComponent } from "../assets-type/assets-type.component";
 import { AddAssetTypeComponent } from '../add-asset-type/add-asset-type.component';
+import { FaqComponent } from "../../components/faq/faq.component";
 
 
 @Component({
   selector: 'app-dummy',
-  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, AddAssetTypeComponent],
+  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, AddAssetTypeComponent, FaqComponent],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]

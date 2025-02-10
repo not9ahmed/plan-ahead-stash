@@ -5,6 +5,9 @@ import { AssetType } from '../../models/asset-type';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 interface Column {
@@ -14,16 +17,17 @@ interface Column {
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule],
   templateUrl: './assets-type.component.html',
-  styleUrl: './assets-type.component.css'
+  styleUrl: './assets-type.component.css',
+  providers: [ConfirmationService, MessageService]
 })
 export class AssetsTypeComponent {
   
   assetsType: AssetType[] = [];
   cols!: Column[];
 
-  constructor(private assetTypeService: AssetTypeService) {
+  constructor(private assetTypeService: AssetTypeService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.loadData();
 
     // make it dynamic
@@ -59,8 +63,35 @@ export class AssetsTypeComponent {
         console.log(error);
       }
     })
-
   }
+
+
+
+  confirm2(event: Event, id: number) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Do you want to delete this record?',
+        header: 'Danger Zone' + ", The is id: "+ id,
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true,
+        },
+        acceptButtonProps: {
+            label: 'Delete',
+            severity: 'danger',
+        },
+
+        accept: () => {
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+        },
+    });
+}
 
   refresh() {
     this.loadData();

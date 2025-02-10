@@ -6,16 +6,21 @@ import { CommonModule } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-add-asset-type',
-  imports: [CommonModule, ReactiveFormsModule, FloatLabel, Button, InputTextModule],
+  imports: [CommonModule, ReactiveFormsModule, FloatLabel, Button, InputTextModule, Toast],
   templateUrl: './add-asset-type.component.html',
-  styleUrl: './add-asset-type.component.css'
+  styleUrl: './add-asset-type.component.css',
+  providers: [MessageService]
 })
 export class AddAssetTypeComponent {
-  constructor(private assetTypeService: AssetTypeService){
+  constructor(
+    private assetTypeService: AssetTypeService,
+    private messageService: MessageService){
 
   }
 
@@ -37,8 +42,22 @@ export class AddAssetTypeComponent {
 
     const newAssetType: AssetType = {name: name};
 
-    this.assetTypeService.create(newAssetType).subscribe(data => {
-      console.log(data);
+    this.assetTypeService.create(newAssetType).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => {
+
+        // handle api errors here
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message + " " + err.error.timestamp,
+          life: 3000
+        });
+      }
+
     });
   }
 }

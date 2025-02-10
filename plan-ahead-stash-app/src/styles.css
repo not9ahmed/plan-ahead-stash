@@ -6,20 +6,26 @@
 
 @import "primeicons/primeicons.css";
 
+
 @font-face {
-    font-family: 'Roboto';
-    src: url(/assets/fonts/Roboto-VariableFont_wdth,wght.ttf) format("truetype");
+    font-family: 'Roboto'; /* Replace with the actual font name */
+    src: url('../src/assets/fonts/Roboto.ttf') format('truetype');
+    font-weight: 100 900; /* Example weight range */
+}
+
+:root {
+    --ground-color: var(--p-surface-50);
 }
 
 body {
     font-family: 'Roboto', sans-serif;
-}
-
-
-
-
-body {
     height: 100vh;
     width: 100vw;
     /* background-color: var(--ground-color); */
+
+}
+
+h1 {
+    font-family: 'Roboto', sans-serif;
+
 }
