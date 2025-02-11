@@ -1,15 +1,18 @@
 <div class="card flex justify-center gap-5 p-5">
-    <div><h2>Add Asset Type</h2></div>
     <p-toast />
 
-    <form [formGroup]="assetTypeForm" (submit)="handleSubmit()"> 
-        <p-floatlabel>
-            <input id="name" pInputText formControlName="name" />
-            <label for="name">Name</label>
-        </p-floatlabel>
-        
-        <p-button type="submit">Create</p-button>
+    <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
+
+        <div class="card flex justify-center gap-5 p-5"
+            style="display: flex; flex-direction: column; gap: 24px; padding: 16px;">
+
+            <h2>Add Asset Type</h2>
+            <p-floatlabel>
+                <input id="name" pInputText formControlName="name" />
+                <label for="name">Name</label>
+            </p-floatlabel>
+            <p-button type="submit">Create</p-button>
+        </div>
+
     </form>
 </div>
-
-

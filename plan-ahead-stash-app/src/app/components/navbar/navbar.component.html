@@ -15,7 +15,9 @@
                     fill="var(--ground-background)"
                 />
             </svg>
-            <span class="text-xl font-semibold">Plan Ahead Stash</span>
+            <span class="text-xl font-semibold" style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--primary-color);">
+                Plan Ahead Stash
+            </span>
         </span>
     </ng-template>
     <ng-template #submenuheader let-item>
@@ -37,5 +39,6 @@
                 <span class="text-sm">Admin</span>
             </span>
         </a>
+        <p-button label="Toggle Dark Mode" (onClick)="toggleDarkMode()"/>
     </ng-template>
 </p-menu>

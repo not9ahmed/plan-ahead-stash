@@ -1,12 +1,14 @@
-<div class="card flex-col gap-5">
+<div style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
     
     <!-- Dialog box related to delete -->
     <p-toast />
     <p-confirmdialog />
 
 
-    <div class="card"><h2>Assets Type</h2></div>
     <div class="card">
+        <h2>Assets Type</h2>
+    </div>
+    <div class="card" style="display: flex; flex-direction: row; justify-content: end;">
         <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
     </div>
     <p-table [columns]="cols" [value]="assetsType" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">

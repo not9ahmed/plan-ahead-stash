@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { Ripple } from 'primeng/ripple';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule],
+  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -62,5 +63,10 @@ export class NavbarComponent {
                 separator: true
             }
         ];
+    }
+
+    toggleDarkMode() {
+        const element = document.querySelector('html')!;
+        element.classList.toggle('my-app-dark');
     }
 }
