@@ -14,11 +14,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AssetsTypeComponent } from "../assets-type/assets-type.component";
 import { AddAssetTypeComponent } from '../add-asset-type/add-asset-type.component';
 import { FaqComponent } from "../../components/faq/faq.component";
+import { FooterComponent } from "../../components/footer/footer.component";
+import { UsersComponent } from "../users/users.component";
 
 
 @Component({
   selector: 'app-dummy',
-  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, AddAssetTypeComponent, FaqComponent],
+  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, AddAssetTypeComponent, FaqComponent, FooterComponent, UsersComponent],
   templateUrl: './dummy.component.html',
   styleUrl: './dummy.component.css',
   providers: [MessageService]

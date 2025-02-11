@@ -11,7 +11,7 @@
     <div class="card" style="display: flex; flex-direction: row; justify-content: end;">
         <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
     </div>
-    <p-table [columns]="cols" [value]="assetsType" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [columns]="cols" [value]="assetsType" showGridlines stripedRows responsiveLayout="stack">
         <ng-template #header let-columns>
             <tr>
                 <th *ngFor="let col of columns">
@@ -34,7 +34,7 @@
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
                         <p-button label="Edit" severity="success"/>
-                        <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" />
+                        <!-- <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" /> -->
 
                         <!-- use this for deletion -->
                          <!-- will pass id also -->

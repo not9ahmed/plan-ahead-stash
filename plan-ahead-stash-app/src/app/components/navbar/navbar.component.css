@@ -1,3 +1,59 @@
-.my-nav-bar {
-    /* border: 2px solid rebeccapurple; */
+.navbar-full {
+    display: flex;
+}
+
+.navbar-responsive {
+    display: none;
+}
+
+/* Small screens (phones) */
+@media (width <=576px) {
+
+    /* Styles for small screens */
+
+    .navbar-full {
+        display: none;
+    }
+
+    .navbar-responsive {
+        display: flex;
+        justify-content: end;
+    }
+}
+
+/* Medium screens (tablets) */
+@media (width >=577px) and (width <=767px) {
+    /* Styles for medium screens */
+
+    .navbar-full {
+        display: none;
+    }
+
+    .navbar-responsive {
+        display: flex;
+        justify-content: end;
+    }
+}
+
+/* Large screens (desktops) */
+@media (width >=768px) {
+    /* Styles for large screens */
+
+    .navbar-full {
+        display: flex;
+    }
+
+    .navbar-responsive {
+        display: none;
+    }
+}
+
+/* Extra large screens (large desktops) */
+@media (width >=992px) {
+    /* Styles for extra large screens */
+}
+
+/* Extra extra large screens (very large desktops) */
+@media (width >=1200px) {
+    /* Styles for extra extra large screens */
 }

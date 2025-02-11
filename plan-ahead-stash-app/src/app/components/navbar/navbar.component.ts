@@ -8,10 +8,11 @@ import { Ripple } from 'primeng/ripple';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule],
+  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -28,14 +29,15 @@ export class NavbarComponent {
                 label: 'Documents',
                 items: [
                     {
-                        label: 'New',
-                        icon: 'pi pi-plus',
-                        shortcut: '⌘+N'
+                        label: 'Assets Type',
+                        // icon: 'pi pi-plus',
+                        url: '/about'
                     },
                     {
                         label: 'Search',
-                        icon: 'pi pi-search',
-                        shortcut: '⌘+S'
+                        // icon: 'pi pi-search',
+                        // shortcut: '⌘+S',
+                        url: '/about'
                     }
                 ]
             },
@@ -44,18 +46,24 @@ export class NavbarComponent {
                 items: [
                     {
                         label: 'Settings',
-                        icon: 'pi pi-cog',
-                        shortcut: '⌘+O'
+                        // icon: 'pi pi-cog',
+                        // shortcut: '⌘+O',
+                        url: '/about'
+
                     },
                     {
                         label: 'Messages',
-                        icon: 'pi pi-inbox',
-                        badge: '2'
+                        // icon: 'pi pi-inbox',
+                        badge: '2',
+                        url: '/about'
+
                     },
                     {
                         label: 'Logout',
-                        icon: 'pi pi-sign-out',
-                        shortcut: '⌘+Q'
+                        // icon: 'pi pi-sign-out',
+                        // shortcut: '⌘+Q',
+                        url: '/about'
+
                     }
                 ]
             },

@@ -1,6 +1,8 @@
-<p-menu [model]="items" class="flex justify-center my-nav-bar" styleClass="w-half md:w-60">
+
+<!-- Make it responsive -->
+<p-menu [model]="items" class="flex justify-center navbar-full" styleClass="w-half md:w-60">
     <ng-template #start>
-        <span class="inline-flex items-center gap-1 px-2 py-2">
+        <span class="inline-flex items-center gap-1 px-2 py-2" style="display: inline-flex; align-items: center; gap: 1rem; padding: 2px;">
                 <svg
                 width="31"
                 height="33"
@@ -10,10 +12,10 @@
                 class="block mx-auto"
             >
             <!-- logo here -->
-                <path
+                <!-- <path
                     d="M11.4013 8.27235L8.00893 7.94938L10.2705 5.68861H12.5321L11.4013 8.27235Z"
                     fill="var(--p-primary-color)"
-                />
+                /> -->
             </svg>
             <span class="text-xl font-semibold" style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--p-primary-color);">
                 Plan Ahead Stash
@@ -24,7 +26,7 @@
         <span class="text-primary font-bold">{{ item.label }}</span>
     </ng-template>
     <ng-template #item let-item>
-        <a pRipple class="flex items-center p-menu-item-link">
+        <a pRipple class="flex items-center p-menu-item-link" routerLink="{{ item.url }}">
             <span [class]="item.icon"></span>
             <span class="ml-2">{{ item.label }}</span>
             <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
@@ -36,6 +38,7 @@
             <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2" shape="circle" />
             <span class="inline-flex flex-col">
                 <span class="font-bold">NotAhmed</span>
+                -
                 <span class="text-sm">Admin</span>
             </span>
         </a>
@@ -48,3 +51,8 @@
         </div>
     </ng-template>
 </p-menu>
+
+<div class="card flex justify-center navbar-responsive" style="">
+    <p-menu #menu [model]="items" [popup]="true" />
+    <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+</div>
