@@ -65,8 +65,11 @@ export class NavbarComponent {
         ];
     }
 
+    isDark: boolean = false;
+
     toggleDarkMode() {
         const element = document.querySelector('html')!;
         element.classList.toggle('my-app-dark');
+        this.isDark = !this.isDark;
     }
 }

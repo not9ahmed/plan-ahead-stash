@@ -12,10 +12,10 @@
             <!-- logo here -->
                 <path
                     d="M11.4013 8.27235L8.00893 7.94938L10.2705 5.68861H12.5321L11.4013 8.27235Z"
-                    fill="var(--ground-background)"
+                    fill="var(--p-primary-color)"
                 />
             </svg>
-            <span class="text-xl font-semibold" style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--primary-color);">
+            <span class="text-xl font-semibold" style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--p-primary-color);">
                 Plan Ahead Stash
             </span>
         </span>
@@ -39,6 +39,12 @@
                 <span class="text-sm">Admin</span>
             </span>
         </a>
-        <p-button label="Toggle Dark Mode" (onClick)="toggleDarkMode()"/>
+        <div style="display: flex; justify-content: center;">
+            @if (isDark) {
+                <p-button icon="pi pi-sun" aria-label="Save" (onClick)="toggleDarkMode()" />
+            } @else {
+                <p-button icon="pi pi-moon" aria-label="Save" (onClick)="toggleDarkMode()" />
+            }
+        </div>
     </ng-template>
 </p-menu>

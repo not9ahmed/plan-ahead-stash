@@ -13,17 +13,17 @@ import { definePreset } from '@primeng/themes';
 const MyPreset = definePreset(Aura, {
   semantic: {
     primary: {
-      50: '{cyan.50}',
-      100: '{cyan.100}',
-      200: '{cyan.200}',
-      300: '{cyan.300}',
-      400: '{cyan.400}',
-      500: '{cyan.500}',
-      600: '{cyan.600}',
-      700: '{cyan.700}',
-      800: '{cyan.800}',
-      900: '{cyan.900}',
-      950: '{cyan.950}'
+      50: '{sky.50}',
+      100: '{sky.100}',
+      200: '{sky.200}',
+      300: '{sky.300}',
+      400: '{sky.400}',
+      500: '{sky.500}',
+      600: '{sky.600}',
+      700: '{sky.700}',
+      800: '{sky.800}',
+      900: '{sky.900}',
+      950: '{sky.950}'
     },
     colorScheme: {
       light: {
@@ -62,6 +62,55 @@ const MyPreset = definePreset(Aura, {
   }
 });
 
+// using Noir theme
+const Noir = definePreset(Aura, {
+  semantic: {
+      primary: {
+          50: '{zinc.50}',
+          100: '{zinc.100}',
+          200: '{zinc.200}',
+          300: '{zinc.300}',
+          400: '{zinc.400}',
+          500: '{zinc.500}',
+          600: '{zinc.600}',
+          700: '{zinc.700}',
+          800: '{zinc.800}',
+          900: '{zinc.900}',
+          950: '{zinc.950}'
+      },
+      colorScheme: {
+          light: {
+              primary: {
+                  color: '{zinc.950}',
+                  inverseColor: '#ffffff',
+                  hoverColor: '{zinc.900}',
+                  activeColor: '{zinc.800}'
+              },
+              highlight: {
+                  background: '{zinc.950}',
+                  focusBackground: '{zinc.700}',
+                  color: '#ffffff',
+                  focusColor: '#ffffff'
+              }
+          },
+          dark: {
+              primary: {
+                  color: '{zinc.50}',
+                  inverseColor: '{zinc.950}',
+                  hoverColor: '{zinc.100}',
+                  activeColor: '{zinc.200}'
+              },
+              highlight: {
+                  background: 'rgba(250, 250, 250, .16)',
+                  focusBackground: 'rgba(250, 250, 250, .24)',
+                  color: 'rgba(255,255,255,.87)',
+                  focusColor: 'rgba(255,255,255,.87)'
+              }
+          }
+      }
+  }
+});
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -71,7 +120,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: MyPreset,
+        preset: Noir,
         options: {
           darkModeSelector: '.my-app-dark'
         }

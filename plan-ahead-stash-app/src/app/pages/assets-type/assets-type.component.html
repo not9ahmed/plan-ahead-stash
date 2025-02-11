@@ -33,12 +33,12 @@
                 </td>
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
-                        <p-button label="Edit" severity="success" [outlined]="true" />
+                        <p-button label="Edit" severity="success"/>
                         <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" />
 
                         <!-- use this for deletion -->
                          <!-- will pass id also -->
-                        <p-button (click)="confirm2($event, rowData.id)" label="Delete" severity="danger" [outlined]="true" />
+                        <p-button (click)="confirm2($event, rowData.id)" label="Delete" severity="danger" />
 
                     </div>                    
                 </td>

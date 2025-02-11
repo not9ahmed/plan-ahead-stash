@@ -85,7 +85,9 @@ export class AssetsTypeComponent {
         },
 
         accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+          this.handleDelete(id);
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+
         },
         reject: () => {
             this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });

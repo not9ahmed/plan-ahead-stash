@@ -26,7 +26,7 @@ export class AddAssetTypeComponent {
 
   // Creating a form
   assetTypeForm = new FormGroup({
-    name: new FormControl('', [Validators.required])
+    name: new FormControl<string | null>('', [Validators.required])
   })
 
 
@@ -40,11 +40,19 @@ export class AddAssetTypeComponent {
       return;
     }
 
+
     const newAssetType: AssetType = {name: name};
 
     this.assetTypeService.create(newAssetType).subscribe({
       next: (data) => {
         console.log(data);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmed',
+          detail: 'Record created',
+          life: 3000
+        });
+
       },
       error: (err) => {
 
@@ -59,5 +67,8 @@ export class AddAssetTypeComponent {
       }
 
     });
+
+    this.assetTypeForm.reset();
+
   }
 }
