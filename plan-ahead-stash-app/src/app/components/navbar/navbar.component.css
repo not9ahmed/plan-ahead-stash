@@ -1,5 +1,6 @@
 .navbar-full {
     display: flex;
+    height: 100%;
 }
 
 .navbar-responsive {
