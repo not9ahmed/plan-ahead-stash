@@ -18,6 +18,8 @@
     .navbar-responsive {
         display: flex;
         justify-content: end;
+        padding: 12px 4px;
+
     }
 }
 
@@ -32,6 +34,8 @@
     .navbar-responsive {
         display: flex;
         justify-content: end;
+        padding: 12px 4px;
+
     }
 }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
@@ -8,11 +8,13 @@ import { Ripple } from 'primeng/ripple';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { Drawer, DrawerModule } from 'primeng/drawer';
+import { StyleClass } from 'primeng/styleclass';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, RouterLink, RouterLinkActive],
+  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, DrawerModule, StyleClass, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -74,6 +76,14 @@ export class NavbarComponent {
     }
 
     isDark: boolean = false;
+
+    visible1: boolean = false;
+
+    @ViewChild('drawerRef') drawerRef!: Drawer;
+
+    closeCallback(e: any): void {
+        this.drawerRef.close(e);
+    }
 
     toggleDarkMode() {
         const element = document.querySelector('html')!;

@@ -1,23 +1,18 @@
-
 <!-- Make it responsive -->
 <p-menu [model]="items" class="flex justify-center navbar-full" styleClass="w-half md:w-60">
     <ng-template #start>
-        <span class="inline-flex items-center gap-1 px-2 py-2" style="display: inline-flex; align-items: center; gap: 1rem; padding: 2px;">
-                <svg
-                width="31"
-                height="33"
-                viewBox="0 0 31 33"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="block mx-auto"
-            >
-            <!-- logo here -->
+        <span class="inline-flex items-center gap-1 px-2 py-2"
+            style="display: inline-flex; align-items: center; gap: 1rem; padding: 2px;">
+            <svg width="31" height="33" viewBox="0 0 31 33" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="block mx-auto">
+                <!-- logo here -->
                 <!-- <path
                     d="M11.4013 8.27235L8.00893 7.94938L10.2705 5.68861H12.5321L11.4013 8.27235Z"
                     fill="var(--p-primary-color)"
                 /> -->
             </svg>
-            <span class="text-xl font-semibold" style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--p-primary-color);">
+            <span class="text-xl font-semibold"
+                style="font-size: 1.25rem; line-height: 1.75rem; font-weight: 600; color: var(--p-primary-color);">
                 Plan Ahead Stash
             </span>
         </span>
@@ -30,12 +25,15 @@
             <span [class]="item.icon"></span>
             <span class="ml-2">{{ item.label }}</span>
             <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
-            <span *ngIf="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
+            <span *ngIf="item.shortcut"
+                class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut
+                }}</span>
         </a>
     </ng-template>
     <ng-template #end>
         <a pRipple class="flex items-center p-menu-item-link">
-            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2" shape="circle" />
+            <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" class="mr-2"
+                shape="circle" />
             <span class="inline-flex flex-col">
                 <span class="font-bold">NotAhmed</span>
                 -
@@ -44,15 +42,75 @@
         </a>
         <div style="display: flex; justify-content: center;">
             @if (isDark) {
-                <p-button icon="pi pi-sun" aria-label="Save" (onClick)="toggleDarkMode()" />
+            <p-button icon="pi pi-sun" aria-label="Save" (onClick)="toggleDarkMode()" />
             } @else {
-                <p-button icon="pi pi-moon" aria-label="Save" (onClick)="toggleDarkMode()" />
+            <p-button icon="pi pi-moon" aria-label="Save" (onClick)="toggleDarkMode()" />
             }
         </div>
     </ng-template>
 </p-menu>
 
-<div class="card flex justify-center navbar-responsive" style="">
-    <p-menu #menu [model]="items" [popup]="true" />
-    <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/>
+<div class="card flex justify-center navbar-responsive">
+    <!-- <p-menu #menu [model]="items" [popup]="true" />
+    <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v"/> -->
+    <p-drawer #drawerRef [(visible)]="visible1" position="right">
+
+        <ng-template #header>
+            <div class="flex items-center gap-2" style="display: flex; align-items: center; gap: 2px;">
+                <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+                <span class="font-bold">Amy Elsner</span>
+            </div>
+        </ng-template>
+
+        <div style="display: flex; flex-direction: column; height: 100%;">
+            <div style=" display: flex; align-items: center; justify-content: between; flex-shrink: 0rem;">
+
+                <div class="overflow-y-auto" style="overflow-y: auto;">
+
+                    <a pRipple class="flex items-center p-menu-item-link">
+                        <i class="pi pi-home mr-2"></i>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+
+
+                    <a pRipple class="flex items-center p-menu-item-link">
+                        <i class="pi pi-chart-line mr-2"></i>
+                        <span class="font-medium">Expenses</span>
+                    </a>
+
+                    
+                    @for (item of items; track $index) {
+
+                            <a pRipple class="flex items-center p-menu-item-link" routerLink="{{ item.url }}">
+                                <span [class]="item.icon"></span>
+                                <span class="ml-2">{{ item.label }}</span>
+                                <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
+                    
+                            </a>
+    
+                    }
+
+
+                    <!-- <div class="mt-auto">
+                    <a pRipple class="m-4 flex items-center cursor-pointer p-4 gap-2 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+                        <span class="font-bold">Amy Elsner</span>
+                    </a>
+                </div> -->
+
+                </div>
+            </div>
+        </div>
+
+        <ng-template #footer>
+            <div class="flex items-center gap-2">
+                <button pButton label="Account" icon="pi pi-user" class="w-full" outlined></button>
+                <button pButton label="Logout" icon="pi pi-sign-out" class="w-full" severity="danger" text></button>
+            </div>
+        </ng-template>
+    </p-drawer>
+    <p-button (click)="visible1 = true" icon="pi pi-bars" />
+
+
+
 </div>
