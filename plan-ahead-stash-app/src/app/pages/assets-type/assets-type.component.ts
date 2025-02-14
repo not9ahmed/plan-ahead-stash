@@ -67,7 +67,7 @@ export class AssetsTypeComponent {
 
 
 
-  confirm2(event: Event, id: number) {
+  confirm(event: Event, id: number) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Do you want to delete this record?',

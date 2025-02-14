@@ -14,6 +14,28 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.API_URL}/`);
+    const url = `${this.API_URL}/`;
+    return this.http.get<User[]>(url);
   }
+
+  findById(id: number): Observable<User> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.get<User>(url);
+  }
+
+  create(user: User): Observable<User> {
+    const url = `${this.API_URL}`;
+    return this.http.post<User>(url, user);
+  }
+
+  update(id: number, user: User): Observable<User> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.put<User>(url, user);
+  }
+
+  delete(id: number): Observable<User> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.delete<any>(url);
+  }
+  
 }

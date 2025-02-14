@@ -1,3 +1,46 @@
-<div class="card">
-    <h2>Users Type</h2>
+<div class="users-page">
+
+    <div class="card">
+        <h2>Users Pages</h2>
+    </div>
+    
+    <div class="card" style="display: flex; flex-direction: row; justify-content: end;">
+        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
+    </div>
+
+    <p-table [columns]="cols" [value]="users" showGridlines responsiveLayout="stack">
+        <ng-template #header let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowData let-columns="columns">
+            <tr>
+            <td *ngFor="let col of columns">
+                @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
+                    {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                } @else {
+                    {{ rowData[col.field] }}
+                }
+            </td>
+            <td>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <p-button label="Edit" severity="success"/>
+                    <!-- <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" /> -->
+
+                    <!-- use this for deletion -->
+                     <!-- will pass id also -->
+                    <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" />
+
+                </div>                    
+            </td>
+        </tr>
+        </ng-template>
+        </p-table>
 </div>
+
