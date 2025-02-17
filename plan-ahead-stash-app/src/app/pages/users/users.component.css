@@ -1,8 +1,9 @@
 .users-page {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 8px;
     margin: 0;
-    border: 2px solid seagreen;
+    border: 2px solid seagreen; */
+
 }

@@ -4,6 +4,8 @@ import { User } from '../../models/user';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 interface Column {
@@ -14,7 +16,7 @@ interface Column {
 
 @Component({
   selector: 'app-users',
-  imports: [TableModule, CommonModule, ButtonModule],
+  imports: [TableModule, CommonModule, ButtonModule, InputTextModule, DatePickerModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]
