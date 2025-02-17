@@ -5,6 +5,10 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DialogModule } from 'primeng/dialog';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -16,7 +20,7 @@ interface Column {
 
 @Component({
   selector: 'app-users',
-  imports: [TableModule, CommonModule, ButtonModule, InputTextModule, DatePickerModule],
+  imports: [TableModule, CommonModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]
@@ -86,6 +90,12 @@ export class UsersComponent {
 
   }
 
+  isDialogVisible: boolean = false;
+
+  showDialog() {
+    this.isDialogVisible = true;
+    
+  }
 
   refresh() {
     this.loadData();

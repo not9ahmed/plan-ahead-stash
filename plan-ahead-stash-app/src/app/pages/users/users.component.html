@@ -1,13 +1,26 @@
 <div class="users-page" style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
 
+    <p-toast />
+    <p-confirmdialog />
+
     <div class="card">
         <h2>Users Pages</h2>
     </div>
 
-    <div class="card" style="display: flex; flex-direction: row; justify-content: space-evenly;">
-        <p-button icon="pi pi-plus" label="Add"></p-button>
+    <!-- <div class="card" style="display: flex; flex-direction: row; justify-content: space-evenly;">
+        <p-button icon="pi pi-plus" label="Add" ></p-button>
         <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" />
-    </div>
+    </div> -->
+
+    <p-toolbar styleClass="mb-6">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="mr-2" (onClick)="showDialog()" />
+        </ng-template>
+
+        <ng-template #end>
+            <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" severity="secondary" />
+        </ng-template>
+    </p-toolbar>
 
     <p-table [columns]="cols" [value]="users" showGridlines responsiveLayout="stack">
 
@@ -33,12 +46,16 @@
                 </td>
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
-                        <p-button label="Edit" severity="success" />
+
+                        <p-button severity="info" icon="pi pi-pencil" />
+
                         <!-- <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" /> -->
 
                         <!-- use this for deletion -->
                         <!-- will pass id also -->
-                        <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" />
+                        <!-- <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" /> -->
+                        <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id!)" />
+
 
                     </div>
                 </td>
@@ -47,4 +64,24 @@
         </ng-template>
 
     </p-table>
+
+
+
+    <!-- Adding user by dialog -->
+    <p-dialog header="Add User" [(visible)]="isDialogVisible" [style]="{ width: '25rem' }" class="card" style="display: flex; justify-content: center;">
+
+        <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Update your information.</span>
+        <div class="flex items-center gap-4 mb-4" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+            <label for="username" class="font-semibold w-24">Username</label>
+            <input pInputText id="username" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex items-center gap-4 mb-8" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+            <label for="email" class="font-semibold w-24">Email</label>
+            <input pInputText id="email" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex justify-end gap-2" style="display: flex; justify-content: end; gap: 2px;">
+            <p-button label="Cancel" severity="secondary" (click)="isDialogVisible = false" />
+            <p-button label="Save" (click)="isDialogVisible = false" />
+        </div>
+    </p-dialog>
 </div>
