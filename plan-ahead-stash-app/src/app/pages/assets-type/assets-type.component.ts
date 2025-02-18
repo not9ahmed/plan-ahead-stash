@@ -8,6 +8,10 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 
 interface Column {
@@ -17,15 +21,21 @@ interface Column {
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css',
   providers: [ConfirmationService, MessageService]
 })
 export class AssetsTypeComponent {
-  
+
+  isDialogVisible: boolean = false;
   assetsType: AssetType[] = [];
   cols!: Column[];
+
+  // Creating a form
+  assetTypeForm = new FormGroup({
+    name: new FormControl<string | null>('', [Validators.required])
+  })
 
   constructor(private assetTypeService: AssetTypeService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.loadData();
@@ -47,10 +57,44 @@ export class AssetsTypeComponent {
   }
 
   // create new asset type
-  handleSubmit(assetType: AssetType) {
-    this.assetTypeService.create(assetType).subscribe(data => {
-      console.log(data);
+  handleSubmit() {
+
+    console.log(this.assetTypeForm);
+    const {name} = this.assetTypeForm.value;
+
+    // if not valid
+    if(!name){
+      return;
+    }
+
+    const newAssetType: AssetType = {name: name};
+
+    this.assetTypeService.create(newAssetType).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Confirmed',
+          detail: 'Record created' + JSON.stringify(data),
+          life: 3000
+        });
+
+      },
+      error: (err) => {
+
+        // handle api errors here
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: err.error.message + " " + err.error.timestamp,
+          life: 3000
+        });
+      }
+
     });
+
+    this.assetTypeForm.reset();
   }
 
 
@@ -65,6 +109,10 @@ export class AssetsTypeComponent {
     })
   }
 
+  handleCancel() {
+    this.assetTypeForm.reset();
+    this.isDialogVisible = false
+  }    
 
 
   confirm(event: Event, id: number) {
@@ -99,4 +147,8 @@ export class AssetsTypeComponent {
     this.loadData();
   }
 
+
+  showDialog() {
+    this.isDialogVisible = true
+  }
 }

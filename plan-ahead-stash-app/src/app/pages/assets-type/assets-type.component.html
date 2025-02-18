@@ -1,5 +1,5 @@
 <div style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
-    
+
     <!-- Dialog box related to delete -->
     <p-toast />
     <p-confirmdialog />
@@ -9,8 +9,20 @@
         <h2>Assets Type</h2>
     </div>
     <div class="card" style="display: flex; flex-direction: row; justify-content: end;">
-        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()"/>
+        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" />
     </div>
+
+    <p-toolbar styleClass="mb-6">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="mr-2" (onClick)="showDialog()" />
+        </ng-template>
+
+        <ng-template #end>
+            <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" severity="secondary" />
+        </ng-template>
+    </p-toolbar>
+
+
     <p-table [columns]="cols" [value]="assetsType" showGridlines responsiveLayout="stack">
         <ng-template #header let-columns>
             <tr>
@@ -26,23 +38,42 @@
             <tr>
                 <td *ngFor="let col of columns">
                     @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
-                        {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                    {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
                     } @else {
-                        {{ rowData[col.field] }}
+                    {{ rowData[col.field] }}
                     }
                 </td>
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
-                        <p-button label="Edit" severity="success"/>
+                        <p-button severity="info" icon="pi pi-pencil" />
                         <!-- <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" /> -->
 
                         <!-- use this for deletion -->
-                         <!-- will pass id also -->
-                        <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" />
+                        <!-- will pass id also -->
+                        <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id)"  />
 
-                    </div>                    
+                    </div>
                 </td>
             </tr>
         </ng-template>
     </p-table>
+
+
+    <!-- Dialog Area -->
+    <p-dialog header="Add Asset Type" [(visible)]="isDialogVisible" class="card"
+        style="display: flex; justify-content: center; width: 25rem;">
+
+        <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
+            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
+            <div class="flex items-center gap-4 mb-4"
+                style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Asset Name</label>
+                <input pInputText id="name" class="flex-auto" formControlName="name" />
+            </div>
+            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end; ">
+                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                <p-button label="Save" type="submit" />
+            </div>
+       </form>
+    </p-dialog>
 </div>

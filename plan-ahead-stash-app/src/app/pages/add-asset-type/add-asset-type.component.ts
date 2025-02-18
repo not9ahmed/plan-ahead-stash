@@ -40,7 +40,6 @@ export class AddAssetTypeComponent {
       return;
     }
 
-
     const newAssetType: AssetType = {name: name};
 
     this.assetTypeService.create(newAssetType).subscribe({
