@@ -67,6 +67,7 @@ export class AssetsTypeComponent {
       return;
     }
 
+    // take values from form
     const newAssetType: AssetType = {name: name};
 
     this.assetTypeService.create(newAssetType).subscribe({
@@ -75,9 +76,11 @@ export class AssetsTypeComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Confirmed',
-          detail: 'Record created' + JSON.stringify(data),
+          detail: 'Record created ' + JSON.stringify(data),
           life: 3000
         });
+
+        this.isDialogVisible = false;
 
       },
       error: (err) => {
@@ -90,6 +93,9 @@ export class AssetsTypeComponent {
           detail: err.error.message + " " + err.error.timestamp,
           life: 3000
         });
+
+
+        this.isDialogVisible = false;
       }
 
     });

@@ -8,17 +8,14 @@
     <div class="card">
         <h2>Assets Type</h2>
     </div>
-    <div class="card" style="display: flex; flex-direction: row; justify-content: end;">
-        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" />
-    </div>
 
-    <p-toolbar styleClass="mb-6">
+    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
         <ng-template #start>
-            <p-button label="New" icon="pi pi-plus" class="mr-2" (onClick)="showDialog()" />
+            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
         </ng-template>
 
         <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" severity="secondary" />
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="refresh()" severity="secondary" />
         </ng-template>
     </p-toolbar>
 
@@ -60,19 +57,17 @@
 
 
     <!-- Dialog Area -->
-    <p-dialog header="Add Asset Type" [(visible)]="isDialogVisible" class="card"
-        style="display: flex; justify-content: center; width: 25rem;">
+    <p-dialog header="Add Asset Type" [(visible)]="isDialogVisible" class="card" style="display: flex; justify-content: center; width: 25rem;">
 
         <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
             <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
-            <div class="flex items-center gap-4 mb-4"
-                style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Asset Name</label>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
                 <input pInputText id="name" class="flex-auto" formControlName="name" />
             </div>
-            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end; ">
+            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
                 <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
-                <p-button label="Save" type="submit" />
+                <p-button label="Save" severity="primary" type="submit" />
             </div>
        </form>
     </p-dialog>

@@ -1,16 +1,22 @@
-<!-- Update to use angular ng components -->
-<app-header>
-</app-header>
-<div class="container">
-    <h1>Home page</h1>
-    <div class="container-fluid">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam repellat ducimus recusandae. Consectetur atque nobis nihil, quaerat vel, eaque sit assumenda perspiciatis asperiores repudiandae eum provident, sed voluptates qui esse.
-    </div>
-</div>
+<div class="home" style="display: flex; flex-direction: column;">
 
-<div class="home">
-    <app-navbar></app-navbar>
-    <div class="component">
+    <main class="main-dummy-content">
+        <app-navbar></app-navbar>
+        <div class="dummy-component">
 
-</div>
+            <app-assets-type></app-assets-type>
+
+            <p-divider></p-divider>
+
+            <!-- <app-add-asset-type></app-add-asset-type> -->
+            <!-- <p-divider></p-divider> -->
+
+            <app-faq></app-faq>
+            <p-divider></p-divider>
+
+            <app-users></app-users>
+
+        </div>
+    </main>
+    <app-footer></app-footer>
 </div>
