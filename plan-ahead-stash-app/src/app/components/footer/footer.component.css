@@ -1,6 +1,6 @@
 footer {
     display: flex;
     width: 100%;
-    /* padding: 2rem 2rem; */
-    border: 2px solid rebeccapurple;
+    padding: 0.25rem 0.25rem;
+    /* border: 2px solid var(--p-zinc-50); */
 }

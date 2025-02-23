@@ -11,6 +11,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 interface Column {
   field: string;
@@ -20,7 +21,7 @@ interface Column {
 
 @Component({
   selector: 'app-users',
-  imports: [TableModule, CommonModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
+  imports: [CommonModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]
@@ -29,6 +30,16 @@ export class UsersComponent {
 
   users: User[] = [];
   cols!: Column[];
+  isDialogVisible: boolean = false;
+
+
+  userForm = new FormGroup({
+    username: new FormControl<string|null>('', [Validators.required]),
+    firstName: new FormControl<string|null>('', [Validators.required]),
+    lastName: new FormControl<string|null>('', [Validators.required]),
+    dateOfBirth: new FormControl<Date|null>(null, [Validators.required]),
+  });
+
 
 
   constructor(private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
@@ -47,17 +58,48 @@ export class UsersComponent {
       ];
   }
 
+  showDialog() {
+    this.isDialogVisible = true; 
+  }
+
 
   loadData() {
     this.userService.findAll().subscribe({
       next: (data) => {
         console.log("users", data);
-        this.users = data;
-      },
+        this.users = data;      },
       error: (err) => {
         console.log(err);
       }
     })
+  }
+
+
+  handleSubmit() {
+    
+    let {username, firstName, lastName, dateOfBirth} = this.userForm.value;
+    console.log("handle submit");
+    console.log(this.userForm.value);
+
+
+    // verify that fields are filld
+    if(username && firstName && lastName && dateOfBirth) {
+      console.log("is valid");
+
+      let newUser = {username, firstName, lastName, dateOfBirth};
+      this.userService.create(newUser).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.refresh();
+          this.isDialogVisible = false;
+
+        },
+        error: (err) => {
+          console.log("error", err);
+        }
+      })
+    }
+
   }
 
 
@@ -81,23 +123,35 @@ export class UsersComponent {
         accept: () => {
           // this.handleDelete(id);
           this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
+          this.userService.delete(id).subscribe({
+            next: (data) => {
+              console.log("DELETED");
+              console.log(data);
+              this.refresh();
+            },
+            error: (err) => {
+              console.log("ERROR");
+              console.log(err);
+            }
+          })
 
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
         },
     });
 
   }
 
-  isDialogVisible: boolean = false;
-
-  showDialog() {
-    this.isDialogVisible = true;
-    
-  }
 
   refresh() {
     this.loadData();
+  }
+
+
+
+
+  handleCancel() {
+
   }
 }

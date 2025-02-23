@@ -12,6 +12,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DividerModule } from 'primeng/divider';
+
 
 
 interface Column {
@@ -21,7 +23,7 @@ interface Column {
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css',
   providers: [ConfirmationService, MessageService]
@@ -73,6 +75,7 @@ export class AssetsTypeComponent {
     this.assetTypeService.create(newAssetType).subscribe({
       next: (data) => {
         console.log(data);
+        this.isDialogVisible = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Confirmed',
@@ -80,7 +83,7 @@ export class AssetsTypeComponent {
           life: 3000
         });
 
-        this.isDialogVisible = false;
+        this.refresh();
 
       },
       error: (err) => {
@@ -118,8 +121,7 @@ export class AssetsTypeComponent {
   handleCancel() {
     this.assetTypeForm.reset();
     this.isDialogVisible = false
-  }    
-
+  }
 
   confirm(event: Event, id: number) {
     this.confirmationService.confirm({
@@ -144,7 +146,7 @@ export class AssetsTypeComponent {
 
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
         },
     });
 }
@@ -155,6 +157,6 @@ export class AssetsTypeComponent {
 
 
   showDialog() {
-    this.isDialogVisible = true
+    this.isDialogVisible = true;
   }
 }

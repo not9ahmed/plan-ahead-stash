@@ -7,12 +7,7 @@
         <h2>Users Pages</h2>
     </div>
 
-    <!-- <div class="card" style="display: flex; flex-direction: row; justify-content: space-evenly;">
-        <p-button icon="pi pi-plus" label="Add" ></p-button>
-        <p-button icon="pi pi-refresh" iconPos="bottom" (onClick)="refresh()" />
-    </div> -->
-
-    <p-toolbar styleClass="mb-6">
+    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
         <ng-template #start>
             <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
         </ng-template>
@@ -66,22 +61,31 @@
     </p-table>
 
 
-
-    <!-- Adding user by dialog -->
-    <p-dialog header="Add User" [(visible)]="isDialogVisible" [style]="{ width: '25rem' }" class="card" style="display: flex; justify-content: center;">
-
-        <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Update your information.</span>
-        <div class="flex items-center gap-4 mb-4" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
-            <label for="username" class="font-semibold w-24">Username</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex items-center gap-4 mb-8" style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex justify-end gap-2" style="display: flex; justify-content: end; gap: 2px;">
-            <p-button label="Cancel" severity="secondary" (click)="isDialogVisible = false" />
-            <p-button label="Save" (click)="isDialogVisible = false" />
-        </div>
+    <!-- Dialog Area -->
+    <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}">
+        
+        <form [formGroup]="userForm" (submit)="handleSubmit()">
+            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="username" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Username</label>
+                <input pInputText id="username" class="flex-auto" formControlName="username" />
+            </div>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="firstName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">First Name</label>
+                <input pInputText id="firstName" class="flex-auto" formControlName="firstName" />
+            </div>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="lastName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Last Name</label>
+                <input pInputText id="lastName" class="flex-auto" formControlName="lastName" />
+            </div>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="dateOfBirth" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Date of Birth</label>
+                <p-datepicker inputId="dateOfBirth" formControlName="dateOfBirth" />
+            </div>
+            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                <p-button label="Save" severity="primary" type="submit" />
+            </div>
+       </form>
     </p-dialog>
 </div>

@@ -1,6 +1,7 @@
 package com.notahmed.plan_ahead_stash_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ public class User {
     private Long id;
 
     @Column(name = "username", unique = true, nullable = false)
+    @NotBlank
     private String username;
 
     @Column(name = "first_name", length = 100, nullable = false)
