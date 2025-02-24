@@ -1,0 +1,58 @@
+.app-content {
+    display: flex;
+    flex-direction: row;
+    /* width: 100%;
+    min-height: 100%; */
+    /* border: 1px solid red; */
+    height: max-content;
+}
+
+.app-component {
+    width: 100%;
+    height: max-content;
+    /* border: 2px solid green; */
+    /* border: 2px solid var(--p-zinc-100); */
+}
+
+
+/* Small screens (phones) */
+@media (width <= 576px) {
+    /* Styles for small screens */
+    .app-content {
+        flex-direction: column;
+    }
+
+  }
+  
+  /* Medium screens (tablets) */
+  @media (width >= 577px) and (width <= 767px) {
+    /* Styles for medium screens */
+
+    .app-content {
+        flex-direction: column;
+    }
+    
+  }
+  
+  /* Large screens (desktops) */
+  @media (width >= 768px) {
+    /* Styles for large screens */
+
+    .app-content {
+        flex-direction: row;
+    }
+  }
+  
+  /* Extra large screens (large desktops) */
+  @media (width >= 992px) {
+    /* Styles for extra large screens */
+
+    .app-content {
+        flex-direction: row;
+    }
+  }
+  
+  /* Extra extra large screens (very large desktops) */
+  @media (width >= 1200px) {
+    /* Styles for extra extra large screens */
+  } 

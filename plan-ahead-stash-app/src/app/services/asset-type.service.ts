@@ -12,8 +12,7 @@ export class AssetTypeService {
 
   private API_URL = environment.BACKEND_API_URL + "/assetsType";
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   findAll(): Observable<AssetType[]> {
     return this.http.get<AssetType[]>(`${this.API_URL}/`);

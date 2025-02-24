@@ -30,9 +30,19 @@ export class NavbarComponent {
                 label: 'Documents',
                 items: [
                     {
+                        label: 'Users Management',
+                        // icon: 'pi pi-plus',
+                        url: '/users'
+                    },
+                    {
                         label: 'Assets Type',
                         // icon: 'pi pi-plus',
-                        url: '/about'
+                        url: '/assetsType'
+                    },
+                    {
+                        label: 'Portfolio',
+                        // icon: 'pi pi-plus',
+                        url: '/portfolios'
                     },
                     {
                         label: 'Search',
@@ -49,13 +59,6 @@ export class NavbarComponent {
                         label: 'Settings',
                         // icon: 'pi pi-cog',
                         // shortcut: '⌘+O',
-                        url: '/about'
-
-                    },
-                    {
-                        label: 'Messages',
-                        // icon: 'pi pi-inbox',
-                        badge: '2',
                         url: '/about'
 
                     },
