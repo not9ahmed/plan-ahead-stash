@@ -19,7 +19,26 @@ export class PortifolioService {
     return this.http.get<Portfolio[]>(url);
   }
 
-  
+  findById(id: number): Observable<Portfolio> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.get<Portfolio>(url);
+  }
+
+  create(portfolio: Portfolio): Observable<Portfolio> {
+    const url = `${this.API_URL}`;
+    return this.http.post<Portfolio>(url, portfolio);
+  }
+
+  update(id: number, portfolio: Portfolio): Observable<Portfolio> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.put<Portfolio>(url, portfolio);
+  }
+
+
+  delete(id: number): Observable<null> {
+    const url = `${this.API_URL}/${id}`;
+    return this.http.delete<null>(url);
+  }
 
 
 }

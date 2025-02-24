@@ -97,11 +97,16 @@ export class AssetsTypeComponent {
           life: 3000
         });
 
-
-        this.isDialogVisible = false;
-      }
+      },
+      // recently added
+      complete: () => {
+        console.log("complete")
+        // this.isDialogVisible = false;
+      },
 
     });
+
+    this.isDialogVisible = false;
 
     this.assetTypeForm.reset();
   }
