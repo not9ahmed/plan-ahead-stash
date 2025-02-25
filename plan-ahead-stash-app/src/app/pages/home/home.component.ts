@@ -11,10 +11,11 @@ import { FaqComponent } from '../../components/faq/faq.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AssetsTypeComponent } from '../assets-type/assets-type.component';
 import { UsersComponent } from '../users/users.component';
+import { PortifolioComponent } from "../portifolio/portifolio.component";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, FaqComponent, FooterComponent, UsersComponent],
+  imports: [CommonModule, ButtonModule, ToastModule, BadgeModule, NavbarComponent, DividerModule, FloatLabelModule, InputTextModule, AssetsTypeComponent, FaqComponent, FooterComponent, UsersComponent, PortifolioComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

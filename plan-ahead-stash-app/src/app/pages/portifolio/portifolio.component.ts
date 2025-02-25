@@ -1,34 +1,35 @@
 import { Component } from '@angular/core';
 import { PortifolioService } from '../../services/portifolio.service';
 import { Portfolio } from '../../models/portfolio';
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+
+
+interface Column {
+  field: string;
+  header: string;
+}
 
 @Component({
   selector: 'app-portifolio',
-  imports: [],
+  imports: [CommonModule, TableModule, ButtonModule, ToolbarModule],
   templateUrl: './portifolio.component.html',
-  styleUrl: './portifolio.component.css'
+  styleUrl: './portifolio.component.css',
+  providers: []
 })
 export class PortifolioComponent {
 
   portfolios: Portfolio[] = [];
   portfolio?: Portfolio;
+  cols: Column[] = [];
 
   constructor(private portifolioService: PortifolioService) {
 
-    // find all portfolios
-    portifolioService.findAll().subscribe({
-      next: (data) => {
-        console.log(data);
-        this.portfolios = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('Observer completed');
-      }
-    });
 
+    this.initCols();
+    this.loadData();
 
     // find single portfolio
     const id = 9;
@@ -99,6 +100,34 @@ export class PortifolioComponent {
     //   }
     // })
 
+  }
+
+  initCols() {
+    this.cols = [
+      { field: "id", header: "ID"},
+      { field: "name", header: "Name"},
+      { field: "user", header: "User"},
+      { field: "createdDate", header: "Created Date"},
+      { field: "modifiedDate", header: "Modified Date"},
+    ];
+  }
+
+  loadData() {
+    // find all portfolios
+    this.portifolioService.findAll().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.portfolios = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('Observer completed');
+      }
+    });
 
   }
+
+
 }

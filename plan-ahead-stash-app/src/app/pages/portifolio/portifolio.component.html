@@ -1,1 +1,54 @@
-<p>portifolio works!</p>
+<div class="portifolio-page" style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
+    
+    <div>
+        <h2>Portfolio Page</h2>
+    </div>
+
+    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="mr-2"  />
+        </ng-template>
+
+        <ng-template #end>
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+        </ng-template>
+    </p-toolbar>
+
+    <p-table [columns]="cols" [value]="portfolios" responsiveLayout="stack">
+
+        <ng-template #caption>
+            <div class="flex items-center justify-between" style="display: flex; justify-content: space-between; align-items: center; ">
+                <span class="text-xl font-bold" style="font-size: 1.25rem;line-height: 1.75rem; font-weight: 700; ">Portfolios</span>
+                <!-- <p-button icon="pi pi-refresh" rounded raised /> -->
+            </div>
+        </ng-template>
+
+
+
+
+        <ng-template #header let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    
+                    @if (col.field !== 'user') {
+                        {{ rowData[col.field]}}
+                    } @else {
+                        {{ rowData[col.field].username}}
+                    }
+                </td>
+            </tr>
+
+        </ng-template>
+
+        <ng-template #footer> In total there are {{ portfolios ? portfolios.length : 0 }} portfolios. </ng-template>
+
+    </p-table>
+</div>
