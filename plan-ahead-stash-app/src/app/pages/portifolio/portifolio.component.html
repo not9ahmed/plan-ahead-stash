@@ -16,39 +16,50 @@
 
     <p-table [columns]="cols" [value]="portfolios" responsiveLayout="stack">
 
-        <ng-template #caption>
+        <!-- <ng-template #caption>
             <div class="flex items-center justify-between" style="display: flex; justify-content: space-between; align-items: center; ">
                 <span class="text-xl font-bold" style="font-size: 1.25rem;line-height: 1.75rem; font-weight: 700; ">Portfolios</span>
-                <!-- <p-button icon="pi pi-refresh" rounded raised /> -->
             </div>
-        </ng-template>
-
-
-
+        </ng-template> -->
 
         <ng-template #header let-columns>
             <tr>
                 <th *ngFor="let col of columns">
                     {{ col.header }}
                 </th>
+                <th>
+                    Action
+                </th>
             </tr>
         </ng-template>
 
-        <ng-template #body let-rowData let-columns="columns">
+
+        <ng-template #body let-portfolio let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
                     
                     @if (col.field !== 'user') {
-                        {{ rowData[col.field]}}
+                        {{ portfolio[col.field]}}
                     } @else {
-                        {{ rowData[col.field].username}}
+                        {{ portfolio[col.field].username}}
                     }
+                </td>
+                <td>
+                    <p-button severity="info" icon="pi pi-pencil" />
+                    <p-button severity="danger" icon="pi pi-trash" />
+                    
+                    <!-- passing the portfolio object -->
+                     <!-- will be very useful for edit -->
+                    <p-button icon="pi pi-search" (click)="showPortfolio(portfolio)" severity="secondary" rounded />
+                    
                 </td>
             </tr>
 
         </ng-template>
 
-        <ng-template #footer> In total there are {{ portfolios ? portfolios.length : 0 }} portfolios. </ng-template>
+        <ng-template #footer>
+            In total there are {{ portfolios ? portfolios.length : 0 }} portfolios.
+        </ng-template>
 
     </p-table>
 </div>

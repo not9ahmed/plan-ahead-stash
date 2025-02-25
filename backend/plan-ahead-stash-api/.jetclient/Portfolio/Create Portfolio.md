@@ -10,6 +10,6 @@ type = 'JSON'
 raw = '''
 {
   "name": "Car Business",
-  "userId": 2
+  "userId": 6
 }'''
 ```

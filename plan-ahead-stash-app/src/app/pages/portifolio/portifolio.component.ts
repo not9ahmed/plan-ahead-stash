@@ -20,6 +20,9 @@ interface Column {
   providers: []
 })
 export class PortifolioComponent {
+print(arg0: any) {
+throw new Error('Method not implemented.');
+}
 
   portfolios: Portfolio[] = [];
   portfolio?: Portfolio;
@@ -129,5 +132,9 @@ export class PortifolioComponent {
 
   }
 
+
+  showPortfolio(portfolio: Portfolio) {
+    console.log("portfolio", portfolio);
+  }
 
 }
