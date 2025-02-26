@@ -43,19 +43,22 @@ export class UsersComponent {
 
 
   constructor(private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+    this.initCols();
     this.loadData();
+  }
 
-        // make it dynamic
-        // get from the interface the field
-        this.cols = [
-          { field: "id", header: "ID"},
-          { field: "username", header: "Username"},
-          { field: "firstName", header: "First Name"},
-          { field: "lastName", header: "Last Name"},
-          { field: "dateOfBirth", header: "Date of Birth"},
-          { field: "createdDate", header: "Created Date"},
-          { field: "modifiedDate", header: "Modified Date"}
-      ];
+  initCols() {
+    // make it dynamic
+    // get from the interface the field
+    this.cols = [
+      { field: "id", header: "ID"},
+      { field: "username", header: "Username"},
+      { field: "firstName", header: "First Name"},
+      { field: "lastName", header: "Last Name"},
+      { field: "dateOfBirth", header: "Date of Birth"},
+      { field: "createdDate", header: "Created Date"},
+      { field: "modifiedDate", header: "Modified Date"}
+    ];
   }
 
   showDialog() {
@@ -67,7 +70,8 @@ export class UsersComponent {
     this.userService.findAll().subscribe({
       next: (data) => {
         console.log("users", data);
-        this.users = data;      },
+        this.users = data;      
+      },
       error: (err) => {
         console.log(err);
       }
@@ -90,7 +94,7 @@ export class UsersComponent {
       this.userService.create(newUser).subscribe({
         next: (data) => {
           console.log(data);
-          this.refresh();
+          this.loadData();
           this.isDialogVisible = false;
 
         },
@@ -103,7 +107,7 @@ export class UsersComponent {
   }
 
 
-  confirm(event: Event, id: number) {
+  confirmDelete(event: Event, id: number) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Do you want to delete this record?',
@@ -127,7 +131,7 @@ export class UsersComponent {
             next: (data) => {
               console.log("DELETED");
               console.log(data);
-              this.refresh();
+              this.loadData();
             },
             error: (err) => {
               console.log("ERROR");
@@ -143,15 +147,8 @@ export class UsersComponent {
 
   }
 
-
-  refresh() {
-    this.loadData();
-  }
-
-
-
-
   handleCancel() {
-
+    this.isDialogVisible = false;
+    this.userForm.reset();
   }
 }

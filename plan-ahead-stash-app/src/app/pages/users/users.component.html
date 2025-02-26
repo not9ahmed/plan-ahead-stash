@@ -13,7 +13,7 @@
         </ng-template>
 
         <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="refresh()" severity="secondary" />
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
         </ng-template>
     </p-toolbar>
 
@@ -49,7 +49,7 @@
                         <!-- use this for deletion -->
                         <!-- will pass id also -->
                         <!-- <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" /> -->
-                        <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id!)" />
+                        <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, rowData.id!)" />
 
 
                     </div>
