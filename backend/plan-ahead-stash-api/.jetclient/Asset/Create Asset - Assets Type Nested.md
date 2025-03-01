@@ -11,7 +11,7 @@ raw = '''
 {
   "name": "Sukuk 3 Months Ijara",
   "assetType": {
-    "id": 3
+    "id": 13
   }
 }'''
 ```
