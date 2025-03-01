@@ -26,7 +26,7 @@ export class AssetTypeService {
     return this.http.post<AssetType>(`${this.API_URL}`, assetType);
   }
 
-  edit(id: number, assetType: AssetType): Observable<AssetType> {
+  update(id: number, assetType: AssetType): Observable<AssetType> {
     return this.http.put<AssetType>(`${this.API_URL}/${id}`, assetType);
   }
 
