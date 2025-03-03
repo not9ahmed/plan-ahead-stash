@@ -9,18 +9,17 @@
 
             @if (assetType()) {
                 <div style="display: flex; width: 400px;">
-                    {{ assetType()?.id }}
+                    ID: {{ assetType()?.id }}
+                </div>
+                <div style="display: flex; width: 400px;">        
+                    Name: {{ assetType()?.name | uppercase }}
                 </div>
                 <div style="display: flex; width: 400px;">
-                    
-                    {{ assetType()?.name }}
-                </div>
-                <div style="display: flex; width: 400px;">
-                    {{ assetType()?.createdDate }}
+                    CreatedDate: {{ assetType()?.createdDate | date:'dd/MM/YYYY' }}
                 </div>
             
                 <div style="display: flex; width: 400px;">
-                    {{ assetType()?.modifiedDate }}
+                    ModifiedDate: {{ assetType()?.modifiedDate | date:'long' }}
                 </div>
             } @else {
                 <h4>It is unavailable</h4>
@@ -34,7 +33,7 @@
 
 
 <div style="display: flex;">
-    <p-table [value]="assets()" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="assets()" [tableStyle]="{ 'min-width': '50rem' }" responsiveLayout="stack">
         <ng-template #header>
             <tr>
                 <th>id </th>
