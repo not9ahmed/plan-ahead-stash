@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/assets")
@@ -42,8 +43,17 @@ public class AssetController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Asset>> findAll() {
-        List<Asset> assets = assetService.findAll();
+    public ResponseEntity<List<Asset>> findAll(@RequestParam(value = "assetTypeId", required = false) Long assetTypeId) {
+
+        List<Asset> assets;
+
+        if (assetTypeId == null) {
+            assets = assetService.findAll();
+        } else {
+            assets = assetService.findAllByAssetTypeId(assetTypeId);
+        }
+
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(assets);

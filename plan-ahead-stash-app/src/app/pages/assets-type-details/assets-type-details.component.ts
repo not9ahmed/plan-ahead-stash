@@ -1,27 +1,34 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
+import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
+import { AssetService } from '../../services/asset.service';
 
 @Component({
   selector: 'app-assets-type-details',
-  imports: [],
+  imports: [CommonModule, TableModule, DividerModule],
   templateUrl: './assets-type-details.component.html',
   styleUrl: './assets-type-details.component.css'
 })
 export class AssetsTypeDetailsComponent {
 
-  assetTypeId: number = this.id;
+  assetTypeId = signal<number>(0);
+
+  assetType  = signal<AssetType | null>(null);
 
   // dynamic route
+  // access the id from route
   @Input()
   set id(id: number) {
     console.log("asset type id:", id);
-    this.assetTypeId = id;
+    this.assetTypeId.set(id);
+    // this.assetTypeId = id;
   }
 
-
-  constructor(private assetTypeService: AssetTypeService) {
+  constructor(private assetTypeService: AssetTypeService, private assetService: AssetService) {
       
   }
 
@@ -29,15 +36,19 @@ export class AssetsTypeDetailsComponent {
   ngOnInit() {
     console.log("ngOnInit");
 
-    console.log(this.assetTypeId);
     
-    this.assetTypeService.findById(this.assetTypeId).subscribe({
+    this.assetTypeService.findById(this.assetTypeId()).subscribe({
       next: (data: AssetType) => {
         console.log(data);
+        this.assetType.set(data);
       },
       error: (error) => {
         console.log(error);
       }
     });
+
+
+
+    this.assetService.findAll
   }
 }

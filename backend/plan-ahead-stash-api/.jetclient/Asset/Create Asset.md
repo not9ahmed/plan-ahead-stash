@@ -11,7 +11,7 @@ raw = '''
 {
   "name": "Sukuk 6 Months Salam new",
   "assetType": {
-    "id": 13
+    "id": 17
   },  
   "startDate": "2025-01-15T20:23:18.257+00:00",
   "maturityDate": "2025-04-15T20:23:18.257+00:00",

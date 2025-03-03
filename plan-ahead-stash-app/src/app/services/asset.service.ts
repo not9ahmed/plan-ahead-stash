@@ -18,6 +18,19 @@ export class AssetService {
     return this.http.get<Asset[]>(url);
   }
 
+  findAllByAssetTypeId(id: number): Observable<Asset[]> {
+    
+    const url = `${this.API_URL}/`;
+    
+    // const searchParam = new URLSearchParams()
+    // .append("assetTypeID", id.toString());
+
+    // const url = new URL(urlString, searchParam);
+
+
+    return this.http.get<Asset[]>(url);
+  }
+
   findById(id: number): Observable<Asset> {
     const url = `${this.API_URL}/${id}`;
     return this.http.get<Asset>(url);

@@ -1,1 +1,32 @@
-<p>assets-type-details works!</p>
+<div>
+    <h1>Assets Type {{ assetTypeId() }}</h1>
+
+    <div style="display: flex; flex-direction: row; border: 2px solid rebeccapurple; width: 60%;">
+        <div style="display: flex; flex-direction: column; ">
+
+            @if (assetType()) {
+                <div style="display: flex; width: 400px;">
+                    {{ assetType()?.id }}
+                </div>
+                <div style="display: flex; width: 400px;">
+                    
+                    {{ assetType()?.name }}
+                </div>
+                <div style="display: flex; width: 400px;">
+                    {{ assetType()?.createdDate }}
+                </div>
+            
+                <div style="display: flex; width: 400px;">
+                    {{ assetType()?.modifiedDate }}
+                </div>
+            } @else {
+                <h4>It is unavailable</h4>
+            }
+        </div>
+    </div>
+</div>
+
+
+<p-table>
+    
+</p-table>

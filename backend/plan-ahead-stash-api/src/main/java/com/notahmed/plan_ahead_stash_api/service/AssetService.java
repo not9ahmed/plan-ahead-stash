@@ -109,4 +109,8 @@ public class AssetService {
     public void bulkDelete() {
         assetRepository.deleteAll();
     }
+
+    public List<Asset> findAllByAssetTypeId(Long assetTypeId) {
+        return assetRepository.findAllByAssetTypeId(assetTypeId);
+    }
 }
