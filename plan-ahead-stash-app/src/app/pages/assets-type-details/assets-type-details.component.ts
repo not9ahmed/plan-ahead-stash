@@ -6,18 +6,22 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { AssetService } from '../../services/asset.service';
+import { Asset } from '../../models/asset';
 
 @Component({
   selector: 'app-assets-type-details',
   imports: [CommonModule, TableModule, DividerModule],
   templateUrl: './assets-type-details.component.html',
-  styleUrl: './assets-type-details.component.css'
+  styleUrl: './assets-type-details.component.css',
+  providers: [AssetTypeService, AssetService]
 })
 export class AssetsTypeDetailsComponent {
 
   assetTypeId = signal<number>(0);
 
   assetType  = signal<AssetType | null>(null);
+
+  assets = signal<Asset[] | []>([]);
 
   // dynamic route
   // access the id from route
@@ -49,6 +53,14 @@ export class AssetsTypeDetailsComponent {
 
 
 
-    this.assetService.findAll
+    this.assetService.findAllByAssetTypeId(this.assetTypeId()).subscribe({
+      next: (data: Asset[]) => {
+        console.log(data);
+        this.assets.set(data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }
