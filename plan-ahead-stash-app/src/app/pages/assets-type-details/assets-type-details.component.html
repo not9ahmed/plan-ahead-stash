@@ -32,14 +32,18 @@
 </div>
 
 
-<div style="display: flex;">
-    <p-table [value]="assets()" [tableStyle]="{ 'min-width': '50rem' }" responsiveLayout="stack">
+<div style="display: flex; flex-direction: column; justify-content: center; padding: 2rem; border: 1px solid var(--p-zinc-300); border-radius: 4px;">
+    <div style="display: flex; ">
+        <h4>
+            Table
+        </h4>
+    </div>
+    <p-table [value]="assets()" [tableStyle]="{'max-width': '60rem' }" responsiveLayout="stack">
         <ng-template #header>
             <tr>
                 <th>id </th>
                 <th>name </th>
-                <th>assetType</th>
-                <th>starthate</th>
+                <th>startdate</th>
                 <th>maturityDate</th>
                 <th>numberOfDays</th>
             </tr>
@@ -49,7 +53,10 @@
             <tr>
                 <td>{{asset.id}} </td>
                 <td>{{asset.name}} </td>
-                <td>{{asset.assetType | json}}</td>
+                
+
+
+
                 <td>{{asset.startDate}}</td>
                 <td>{{asset.maturityDate}}</td>
                 <td>{{asset.numberOfDays}}</td>

@@ -7,6 +7,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { PortifolioComponent } from './pages/portifolio/portifolio.component';
 import { AssetsComponent } from './pages/assets/assets.component';
 import { AssetsTypeDetailsComponent } from './pages/assets-type-details/assets-type-details.component';
+import { PortfolioDetailsComponent } from './pages/portfolio-details/portfolio-details.component';
 
 export const routes: Routes = [
     {path: 'home', redirectTo: '', pathMatch: 'full'},
@@ -17,7 +18,10 @@ export const routes: Routes = [
     {path: 'assetsType/:id', component: AssetsTypeDetailsComponent},
 
     {path: 'users', component: UsersComponent},
+    
     {path: 'portfolios', component: PortifolioComponent},
+    {path: 'portfolios/:id', component: PortfolioDetailsComponent},
+
     {path: 'assets', component: AssetsComponent},
     // {path: 'management', component: ManagementComponent, children: [
     //     {path: 'assetsType', component: AssetsTypeComponent},

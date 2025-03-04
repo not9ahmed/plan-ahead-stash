@@ -1,0 +1,4 @@
+.portfolio-details {
+    display: flex;
+    flex-direction: column;
+}
