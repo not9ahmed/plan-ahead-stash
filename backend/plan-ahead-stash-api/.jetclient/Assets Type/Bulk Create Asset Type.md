@@ -14,6 +14,18 @@ raw = '''
   },
   {
     "name": "T-Bills"
+  },
+  {
+    "name": "Sukuk Ijara"
+  },
+  {
+    "name": "Sukuk AlSalam"
+  },
+  {
+    "name": "Wakala Deposit"
+  },
+  {
+    "name": "Crowdfunding"
   }
 ]'''
 ```

@@ -41,9 +41,14 @@
                 </td>
 
                 <td>
-                    <div class="flex flex-wrap gap-4 justify-center">
+                    <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
                         <p-button severity="info" icon="pi pi-pencil" />
                         <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id)"  />
+                                    
+                        <a routerLink="{{ '/assetsType/' + rowData.id}}"  class="p-button font-bold" style="text-decoration: none;">
+                            <i class="pi pi-search"></i>
+                            Router
+                        </a>
                     </div>
                 </td>
             </tr>

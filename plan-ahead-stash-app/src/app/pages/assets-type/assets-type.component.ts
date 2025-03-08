@@ -13,6 +13,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -23,7 +24,7 @@ interface Column {
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule, RouterModule],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css',
   providers: [ConfirmationService, MessageService]
