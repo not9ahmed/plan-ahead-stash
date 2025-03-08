@@ -16,6 +16,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -27,7 +28,7 @@ interface Column {
 
 @Component({
   selector: 'app-portifolio',
-  imports: [CommonModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule],
   templateUrl: './portifolio.component.html',
   styleUrl: './portifolio.component.css',
   providers: [ConfirmationService, MessageService]

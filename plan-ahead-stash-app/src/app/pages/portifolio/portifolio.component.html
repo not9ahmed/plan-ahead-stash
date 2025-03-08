@@ -47,13 +47,18 @@
                     }
                 </td>
                 <td>
-                    <p-button severity="info" icon="pi pi-pencil" />
-                    <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, portfolio.id)" />
-                    
-                    <!-- passing the portfolio object -->
-                     <!-- will be very useful for edit -->
-                    <!-- <p-button icon="pi pi-search" (click)="showPortfolio(portfolio)" severity="secondary" rounded /> -->
-                    
+                    <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
+
+                        <p-button severity="info" icon="pi pi-pencil" />
+                        <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, portfolio.id)" />
+                        <a routerLink="{{ '/portfolios/' + portfolio.id}}"  class="p-button font-bold" style="text-decoration: none;">
+                            <i class="pi pi-search"></i>
+                        </a>
+                        <!-- passing the portfolio object -->
+                        <!-- will be very useful for edit -->
+                        <!-- <p-button icon="pi pi-search" (click)="showPortfolio(portfolio)" severity="secondary" rounded /> -->
+                        
+                    </div>
                 </td>
             </tr>
 
