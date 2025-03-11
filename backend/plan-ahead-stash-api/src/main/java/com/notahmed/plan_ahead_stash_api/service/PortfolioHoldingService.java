@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PortfolioHoldingService {
@@ -53,16 +54,19 @@ public class PortfolioHoldingService {
                 portfolioHolding.getModifiedDate()
         );
 
-        portfolioHoldingRepository.save(portfolioHoldingTemp);
 
-
-
-        return portfolioHoldingRepository.save(portfolioHolding);
+        return portfolioHoldingRepository.save(portfolioHoldingTemp);
     }
 
     public List<PortfolioHolding> findAll() {
         return portfolioHoldingRepository.findAll();
     }
+
+    public List<PortfolioHolding> findAllByPortfolio(Long portfolioId) {
+        return portfolioHoldingRepository.findAllByPortfolioId(portfolioId);
+    }
+
+
 
     public PortfolioHolding findById(Long id) {
         return portfolioHoldingRepository.findById(id)
@@ -102,6 +106,23 @@ public class PortfolioHoldingService {
 
     @Transactional
     public List<PortfolioHolding> bulkCreate(List<PortfolioHolding> portfolioHoldingList) {
+
+        // List<PortfolioHolding> portfolioHoldingsMapped = portfolioHoldingList.stream().map(
+        //         el -> {
+        //
+        //             Asset asset = assetRepository.findById(el.getAsset().getId())
+        //                     .orElseThrow(() -> new ResourceNotFound("Asset " + el.getAsset().getId() + " not found"));
+        //             el.setAsset(asset);
+        //
+        //             Portfolio portfolio = portfolioRepository.findById(el.getAsset().getId())
+        //                     .orElseThrow(() -> new ResourceNotFound("Portfolio " + el.getPortfolio().getId() + " not found"));
+        //             el.setPortfolio(portfolio);
+        //
+        //             return el;
+        //         }
+        // ).toList();
+
+
         return portfolioHoldingRepository.saveAll(portfolioHoldingList);
     }
 

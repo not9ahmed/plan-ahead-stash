@@ -7,7 +7,7 @@ import { Portfolio } from '../models/portfolio';
 @Injectable({
   providedIn: 'root'
 })
-export class PortifolioService {
+export class PortfolioService {
 
   private API_URL = environment.BACKEND_API_URL + "/portfolios";
 

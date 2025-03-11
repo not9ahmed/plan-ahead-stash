@@ -18,12 +18,12 @@ public class PortfolioHolding {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "portfolio_id", nullable = false)
     private Portfolio portfolio;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "asset_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "asset_id", nullable = false)
     private Asset asset;
 
     private Integer quantity;

@@ -1,5 +1,7 @@
 package com.notahmed.plan_ahead_stash_api.controller;
 
+import com.notahmed.plan_ahead_stash_api.model.Asset;
+import com.notahmed.plan_ahead_stash_api.model.Portfolio;
 import com.notahmed.plan_ahead_stash_api.model.PortfolioHolding;
 import com.notahmed.plan_ahead_stash_api.service.PortfolioHoldingService;
 import jakarta.validation.Valid;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/portfolios")
@@ -19,20 +22,46 @@ public class PortfolioHoldingController {
         this.portfolioHoldingService = portfolioHoldingService;
     }
 
+
     @PostMapping("/{id}/holdings")
     public ResponseEntity<PortfolioHolding> create(@PathVariable("id") Long portfolioId,
                                                          @RequestBody @Valid PortfolioHolding portfolioHolding) {
 
+        // getting portfolioId from path variable
         System.out.println("portfolioId: "+ portfolioId);
-        portfolioHoldingService.create(portfolioHolding);
+        Portfolio portfolio = new Portfolio();
+        portfolio.setId(portfolioId);
+
+        portfolioHolding.setPortfolio(portfolio);
+
+
+        PortfolioHolding result = portfolioHoldingService.create(portfolioHolding);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(portfolioHolding);
+                .body(result);
     }
 
 
-    @GetMapping("/{id}/holdings")
+    @PostMapping("/{id}/holdings/bulk")
+    public ResponseEntity<List<PortfolioHolding>> bulkCreate(@PathVariable("id") Long portfolioId,
+                                                   @RequestBody @Valid List<PortfolioHolding> portfolioHoldings) {
+
+        // getting portfolioId from path variable
+        System.out.println("portfolioId: "+ portfolioId);
+
+        System.out.println("portfolioHoldings: "+ portfolioHoldings);
+
+
+        List<PortfolioHolding> result = portfolioHoldingService.bulkCreate(portfolioHoldings);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(result);
+
+    }
+
+    @GetMapping("/holdings/")
     public ResponseEntity<List<PortfolioHolding>> findAll() {
 
         List<PortfolioHolding> portfolioHoldingList = portfolioHoldingService.findAll();
@@ -43,4 +72,13 @@ public class PortfolioHoldingController {
     }
 
 
+    @GetMapping("/{id}/holdings/")
+    public ResponseEntity<List<PortfolioHolding>> findAllByPortfolio(@PathVariable("id") Long portfolioId) {
+
+        List<PortfolioHolding> portfolioHoldingList = portfolioHoldingService.findAllByPortfolio(portfolioId);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(portfolioHoldingList);
+    }
 }

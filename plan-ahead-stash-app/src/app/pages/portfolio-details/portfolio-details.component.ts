@@ -1,11 +1,12 @@
 import { Component, Input, signal } from '@angular/core';
-import { PortifolioService } from '../../services/portifolio.service';
+import { PortfolioService } from '../../services/portfolio.service';
 import { CommonModule } from '@angular/common';
 import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { Portfolio } from '../../models/portfolio';
 import { TableModule } from 'primeng/table';
+import { PortfolioHoldingService } from '../../services/portfolio-holding.service';
 
 
 const dummyProducts = [
@@ -68,7 +69,7 @@ export class PortfolioDetailsComponent {
   }
 
 
-  constructor(private portifolioService: PortifolioService) {
+  constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService) {
   }
 
   ngOnInit() { 
@@ -78,7 +79,7 @@ export class PortfolioDetailsComponent {
 
     // get all portfolio along with the assets
     // may better us portfolio holding
-    this.portifolioService.findById(this.portfolioId()).subscribe({
+    this.portfolioService.findById(this.portfolioId()).subscribe({
       next: (data: Portfolio) => {
           console.log(data);
           this.portfolio.set(data);
@@ -86,12 +87,21 @@ export class PortfolioDetailsComponent {
       error: (err) => {
           console.log(err)
       },
-    })
+    });
 
 
     // dummy table 
-
     this.products = dummyProducts;
+
+
+    this.portfolioHoldingService.findAllPortfolioId(this.portfolioId()).subscribe({
+      next: (data: Portfolio) => {
+          console.log(data);
+      },
+      error: (err) => {
+          console.log(err);
+      },
+    })
 
 
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PortifolioService } from '../../services/portifolio.service';
+import { PortfolioService } from '../../services/portfolio.service';
 import { Portfolio } from '../../models/portfolio';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -47,7 +47,7 @@ export class PortifolioComponent {
     userId: new FormControl<number|null>(null, [Validators.required])
   })
 
-  constructor(private portifolioService: PortifolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  constructor(private portifolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.initCols();
     this.loadData();
 
