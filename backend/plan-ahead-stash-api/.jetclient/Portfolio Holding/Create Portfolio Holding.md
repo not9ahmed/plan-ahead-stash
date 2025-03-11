@@ -9,7 +9,14 @@ id = '763085b3-0c68-4d40-a9ec-b9c41bb41276'
 type = 'JSON'
 raw = '''
 {
-  "name": "Car Business",
-  "userId": 2
+  "portfolio": {
+    "id": 12
+  },
+  "asset": {
+    "id": 1
+  },
+  "quantity": 20,
+  "purchasePrice": 1000.10,
+  "purchaseDate": "2025-02-02T20:19:46.298+00:00"
 }'''
 ```

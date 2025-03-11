@@ -17,19 +17,20 @@ public class PortfolioHolding {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "portfolio")
-    private Set<Portfolio> portfolios;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "portfolio_id", nullable = false)
+    private Portfolio portfolio;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "asset_id")
-    private Set<Asset> assets;
+    private Asset asset;
 
     private Integer quantity;
 
     private Double purchasePrice;
 
-    private Double purchaseDate;
+    private Date purchaseDate;
 
 
     @Column(name = "created_date", nullable = false, updatable=false)
@@ -45,10 +46,11 @@ public class PortfolioHolding {
     public PortfolioHolding() {
     }
 
-    public PortfolioHolding(Long id, Set<Portfolio> portfolios, Set<Asset> assets, Integer quantity, Double purchasePrice, Double purchaseDate, Date createdDate, Date modifiedDate) {
+
+    public PortfolioHolding(Long id, Portfolio portfolio, Asset asset, Integer quantity, Double purchasePrice, Date purchaseDate, Date createdDate, Date modifiedDate) {
         this.id = id;
-        this.portfolios = portfolios;
-        this.assets = assets;
+        this.portfolio = portfolio;
+        this.asset = asset;
         this.quantity = quantity;
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;
@@ -64,20 +66,20 @@ public class PortfolioHolding {
         this.id = id;
     }
 
-    public Set<Portfolio> getPortfolios() {
-        return portfolios;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setPortfolios(Set<Portfolio> portfolios) {
-        this.portfolios = portfolios;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
-    public Set<Asset> getAssets() {
-        return assets;
+    public Asset getAsset() {
+        return asset;
     }
 
-    public void setAssets(Set<Asset> assets) {
-        this.assets = assets;
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 
     public Integer getQuantity() {
@@ -96,11 +98,11 @@ public class PortfolioHolding {
         this.purchasePrice = purchasePrice;
     }
 
-    public Double getPurchaseDate() {
+    public Date getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Double purchaseDate) {
+    public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
@@ -124,20 +126,20 @@ public class PortfolioHolding {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PortfolioHolding that = (PortfolioHolding) o;
-        return Objects.equals(id, that.id) && Objects.equals(portfolios, that.portfolios) && Objects.equals(assets, that.assets) && Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) && Objects.equals(purchaseDate, that.purchaseDate) && Objects.equals(createdDate, that.createdDate) && Objects.equals(modifiedDate, that.modifiedDate);
+        return Objects.equals(id, that.id) && Objects.equals(portfolio, that.portfolio) && Objects.equals(asset, that.asset) && Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) && Objects.equals(purchaseDate, that.purchaseDate) && Objects.equals(createdDate, that.createdDate) && Objects.equals(modifiedDate, that.modifiedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, portfolios, assets, quantity, purchasePrice, purchaseDate, createdDate, modifiedDate);
+        return Objects.hash(id, portfolio, asset, quantity, purchasePrice, purchaseDate, createdDate, modifiedDate);
     }
 
     @Override
     public String toString() {
         return "PortfolioHolding{" +
                 "id=" + id +
-                ", portfolios=" + portfolios +
-                ", assets=" + assets +
+                ", portfolio=" + portfolio +
+                ", asset=" + asset +
                 ", quantity=" + quantity +
                 ", purchasePrice=" + purchasePrice +
                 ", purchaseDate=" + purchaseDate +

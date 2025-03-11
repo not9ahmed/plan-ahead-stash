@@ -1,8 +1,12 @@
 package com.notahmed.plan_ahead_stash_api.service;
 
 import com.notahmed.plan_ahead_stash_api.exception.ResourceNotFound;
+import com.notahmed.plan_ahead_stash_api.model.Asset;
+import com.notahmed.plan_ahead_stash_api.model.Portfolio;
 import com.notahmed.plan_ahead_stash_api.model.PortfolioHolding;
+import com.notahmed.plan_ahead_stash_api.repository.AssetRepository;
 import com.notahmed.plan_ahead_stash_api.repository.PortfolioHoldingRepository;
+import com.notahmed.plan_ahead_stash_api.repository.PortfolioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +15,48 @@ import java.util.List;
 @Service
 public class PortfolioHoldingService {
 
-    public final PortfolioHoldingRepository portfolioHoldingRepository;
+    private final PortfolioRepository portfolioRepository;
+    private final PortfolioHoldingRepository portfolioHoldingRepository;
+    private final AssetRepository assetRepository;
 
-    public PortfolioHoldingService(PortfolioHoldingRepository portfolioHoldingRepository) {
+    public PortfolioHoldingService(PortfolioRepository portfolioRepository, PortfolioHoldingRepository portfolioHoldingRepository, AssetRepository assetRepository) {
+        this.portfolioRepository = portfolioRepository;
         this.portfolioHoldingRepository = portfolioHoldingRepository;
+        this.assetRepository = assetRepository;
     }
 
     @Transactional
     public PortfolioHolding create(PortfolioHolding portfolioHolding) {
+
+
+        // First find the portfolio by id
+        Portfolio portfolio = portfolioRepository.findById(portfolioHolding.getPortfolio().getId())
+                .orElseThrow(() -> new ResourceNotFound("Portfolio not found"));
+
+        System.out.println(portfolio);
+
+
+        // Then find Asset
+        Asset asset = assetRepository.findById(portfolioHolding.getAsset().getId())
+                .orElseThrow(() -> new ResourceNotFound("Asset not found"));
+
+
+        // then create portfolio holding
+        PortfolioHolding portfolioHoldingTemp = new PortfolioHolding(
+                null,
+                portfolio,
+                asset,
+                portfolioHolding.getQuantity(),
+                portfolioHolding.getPurchasePrice(),
+                portfolioHolding.getPurchaseDate(),
+                portfolioHolding.getCreatedDate(),
+                portfolioHolding.getModifiedDate()
+        );
+
+        portfolioHoldingRepository.save(portfolioHoldingTemp);
+
+
+
         return portfolioHoldingRepository.save(portfolioHolding);
     }
 
@@ -41,8 +79,8 @@ public class PortfolioHoldingService {
         // update
         PortfolioHolding portfolioHoldingUpdated = new PortfolioHolding(
                 id,
-                dbPortfolioHolding.getPortfolios(),
-                dbPortfolioHolding.getAssets(),
+                dbPortfolioHolding.getPortfolio(),
+                dbPortfolioHolding.getAsset(),
                 dbPortfolioHolding.getQuantity(),
                 dbPortfolioHolding.getPurchasePrice(),
                 dbPortfolioHolding.getPurchaseDate(),

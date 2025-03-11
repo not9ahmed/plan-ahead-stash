@@ -20,14 +20,26 @@ public class PortfolioHoldingController {
     }
 
     @PostMapping("/{id}/holdings")
-    public ResponseEntity<List<PortfolioHolding>> create(@PathVariable("id") Long portfolioId, @RequestBody @Valid PortfolioHolding portfolioHolding) {
+    public ResponseEntity<PortfolioHolding> create(@PathVariable("id") Long portfolioId,
+                                                         @RequestBody @Valid PortfolioHolding portfolioHolding) {
 
         System.out.println("portfolioId: "+ portfolioId);
-        // portfolioHoldingService.create(portfolioHolding);
+        portfolioHoldingService.create(portfolioHolding);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(List.of());
+                .body(portfolioHolding);
+    }
+
+
+    @GetMapping("/{id}/holdings")
+    public ResponseEntity<List<PortfolioHolding>> findAll() {
+
+        List<PortfolioHolding> portfolioHoldingList = portfolioHoldingService.findAll();
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(portfolioHoldingList);
     }
 
 
