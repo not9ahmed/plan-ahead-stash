@@ -40,12 +40,21 @@ export class PortifolioComponent {
   portfolio?: Portfolio;
   cols: Column[] = [];
   isDialogVisible: boolean = false;
+  isEditDialogVisible: boolean = false;
 
 
   portfolioForm = new FormGroup({
     name: new FormControl<string|null>('', [Validators.required]),
     userId: new FormControl<number|null>(null, [Validators.required])
   })
+
+  editPortfolioForm = new FormGroup({
+    name: new FormControl<string|null>('', [Validators.required]),
+    userId: new FormControl<number|null>(null, [Validators.required])
+  });
+
+
+
 
   constructor(private portifolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.initCols();
@@ -118,6 +127,11 @@ export class PortifolioComponent {
 
   showDialog() {
     this.isDialogVisible = true;
+  }
+
+  // Reptitivie
+  showEditDialog() {
+    this.isEditDialogVisible = true;
   }
 
   showPortfolio(portfolio: Portfolio) {
