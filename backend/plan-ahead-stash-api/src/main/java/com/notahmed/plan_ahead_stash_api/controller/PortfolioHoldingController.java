@@ -74,11 +74,24 @@ public class PortfolioHoldingController {
 
     @GetMapping("/{id}/holdings/")
     public ResponseEntity<List<PortfolioHolding>> findAllByPortfolio(@PathVariable("id") Long portfolioId) {
-
         List<PortfolioHolding> portfolioHoldingList = portfolioHoldingService.findAllByPortfolio(portfolioId);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(portfolioHoldingList);
     }
+
+
+    @DeleteMapping("/{id}/holdings/{portfolioId}")
+    public ResponseEntity<List<PortfolioHolding>> delete(@PathVariable("id") Long id,
+                                                         @PathVariable("portfolioId") Long portfolioId) {
+        System.out.println("id: "+ id);
+        System.out.println("portfolioId: "+ portfolioId);
+
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .body(List.of());
+    }
+
+
+
 }

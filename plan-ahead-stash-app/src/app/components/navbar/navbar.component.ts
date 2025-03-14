@@ -22,6 +22,12 @@ export class NavbarComponent {
   items: MenuItem[] | undefined;
 
     ngOnInit() {
+
+        let mode = localStorage.getItem("mode");
+        if (mode === "dark") {
+            this.toggleDarkMode()
+        }
+
         this.items = [
             {
                 separator: true
@@ -90,6 +96,9 @@ export class NavbarComponent {
     toggleDarkMode() {
         const element = document.querySelector('html')!;
         element.classList.toggle('my-app-dark');
+
         this.isDark = !this.isDark;
+        let mode: string = this.isDark ? "dark" : "light";
+        localStorage.setItem("mode", mode);
     }
 }

@@ -49,7 +49,7 @@
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
 
-                        <p-button severity="info" icon="pi pi-pencil" (click)="showEditDialog()"/>
+                        <p-button severity="info" icon="pi pi-pencil" (click)="showEditDialog(portfolio.id)"/>
                         <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, portfolio.id)" />
                         <a routerLink="{{ '/portfolios/' + portfolio.id}}"  class="p-button font-bold" style="text-decoration: none;">
                             <i class="pi pi-search"></i>
@@ -93,11 +93,11 @@
     </p-dialog>
 
 
-    <!-- -->
+    <!-- Repeaitive -->
     <!-- Dialog Area -->
     <p-dialog header="Edit Portfolio" [(visible)]="isEditDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
         
-        <form [formGroup]="editPortfolioForm" (submit)="handleSubmit()">
+        <form [formGroup]="portfolioForm" (submit)="handleEditSubmit()">
             <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
             <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
                 <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>

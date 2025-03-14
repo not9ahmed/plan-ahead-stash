@@ -42,16 +42,13 @@ export class PortifolioComponent {
   isDialogVisible: boolean = false;
   isEditDialogVisible: boolean = false;
 
+  editPortfolioId: number|null = null;
 
   portfolioForm = new FormGroup({
     name: new FormControl<string|null>('', [Validators.required]),
     userId: new FormControl<number|null>(null, [Validators.required])
   })
 
-  editPortfolioForm = new FormGroup({
-    name: new FormControl<string|null>('', [Validators.required]),
-    userId: new FormControl<number|null>(null, [Validators.required])
-  });
 
 
 
@@ -130,7 +127,23 @@ export class PortifolioComponent {
   }
 
   // Reptitivie
-  showEditDialog() {
+  showEditDialog(id: number) {
+    console.log("id:", id)
+
+
+    // initalize the form
+    // by first finding the portfolio from the list
+    const portfolioCurrent = this.portfolios.filter(el => el.id === id)[0];
+
+
+    console.log("portfolioCurrent: ", portfolioCurrent)
+
+    this.portfolioForm.setValue({
+      name: portfolioCurrent.name,
+      userId: portfolioCurrent.user?.id!,
+    })
+
+    this.editPortfolioId = id;
     this.isEditDialogVisible = true;
   }
 
@@ -237,6 +250,58 @@ export class PortifolioComponent {
       });
     }
   }
+
+
+  handleEditSubmit() {
+
+    console.log("id: ", this.editPortfolioId)
+    console.log("portfolioForm", this.portfolioForm.value);
+    let { name, userId } = this.portfolioForm.value;
+
+    // create  portfolio
+    // const portfolio: Portfolio = {
+    //   name: "example of me creating",
+    //   userId: 1
+    // };
+
+    // verfiy fields are valid
+    if(name && userId && this.editPortfolioId) {
+
+      const newPortfolio = { name, userId };
+
+      this.portifolioService.update(this.editPortfolioId, newPortfolio).subscribe({
+        
+        // success delete
+        next: (data) => {
+          const portfolioCreated: Portfolio = data;
+          console.log(portfolioCreated);
+
+          // adding message to toaster
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Confirmed',
+            detail: `Portfolio ${JSON.stringify(portfolioCreated)}`
+          });
+
+          this.portfolioForm.reset();
+          this.loadData();
+          this.isEditDialogVisible = false;
+
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'danger',
+            summary: 'Error',
+            detail: `Error Occurred ${JSON.stringify(err)}`
+          });
+        },
+        complete: () => {
+          console.log('complete called');
+        }
+      });
+    }
+  }
+
 
   handleCancel() {
     this.isDialogVisible = false;
