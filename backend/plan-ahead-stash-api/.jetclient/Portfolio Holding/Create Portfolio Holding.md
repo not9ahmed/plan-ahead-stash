@@ -10,10 +10,10 @@ type = 'JSON'
 raw = '''
 {
   "asset": {
-    "id": 2
+    "id": 5
   },
   "quantity": 20,
-  "purchasePrice": 1000.10,
-  "purchaseDate": "2025-02-02T20:19:46.298+00:00"
+  "purchasePrice": 9999.10,
+  "purchaseDate": "2025-09-03T20:19:46.298+00:00"
 }'''
 ```

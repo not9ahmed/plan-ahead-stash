@@ -11,7 +11,7 @@ import { FaqComponent } from '../../components/faq/faq.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AssetsTypeComponent } from '../assets-type/assets-type.component';
 import { UsersComponent } from '../users/users.component';
-import { PortifolioComponent } from "../portifolio/portifolio.component";
+import { PortfolioComponent } from "../portfolio/portfolio.component";
 import { HeaderComponent } from "../../components/header/header.component";
 
 @Component({
@@ -28,7 +28,7 @@ import { HeaderComponent } from "../../components/header/header.component";
     FaqComponent, 
     FooterComponent, 
     UsersComponent, 
-    PortifolioComponent, 
+    PortfolioComponent, 
     HeaderComponent
   ],
   templateUrl: './home.component.html',

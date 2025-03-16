@@ -27,13 +27,13 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-portifolio',
+  selector: 'app-portfolio',
   imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule],
-  templateUrl: './portifolio.component.html',
-  styleUrl: './portifolio.component.css',
+  templateUrl: './portfolio.component.html',
+  styleUrl: './portfolio.component.css',
   providers: [ConfirmationService, MessageService]
 })
-export class PortifolioComponent {
+export class PortfolioComponent {
 
   portfolios: Portfolio[] = [];
   users: User[] = [];
@@ -53,7 +53,7 @@ export class PortifolioComponent {
 
 
 
-  constructor(private portifolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  constructor(private portfolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.initCols();
     this.loadData();
 
@@ -64,7 +64,7 @@ export class PortifolioComponent {
     //   userId: 1
     // };
 
-    // portifolioService.update(updateId, portfolioUpdated).subscribe({
+    // portfolioService.update(updateId, portfolioUpdated).subscribe({
     //   next: (data) => {
     //     console.log(data);
     //   },
@@ -92,7 +92,7 @@ export class PortifolioComponent {
   loadData() {
     
     // find all portfolios
-    this.portifolioService.findAll().subscribe({
+    this.portfolioService.findAll().subscribe({
       next: (data) => {
         console.log(data);
         this.portfolios = data;
@@ -177,7 +177,7 @@ export class PortifolioComponent {
 
         // delete portfolio
         const deleteId: number = 9;
-        this.portifolioService.delete(id).subscribe({
+        this.portfolioService.delete(id).subscribe({
           next: (data) => {
             console.log("deleted");
             console.log(data);
@@ -218,7 +218,7 @@ export class PortifolioComponent {
 
       const newPortfolio = { name, userId };
 
-      this.portifolioService.create(newPortfolio).subscribe({
+      this.portfolioService.create(newPortfolio).subscribe({
         
         // success delete
         next: (data) => {
@@ -269,7 +269,7 @@ export class PortifolioComponent {
 
       const newPortfolio = { name, userId };
 
-      this.portifolioService.update(this.editPortfolioId, newPortfolio).subscribe({
+      this.portfolioService.update(this.editPortfolioId, newPortfolio).subscribe({
         
         // success delete
         next: (data) => {

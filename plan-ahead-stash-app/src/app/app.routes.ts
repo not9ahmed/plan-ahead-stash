@@ -4,7 +4,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AssetsTypeComponent } from './pages/assets-type/assets-type.component';
 import { UsersComponent } from './pages/users/users.component';
-import { PortifolioComponent } from './pages/portifolio/portifolio.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { AssetsComponent } from './pages/assets/assets.component';
 import { AssetsTypeDetailsComponent } from './pages/assets-type-details/assets-type-details.component';
 import { PortfolioDetailsComponent } from './pages/portfolio-details/portfolio-details.component';
@@ -19,7 +19,7 @@ export const routes: Routes = [
 
     {path: 'users', component: UsersComponent},
     
-    {path: 'portfolios', component: PortifolioComponent},
+    {path: 'portfolios', component: PortfolioComponent},
     {path: 'portfolios/:id', component: PortfolioDetailsComponent},
 
     {path: 'assets', component: AssetsComponent},

@@ -1,13 +1,16 @@
 <div class="portfolio-details">
-    <h2>My Portfolio {{ portfolioId()}}
+    <h2>My Portfolio {{ portfolio()?.id + " " + portfolio()?.name }}
         <i class="pi pi-wallet"></i>
     </h2>
 
     <div class="card flex justify-center" style="display: flex; justify-content: center; ">
-        <p-panel header="Header">
+        <p-panel header="Description">
             <p class="m-0" style="margin: 0;">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+                Can be new field in DB
+                <br><br>
+
+                Your unique portfolio demonstrates your commitment to a secure retirement. You've selected diverse assets to align with your personal investment philosophy. We support you in maintaining and refining your plan over time.
             </p>
         </p-panel>
     </div>
@@ -31,48 +34,18 @@
                 </ng-template>
             </p-card>
         </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet,
-                </p>
-            </p-card>
-        </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet, consectetus
-                </p>
-            </p-card>
-        </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet,
-                </p>
-            </p-card>
-        </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet, consectetus
-                </p>
-            </p-card>
-        </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet,
-                </p>
-            </p-card>
-        </div>
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Simple Card" [style]="{'width': '12rem'}">
-                <p class="m-0" style="margin: 0;">
-                    Lorem ipsum dolor sit amet, consectetus
-                </p>
-            </p-card>
-        </div>
+
+        @for (holding of portfolioHoldings(); track $index) {
+            <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
+                <p-card header="id: {{holding.id}}" [style]="{'width': '12rem'}">
+                    <p class="m-0" style="margin: 0;">
+                        Asset Name: {{ holding.asset?.name}}
+                    </p>
+                </p-card>
+            </div>
+        }
+
+
     </div>
 
     <!-- detail table of all portfolio holding in the table -->

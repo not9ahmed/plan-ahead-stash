@@ -2,8 +2,8 @@
 name = 'Bulk Create Asset Type'
 method = 'POST'
 url = 'http://localhost:8080/api/assetsType/bulk'
-sortWeight = 7000000
-id = 'c90bb239-3a80-4970-9e11-986810cbef53'
+sortWeight = 1000000
+id = 'b2e110d5-055d-4c2e-b700-2e3b13e23ad4'
 
 [body]
 type = 'JSON'

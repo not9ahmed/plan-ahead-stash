@@ -12,14 +12,15 @@ import { Drawer, DrawerModule } from 'primeng/drawer';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-navbar',
-  imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, DrawerModule, RouterLink],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+    selector: 'app-navbar',
+    imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, DrawerModule, RouterLink],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
 
-  items: MenuItem[] | undefined;
+    items: MenuItem[] | undefined;
+    
 
     ngOnInit() {
 

@@ -34,7 +34,6 @@ public class PortfolioHoldingController {
 
         portfolioHolding.setPortfolio(portfolio);
 
-
         PortfolioHolding result = portfolioHoldingService.create(portfolioHolding);
 
         return ResponseEntity
