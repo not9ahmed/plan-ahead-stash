@@ -8,6 +8,7 @@ import { Portfolio } from '../../models/portfolio';
 import { TableModule } from 'primeng/table';
 import { PortfolioHoldingService } from '../../services/portfolio-holding.service';
 import { PortfolioHolding } from '../../models/portfolio-holding';
+import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 
 const dummyProducts = [
@@ -53,7 +54,7 @@ const dummyProducts = [
 
 @Component({
   selector: 'app-portfolio-details',
-  imports: [CommonModule, PanelModule, CardModule, DividerModule, TableModule],
+  imports: [CommonModule, PanelModule, CardModule, DividerModule, TableModule, NavbarComponent],
   templateUrl: './portfolio-details.component.html',
   styleUrl: './portfolio-details.component.css'
 })

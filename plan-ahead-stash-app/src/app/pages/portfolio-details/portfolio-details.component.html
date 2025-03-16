@@ -1,79 +1,95 @@
-<div class="portfolio-details">
-    <h2>My Portfolio {{ portfolio()?.id + " " + portfolio()?.name }}
-        <i class="pi pi-wallet"></i>
-    </h2>
+<div class="home" style="display: flex; flex-direction: column;">
 
-    <div class="card flex justify-center" style="display: flex; justify-content: center; ">
-        <p-panel header="Description">
-            <p class="m-0" style="margin: 0;">
+<div class="main-content">
+    <app-navbar></app-navbar>
+    <div class="portfolio-details home-component">
 
-                Can be new field in DB
-                <br><br>
-
-                Your unique portfolio demonstrates your commitment to a secure retirement. You've selected diverse assets to align with your personal investment philosophy. We support you in maintaining and refining your plan over time.
-            </p>
-        </p-panel>
-    </div>
-
-    <p-divider/>
-
-
-
-    <!-- Show General stats cards of the assets in this porfolio -->
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">    
-        <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-            <p-card header="Owner" [style]="{'width': '12rem'}">
+        <div style="padding: 2rem;">
+            <h2>My Portfolio {{ portfolio()?.id + " " + portfolio()?.name }}
+                <i class="pi pi-wallet"></i>
+            </h2>
+        </div>
+    
+        <div class="card flex justify-center" style="display: flex; justify-content: center; margin: 1rem;">
+            <p-panel header="Description">
                 <p class="m-0" style="margin: 0;">
-                    {{ portfolio()?.user?.firstName + ' ' + portfolio()?.user?.lastName }}
+    
+                    Can be new field in DB
+                    <br><br>
+    
+                    Your unique portfolio demonstrates your commitment to a secure retirement. You've selected diverse assets to align with your personal investment philosophy. We support you in maintaining and refining your plan over time.
                 </p>
-                <ng-template #subtitle>
-                    something
-                </ng-template>
-                <ng-template #footer>
-                    something
-                </ng-template>
-            </p-card>
+            </p-panel>
         </div>
+    
+        <p-divider/>
+    
+    
+    
+        <!-- Show General stats cards of the assets in this porfolio -->
+         <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
 
-        @for (holding of portfolioHoldings(); track $index) {
-            <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem; ">
-                <p-card header="id: {{holding.id}}" [style]="{'width': '12rem'}">
-                    <p class="m-0" style="margin: 0;">
-                        Asset Name: {{ holding.asset?.name}}
-                    </p>
-                </p-card>
+             <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">    
+                 <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
+                     <p-card header="Owner" [style]="{'width': '16rem' }">
+                         <p class="m-0" style="margin: 0;">
+                             {{ portfolio()?.user?.firstName + ' ' + portfolio()?.user?.lastName }}
+                         </p>
+                         <ng-template #subtitle>
+                             something
+                         </ng-template>
+                         <ng-template #footer>
+                             something
+                         </ng-template>
+                     </p-card>
+                 </div>
+         
+                 @for (holding of portfolioHoldings(); track $index) {
+                     <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
+                         <p-card header="{{'id:' + holding.id}}" [style]="{'width': '16rem', 'borderRadius': '0.5rem'}">
+                             <p class="m-0" style="margin: 0;">
+                                 Asset Name: {{ holding.asset?.name}}
+                             </p>
+                         </p-card>
+                     </div>
+                 }
+         
+         
+             </div>
+         </div>
+    
+    
+        <!-- Add Chart Here -->
+    
+    
+        <!-- detail table of all portfolio holding in the table -->
+    
+        <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+            <div>
+                <h4>Table</h4>
             </div>
-        }
-
-
-    </div>
-
-    <!-- detail table of all portfolio holding in the table -->
-
-    <div class="card">
-        <div>
-            <h4>Table</h4>
+            <p-table
+                [value]="products"
+                showGridlines
+                [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template #header>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-product>
+                        <tr>
+                            <td>{{ product.code }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.quantity }}</td>
+                        </tr>
+                    </ng-template>
+            </p-table>
         </div>
-        <p-table
-            [value]="products"
-            showGridlines
-            [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template #header>
-                    <tr>
-                        <th>Code</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Quantity</th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-product>
-                    <tr>
-                        <td>{{ product.code }}</td>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.category }}</td>
-                        <td>{{ product.quantity }}</td>
-                    </tr>
-                </ng-template>
-        </p-table>
     </div>
+</div>
 </div>
