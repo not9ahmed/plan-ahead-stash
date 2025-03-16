@@ -27,11 +27,11 @@
     
     
         <!-- Show General stats cards of the assets in this porfolio -->
-         <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+         <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
 
              <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">    
-                 <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
-                     <p-card header="Owner" [style]="{'width': '16rem' }">
+                 <!-- <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
+                     <p-card header="Owner" [style]="{'width': '14rem' }">
                          <p class="m-0" style="margin: 0;">
                              {{ portfolio()?.user?.firstName + ' ' + portfolio()?.user?.lastName }}
                          </p>
@@ -42,16 +42,27 @@
                              something
                          </ng-template>
                      </p-card>
-                 </div>
+                 </div> -->
          
                  @for (holding of portfolioHoldings(); track $index) {
                      <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
-                         <p-card header="{{'id:' + holding.id}}" [style]="{'width': '16rem', 'borderRadius': '0.5rem'}">
+                         <p-card header="{{'id:' + holding.id}}" [style]="{'width': '14rem', 'borderRadius': '0.5rem'}">
                              <p class="m-0" style="margin: 0;">
                                  Asset Name: {{ holding.asset?.name}}
                              </p>
                          </p-card>
                      </div>
+                 }
+
+
+                 <!-- with array is better -->
+                 @for (item of portfolioStats() | keyvalue; track $index) {
+
+                    @if (item.key === 'total') {
+                        {{item.key}} : {{item.value}}
+                    } @else {
+                        <!-- {{item.key}} : {{item.value.highestPurchase.quantity.toString()}} -->
+                    }
                  }
          
          

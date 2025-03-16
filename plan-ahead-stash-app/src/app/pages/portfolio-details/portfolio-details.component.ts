@@ -9,6 +9,7 @@ import { TableModule } from 'primeng/table';
 import { PortfolioHoldingService } from '../../services/portfolio-holding.service';
 import { PortfolioHolding } from '../../models/portfolio-holding';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { PortfolioStats } from '../../models/portfolio-stats';
 
 
 const dummyProducts = [
@@ -63,12 +64,11 @@ export class PortfolioDetailsComponent {
   portfolioId = signal<number>(0);
   portfolio = signal<Portfolio | null>(null);
   portfolioHoldings = signal<PortfolioHolding[] | []>([]);
-  portfolioStats = signal<{
-    total?: number, highest?: PortfolioHolding, latest?: PortfolioHolding}>
+  portfolioStats = signal<PortfolioStats>
     ({
     total: 0,
-    highest: undefined,
-    latest: undefined
+    highestPurchase: null,
+    latestPurchase: null
   });
 
   products: any;
@@ -114,8 +114,8 @@ export class PortfolioDetailsComponent {
         // test sum
         this.portfolioStats.set({
           total: this.findSum(this.portfolioHoldings()),
-          highest: this.findHighest(this.portfolioHoldings()),
-          latest: this.findLatestPurchase(this.portfolioHoldings()),
+          highestPurchase: this.findHighest(this.portfolioHoldings()),
+          latestPurchase: this.findLatestPurchase(this.portfolioHoldings()),
         })
         console.log(this.portfolioStats());
 
