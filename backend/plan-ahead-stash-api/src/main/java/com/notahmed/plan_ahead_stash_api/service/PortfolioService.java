@@ -95,4 +95,13 @@ public class PortfolioService {
     public void bulkDelete() {
         portfolioRepository.deleteAll();
     }
+
+
+    public List<Portfolio> findByUserId(Long userId) {
+        return portfolioRepository.findAllByUserId(userId);
+    }
+
+    public List<Portfolio> findAllByName(String name) {
+        return portfolioRepository.findAllByName(name);
+    }
 }

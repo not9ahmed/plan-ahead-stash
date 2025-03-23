@@ -120,4 +120,28 @@ public class PortfolioController {
                 .body(null);
     }
 
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<List<Portfolio>> findByUserId(@PathVariable("id") Long userId) {
+
+        System.out.println("userId: " + userId);
+        List<Portfolio> portfolios = portfolioService.findByUserId(userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(portfolios);
+    }
+
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Portfolio>> findByUserId(@PathVariable("name") String name) {
+
+        System.out.println("userId: " + name);
+        List<Portfolio> portfolios = portfolioService.findAllByName(name);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(portfolios);
+    }
+
 }

@@ -75,9 +75,9 @@
     
         <!-- detail table of all portfolio holding in the table -->
     
-        <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+        <!-- <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
             <div>
-                <h4>Table</h4>
+                <h4>My Current Portfolio Assets</h4>
             </div>
             <p-table
                 [value]="products"
@@ -97,6 +97,35 @@
                             <td>{{ product.name }}</td>
                             <td>{{ product.category }}</td>
                             <td>{{ product.quantity }}</td>
+                        </tr>
+                    </ng-template>
+            </p-table>
+        </div> -->
+
+
+
+        <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+            <div>
+                <h4>My Current Portfolio Assets</h4>
+            </div>
+            <p-table
+                [value]="portfolioHoldings()"
+                showGridlines
+                [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template #header>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-holding>
+                        <tr>
+                            <td>{{ holding.id }}</td>
+                            <td>{{ holding.asset | json }}</td>
+                            <td>{{ holding.category }}</td>
+                            <td>{{ holding.quantity }}</td>
                         </tr>
                     </ng-template>
             </p-table>

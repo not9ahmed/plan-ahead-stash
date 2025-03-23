@@ -20,7 +20,6 @@ import { RouterLink } from '@angular/router';
 export class NavbarComponent {
 
     items: MenuItem[] | undefined;
-    
 
     ngOnInit() {
 
