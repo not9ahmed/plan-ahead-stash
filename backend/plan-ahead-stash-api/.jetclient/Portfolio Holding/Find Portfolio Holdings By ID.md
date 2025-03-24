@@ -1,5 +1,5 @@
 ```toml
-name = 'Final Portfolio Holdings By ID'
+name = 'Find Portfolio Holdings By ID'
 method = 'GET'
 url = 'http://localhost:8080/api/portfolios/10/holdings/'
 sortWeight = 6000000

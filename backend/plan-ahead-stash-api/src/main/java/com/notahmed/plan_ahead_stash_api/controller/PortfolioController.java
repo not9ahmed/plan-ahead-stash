@@ -33,6 +33,7 @@ public class PortfolioController {
         Portfolio portfolioToBeSaved = new Portfolio(
                 null,
                 portfolio.name(),
+                portfolio.description(),
                 tempUser,
                 null,
                 null
@@ -73,6 +74,7 @@ public class PortfolioController {
         Portfolio portfolioToBeUpdated = new Portfolio(
                 id,
                 portfolio.name(),
+                portfolio.description(),
                 tempUser,
                 null,
                 null
@@ -100,6 +102,7 @@ public class PortfolioController {
                 .map(p -> new Portfolio(
                         null,
                         p.name(),
+                        p.description(),
                         new User(p.userId(), null, null, null, null, null, null),
                         null,
                         null

@@ -41,4 +41,9 @@ export class PortfolioService {
   }
 
 
+  findAllByUserId(userId: number): Observable<Portfolio[]> {
+    const url = `${this.API_URL}/users/${userId}`;
+    return this.http.get<Portfolio[]>(url);
+  }
+
 }

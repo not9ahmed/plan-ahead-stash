@@ -34,6 +34,7 @@ public class PortfolioService {
         Portfolio portfolioTobeSaved = new Portfolio(
                 portfolio.getId(),
                 portfolio.getName(),
+                portfolio.getDescription(),
                 user,
                 new Date(),
                 null
@@ -67,6 +68,7 @@ public class PortfolioService {
         var updatedPortfolio = new Portfolio(
                 id,
                 portfolio.getName(),
+                portfolio.getDescription(),
                 user,
                 portfolioDb.getCreatedDate(),
                 null

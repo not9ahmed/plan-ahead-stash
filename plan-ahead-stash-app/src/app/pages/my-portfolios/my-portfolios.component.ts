@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
-import { PortfolioService } from '../../services/portfolio.service';
-import { Portfolio } from '../../models/portfolio';
 import { CommonModule } from '@angular/common';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { ToolbarModule } from 'primeng/toolbar';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
-import { ConfirmationService, MessageService, ToastMessageOptions } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { SelectModule } from 'primeng/select';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-
-
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DatePickerModule } from 'primeng/datepicker';
+import { DialogModule } from 'primeng/dialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { Portfolio } from '../../models/portfolio';
+import { User } from '../../models/user';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { PortfolioService } from '../../services/portfolio.service';
+import { UserService } from '../../services/user.service';
 
 interface Column {
   field: string;
@@ -27,13 +24,13 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-portfolio',
+  selector: 'app-my-portfolios',
   imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule],
-  templateUrl: './portfolio.component.html',
-  styleUrl: './portfolio.component.css',
+  templateUrl: './my-portfolios.component.html',
+  styleUrl: './my-portfolios.component.css',
   providers: [ConfirmationService, MessageService]
 })
-export class PortfolioComponent {
+export class MyPortfoliosComponent {
 
   portfolios: Portfolio[] = [];
   users: User[] = [];
@@ -90,8 +87,8 @@ export class PortfolioComponent {
 
   loadData() {
     
-    // find all portfolios
-    this.portfolioService.findAll().subscribe({
+    // find all portfolios by user
+    this.portfolioService.findAllByUserId(6).subscribe({
       next: (data) => {
         console.log(data);
         this.portfolios = data;

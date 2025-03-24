@@ -8,6 +8,7 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { AssetsComponent } from './pages/assets/assets.component';
 import { AssetsTypeDetailsComponent } from './pages/assets-type-details/assets-type-details.component';
 import { PortfolioDetailsComponent } from './pages/portfolio-details/portfolio-details.component';
+import { MyPortfoliosComponent } from './pages/my-portfolios/my-portfolios.component';
 
 export const routes: Routes = [
     {path: 'home', redirectTo: '', pathMatch: 'full'},
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path: 'users', component: UsersComponent},
     
     {path: 'portfolios', component: PortfolioComponent},
+    {path: 'myportfolios', component: MyPortfoliosComponent},
     {path: 'portfolios/:id', component: PortfolioDetailsComponent},
 
     {path: 'assets', component: AssetsComponent},

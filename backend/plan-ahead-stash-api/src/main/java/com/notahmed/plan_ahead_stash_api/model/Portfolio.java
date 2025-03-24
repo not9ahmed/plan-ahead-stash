@@ -23,6 +23,10 @@ public class Portfolio {
     @Column(name ="name")
     private String name;
 
+
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -39,9 +43,10 @@ public class Portfolio {
     public Portfolio() {
     }
 
-    public Portfolio(Long id, String name, User user, Date createdDate, Date modifiedDate) {
+    public Portfolio(Long id, String name, String description, User user, Date createdDate, Date modifiedDate) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.user = user;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
@@ -61,6 +66,14 @@ public class Portfolio {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser() {
@@ -87,17 +100,16 @@ public class Portfolio {
         this.modifiedDate = modifiedDate;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Portfolio portfolio = (Portfolio) o;
-        return Objects.equals(id, portfolio.id) && Objects.equals(name, portfolio.name) && Objects.equals(user, portfolio.user) && Objects.equals(createdDate, portfolio.createdDate) && Objects.equals(modifiedDate, portfolio.modifiedDate);
+        return Objects.equals(id, portfolio.id) && Objects.equals(name, portfolio.name) && Objects.equals(description, portfolio.description) && Objects.equals(user, portfolio.user) && Objects.equals(createdDate, portfolio.createdDate) && Objects.equals(modifiedDate, portfolio.modifiedDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, user, createdDate, modifiedDate);
+        return Objects.hash(id, name, description, user, createdDate, modifiedDate);
     }
 
     @Override
@@ -105,6 +117,7 @@ public class Portfolio {
         return "Portfolio{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", user=" + user +
                 ", createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
