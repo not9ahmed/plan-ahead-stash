@@ -1,36 +1,38 @@
 <div class="home" style="display: flex; flex-direction: column;">
 
-<div class="main-content">
-    <app-navbar></app-navbar>
-    <div class="portfolio-details home-component">
+    <div class="main-content">
+        <app-navbar></app-navbar>
+        <div class="portfolio-details home-component">
 
-        <div style="padding: 2rem;">
-            <h2>My Portfolio {{ portfolio()?.id + " " + portfolio()?.name }}
-                <i class="pi pi-wallet"></i>
-            </h2>
-        </div>
-    
-        <div class="card flex justify-center" style="display: flex; justify-content: center; margin: 1rem;">
-            <p-panel header="Description">
-                <p class="m-0" style="margin: 0;">
-    
-                    Can be new field in DB
-                    <br><br>
-    
-                    Your unique portfolio demonstrates your commitment to a secure retirement. You've selected diverse assets to align with your personal investment philosophy. We support you in maintaining and refining your plan over time.
-                </p>
-            </p-panel>
-        </div>
-    
-        <p-divider/>
-    
-    
-    
-        <!-- Show General stats cards of the assets in this porfolio -->
-         <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
+            <div style="padding: 2rem;">
+                <h2>My Portfolio {{ portfolio()?.id + " " + portfolio()?.name }}
+                    <i class="pi pi-wallet"></i>
+                </h2>
+            </div>
 
-             <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">    
-                 <!-- <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
+            <div class="card flex justify-center" style="display: flex; justify-content: center; margin: 1rem;">
+                <p-panel header="Description">
+                    <p class="m-0" style="margin: 0;">
+
+                        Can be new field in DB
+                        <br><br>
+
+                        Your unique portfolio demonstrates your commitment to a secure retirement. You've selected
+                        diverse assets to align with your personal investment philosophy. We support you in maintaining
+                        and refining your plan over time.
+                    </p>
+                </p-panel>
+            </div>
+
+            <p-divider />
+
+
+
+            <!-- Show General stats cards of the assets in this porfolio -->
+            <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
+
+                <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                    <!-- <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
                      <p-card header="Owner" [style]="{'width': '14rem' }">
                          <p class="m-0" style="margin: 0;">
                              {{ portfolio()?.user?.firstName + ' ' + portfolio()?.user?.lastName }}
@@ -43,39 +45,39 @@
                          </ng-template>
                      </p-card>
                  </div> -->
-         
-                 @for (holding of portfolioHoldings(); track $index) {
-                     <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
-                         <p-card header="{{'id:' + holding.id}}" [style]="{'width': '14rem', 'borderRadius': '0.5rem'}">
-                             <p class="m-0" style="margin: 0;">
-                                 Asset Name: {{ holding.asset?.name}}
-                             </p>
-                         </p-card>
-                     </div>
-                 }
+
+                    @for (holding of portfolioHoldings(); track $index) {
+                    <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
+                        <p-card header="{{'id:' + holding.id}}" [style]="{'width': '14rem', 'borderRadius': '0.5rem'}">
+                            <p class="m-0" style="margin: 0;">
+                                Asset Name: {{ holding.asset?.name}}
+                            </p>
+                        </p-card>
+                    </div>
+                    }
 
 
-                 <!-- with array is better -->
-                 @for (item of portfolioStats() | keyvalue; track $index) {
+                    <!-- with array is better -->
+                    @for (item of portfolioStats() | keyvalue; track $index) {
 
                     @if (item.key === 'total') {
-                        {{item.key}} : {{item.value}}
+                    {{item.key}} : {{item.value}}
                     } @else {
-                        <!-- {{item.key}} : {{item.value.highestPurchase.quantity.toString()}} -->
+                    <!-- {{item.key}} : {{item.value.highestPurchase.quantity.toString()}} -->
                     }
-                 }
-         
-         
-             </div>
-         </div>
-    
-    
-        <!-- Add Chart Here -->
-    
-    
-        <!-- detail table of all portfolio holding in the table -->
-    
-        <!-- <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+                    }
+
+
+                </div>
+            </div>
+
+
+            <!-- Add Chart Here -->
+
+
+            <!-- detail table of all portfolio holding in the table -->
+
+            <!-- <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
             <div>
                 <h4>My Current Portfolio Assets</h4>
             </div>
@@ -104,14 +106,27 @@
 
 
 
-        <div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
-            <div>
-                <h4>My Current Portfolio Assets</h4>
-            </div>
-            <p-table
-                [value]="portfolioHoldings()"
-                showGridlines
-                [tableStyle]="{ 'min-width': '50rem' }">
+            <!-- TODO: Move to single component Portfolio-Holdings -->
+            <div class="card"
+                style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+                <p-toast />
+                <p-confirmdialog />
+
+                <div>
+                    <h4>My Current Portfolio Assets</h4>
+                </div>
+
+                <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+                    <ng-template #start>
+                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+                    </ng-template>
+
+                    <ng-template #end>
+                        <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+                    </ng-template>
+                </p-toolbar>
+
+                <p-table [value]="portfolioHoldings()" showGridlines [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template #header>
                         <tr>
                             <th>ID</th>
@@ -128,8 +143,42 @@
                             <td>{{ holding.quantity }}</td>
                         </tr>
                     </ng-template>
-            </p-table>
+                </p-table>
+            </div>
+
+
+            <!-- Dialog Area for Add -->
+            <p-dialog header="Add Portfolio Holding" [(visible)]="isDialogVisible" class="card"
+                [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
+                <form [formGroup]="portfolioHoldingForm" (submit)="handleSubmit()">
+
+                    <h4>
+                        portfolioId: {{ portfolioId()}}
+                    </h4>
+
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
+                        Required Fields.</span>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="name" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Name</label>
+                        <input pInputNumber id="quantity" class="flex-auto" formControlName="quantity" />
+                    </div>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="userId" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Asset</label>
+                        <p-select formControlName="assetId" [options]="assets()" optionLabel="name" optionValue="id"
+                            placeholder="Select an Asset" class="w-full md:w-56"
+                            [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}' />
+                    </div>
+
+                    <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                        <p-button label="Save" severity="primary" type="submit" />
+                    </div>
+                </form>
+            </p-dialog>
         </div>
     </div>
-</div>
 </div>

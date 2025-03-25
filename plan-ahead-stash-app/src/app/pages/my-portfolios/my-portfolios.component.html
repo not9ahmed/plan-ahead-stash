@@ -72,6 +72,7 @@
 
 
 
+    <!-- TODO: Make it as single component -->
     <!-- Dialog Area for Add -->
     <p-dialog header="Add Portfolio" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
         <form [formGroup]="portfolioForm" (submit)="handleSubmit()">
@@ -92,8 +93,7 @@
         </form>
     </p-dialog>
 
-
-    <!-- Repeaitive -->
+    <!-- Repeatitive for Edit -->
     <!-- Dialog Area -->
     <p-dialog header="Edit Portfolio" [(visible)]="isEditDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
         

@@ -1,0 +1,40 @@
+<div class="card" style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
+    <p-toast />
+    <p-confirmdialog />
+    
+    <div>
+        <h4>My Current Portfolio Assets</h4>
+    </div>
+
+    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+        </ng-template>
+
+        <ng-template #end>
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+        </ng-template>
+    </p-toolbar>
+
+    <p-table
+        [value]="portfolioHoldings()"
+        showGridlines
+        [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template #header>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-holding>
+                <tr>
+                    <td>{{ holding.id }}</td>
+                    <td>{{ holding.asset | json }}</td>
+                    <td>{{ holding.category }}</td>
+                    <td>{{ holding.quantity }}</td>
+                </tr>
+            </ng-template>
+    </p-table>
+</div>

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
+import { PortfolioHolding } from '../models/portfolio-holding';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +10,25 @@ import { environment } from '../../environments/environment.development';
 export class PortfolioHoldingService {
 
   private API_URL = environment.BACKEND_API_URL + "/portfolios";
-// http://localhost:8080/api/portfolios/12/holdings/
 
   constructor(private http: HttpClient) { }
   
-  findAllPortfolioId(id: number) {
-    return this.http.get<any>(`${this.API_URL}/${id}/holdings/`);
+  findAllByPortfolioId(id: number): Observable<PortfolioHolding[]> {
+    return this.http.get<PortfolioHolding[]>(`${this.API_URL}/${id}/holdings/`);
+  }
+
+  create(portfolioHolding: PortfolioHolding): Observable<PortfolioHolding> {
+    const url = `${this.API_URL}`;
+    return this.http.post<PortfolioHolding>(`${url}/holdings/`, portfolioHolding);
+  }
+
+  update(id: number, portfolioHolding: PortfolioHolding): Observable<PortfolioHolding> {
+    const url = `${this.API_URL}`;
+    return this.http.put<PortfolioHolding>(`${url}/holdings/${id}`, portfolioHolding);
+  }
+
+  delete(id: number): Observable<any> {
+    const url = `${this.API_URL}`;
+    return this.http.delete<PortfolioHolding>(`${url}/holdings/${id}`);
   }
 }
