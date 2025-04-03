@@ -50,7 +50,7 @@
                     <div class="mb-4 p-8" style="padding: 2rem; margin-bottom: 1rem;">
                         <p-card header="{{'id:' + holding.id}}" [style]="{'width': '14rem', 'borderRadius': '0.5rem'}">
                             <p class="m-0" style="margin: 0;">
-                                Asset Name: {{ holding.asset?.name}}
+                                Asset Name: {{ holding.asset?.id}}
                             </p>
                         </p-card>
                     </div>
@@ -107,7 +107,7 @@
 
 
             <!-- TODO: Move to single component Portfolio-Holdings -->
-            <div class="card"
+            <!-- <div class="card"
                 style="border: 2px solid var(--p-primary-200); border-radius: 0.5rem; padding: 2rem; margin: 1rem;">
                 <p-toast />
                 <p-confirmdialog />
@@ -144,7 +144,14 @@
                         </tr>
                     </ng-template>
                 </p-table>
-            </div>
+            </div> -->
+
+
+ 
+            <p-toast />
+            <p-confirmdialog />
+            <app-portfolio-holdings [id]="portfolioId()" ></app-portfolio-holdings>
+       
 
 
             <!-- Dialog Area for Add -->
@@ -156,14 +163,22 @@
                         portfolioId: {{ portfolioId()}}
                     </h4>
 
-                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
-                        Required Fields.</span>
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">
+                        Enter the
+                        Required Fields.
+                    </span>
+
+
+
                     <div class="flex items-center gap-4 mb-4"
                         style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                        <label for="name" class="font-semibold w-24"
-                            style="width: 6rem; font-weight: 600; ">Name</label>
-                        <input pInputNumber id="quantity" class="flex-auto" formControlName="quantity" />
+                        <label for="portfolioId" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Portfolio Id</label>
+                        <input pInputText id="portfolioId" class="flex-auto" formControlName="portfolioId"/>
                     </div>
+
+
+
                     <div class="flex items-center gap-4 mb-4"
                         style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
                         <label for="userId" class="font-semibold w-24"
@@ -172,6 +187,33 @@
                             placeholder="Select an Asset" class="w-full md:w-56"
                             [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}' />
                     </div>
+
+
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="quantity" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Quantity</label>
+                        <p-inputnumber inputId="quantity" class="flex-auto" formControlName="quantity" />
+                    </div>
+
+
+
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="purchasePrice" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Purchase Price</label>
+                        <p-inputnumber mode="currency" currency="USD" locale="en-US" inputId="purchasePrice" class="flex-auto" formControlName="purchasePrice" />
+                    </div>
+
+
+                    <div class="flex items-center gap-4 mb-4"
+                    style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="purchaseDate" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Purchase Date</label>
+                        <p-datepicker inputId="purchaseDate" class="flex-auto" formControlName="purchaseDate" />
+                    </div>
+
+ 
 
                     <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
                         <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />

@@ -80,15 +80,15 @@ public class PortfolioHoldingController {
     }
 
 
-    @DeleteMapping("/{id}/holdings/{portfolioId}")
-    public ResponseEntity<List<PortfolioHolding>> delete(@PathVariable("id") Long id,
-                                                         @PathVariable("portfolioId") Long portfolioId) {
-        System.out.println("id: "+ id);
+    @DeleteMapping("/{portfolioId}/holdings")
+    public ResponseEntity<List<PortfolioHolding>> delete(@PathVariable("portfolioId") Long portfolioId) {
         System.out.println("portfolioId: "+ portfolioId);
+
+        portfolioHoldingService.bulkDeleteByPortfolioId(portfolioId);
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(List.of());
+                .body(null);
     }
 
 

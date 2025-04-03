@@ -17,9 +17,9 @@ export class PortfolioHoldingService {
     return this.http.get<PortfolioHolding[]>(`${this.API_URL}/${id}/holdings/`);
   }
 
-  create(portfolioHolding: PortfolioHolding): Observable<PortfolioHolding> {
+  create(portfolioId: number, portfolioHolding: PortfolioHolding): Observable<PortfolioHolding> {
     const url = `${this.API_URL}`;
-    return this.http.post<PortfolioHolding>(`${url}/holdings/`, portfolioHolding);
+    return this.http.post<PortfolioHolding>(`${url}/${portfolioId}/holdings`, portfolioHolding);
   }
 
   update(id: number, portfolioHolding: PortfolioHolding): Observable<PortfolioHolding> {

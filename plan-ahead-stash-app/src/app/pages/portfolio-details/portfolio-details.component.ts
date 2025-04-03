@@ -21,6 +21,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SelectModule } from 'primeng/select';
 import { AssetService } from '../../services/asset.service';
 import { Asset } from '../../models/asset';
+import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { PortfolioHoldingsComponent } from "../portfolio-holdings/portfolio-holdings.component";
 
 
 const dummyProducts = [
@@ -66,7 +69,7 @@ const dummyProducts = [
 
 @Component({
   selector: 'app-portfolio-details',
-  imports: [CommonModule, ReactiveFormsModule, PanelModule, CardModule, DividerModule, TableModule, NavbarComponent, ToolbarModule, ToastModule, ButtonModule, DialogModule, ConfirmDialogModule, InputNumberModule, SelectModule],
+  imports: [CommonModule, ReactiveFormsModule, PanelModule, CardModule, DividerModule, TableModule, NavbarComponent, ToolbarModule, ToastModule, ButtonModule, DialogModule, ConfirmDialogModule, InputNumberModule, InputTextModule, SelectModule, DatePickerModule, PortfolioHoldingsComponent],
   templateUrl: './portfolio-details.component.html',
   styleUrl: './portfolio-details.component.css',
   providers: [ConfirmationService, MessageService]
@@ -104,8 +107,8 @@ export class PortfolioDetailsComponent {
     portfolioId: new FormControl<number>(this.portfolioId(), [Validators.required]),
     assetId: new FormControl<number | null>(null, [Validators.required]),
     quantity: new FormControl<number | null>(null, [Validators.required]),
-    // purchasePrice: new FormControl<number | null>(null, [Validators.required]),
-    // purchaseDate: new FormControl<Date | null>(null, [Validators.required]),
+    purchasePrice: new FormControl<number | null>(null, [Validators.required]),
+    purchaseDate: new FormControl<Date | null>(null, [Validators.required]),
   });
 
   constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService, private assetService: AssetService) {
@@ -115,6 +118,15 @@ export class PortfolioDetailsComponent {
   ngOnInit() {
     console.log("ngOnInit");
     console.log("portfolioId: ", this.portfolioId());
+
+    this.portfolioHoldingForm.setValue({
+      portfolioId: this.portfolioId(),
+      assetId: null,
+      quantity: null,
+      purchasePrice: null,
+      purchaseDate: null
+    })
+
 
     this.loadData();
   }
@@ -168,6 +180,41 @@ export class PortfolioDetailsComponent {
 
   handleSubmit(): void {
     console.log("handleSubmit");
+
+    console.log(this.portfolioHoldingForm.value);
+    console.log(this.portfolioHoldingForm.valid);
+    console.log(this.portfolioHoldingForm.valid);
+
+
+    const { portfolioId, assetId, quantity, purchasePrice, purchaseDate} = this.portfolioHoldingForm.value;
+    
+    if(portfolioId && assetId && quantity && purchasePrice && purchaseDate) {
+
+      const newPortfolioHolding: PortfolioHolding = {
+        asset: {
+          id: assetId
+        },
+        quantity,
+        purchasePrice,
+        purchaseDate
+      }
+  
+      this.portfolioHoldingService.create(portfolioId, newPortfolioHolding).subscribe({
+        
+        next: (value) => {
+            console.log("value: ", value);
+            this.portfolioHoldingForm.reset();
+            this.isDialogVisible.set(false);
+            this.loadData();
+        },
+        error: (err) => {
+          console.log("err: ", err);
+        },
+      });
+
+
+    }
+
   }
   
   handleCancel() {
@@ -176,7 +223,11 @@ export class PortfolioDetailsComponent {
 
   showDialog(): void {
     console.log("showDialog");
-    this.isDialogVisible.set(!this.isDialogVisible())
+
+    
+    // this.isDialogVisible.set(!this.isDialogVisible())
+
+
   }
 
 

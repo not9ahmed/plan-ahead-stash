@@ -5,7 +5,7 @@ export interface PortfolioHolding {
     id?: 7,
     portfolio?: Portfolio,
     portfolioId?: number,
-    asset?: Asset,
+    asset?: Asset | {id: number},
     assetId?: number,
     quantity: number,
     purchasePrice: number,

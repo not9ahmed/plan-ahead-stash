@@ -131,4 +131,10 @@ public class PortfolioHoldingService {
         portfolioHoldingRepository.deleteAll();
     }
 
+    @Transactional
+    public void bulkDeleteByPortfolioId(Long portfolioId) {
+        System.out.println("portfolioId: "+ portfolioId);
+        portfolioHoldingRepository.deleteAllByPortfolioId(portfolioId);
+    }
+
 }

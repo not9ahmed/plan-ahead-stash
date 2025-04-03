@@ -1,9 +1,9 @@
 ```toml
-name = 'Final All Portfolio Holdings'
-method = 'GET'
-url = 'http://localhost:8080/api/portfolios/holdings/'
-sortWeight = 2000000
-id = '6b96da18-2bf4-4c77-b0b4-78d8bfd86617'
+name = 'Bulk Delete Portfolio Holdings By Portfolio Id'
+method = 'DELETE'
+url = 'http://localhost:8080/api/portfolios/12/holdings'
+sortWeight = 3000000
+id = '1137a552-6b1e-4c8b-a238-8361ed84718d'
 
 [body]
 type = 'JSON'

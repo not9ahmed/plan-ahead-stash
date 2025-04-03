@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { Portfolio } from '../../models/portfolio';
 import { PortfolioHolding } from '../../models/portfolio-holding';
 import { PortfolioStats } from '../../models/portfolio-stats';
@@ -15,6 +15,7 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AssetService } from '../../services/asset.service';
 
 @Component({
   selector: 'app-portfolio-holdings',
@@ -22,58 +23,77 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   templateUrl: './portfolio-holdings.component.html',
   styleUrl: './portfolio-holdings.component.css',
   providers: [ConfirmationService, MessageService]
-  
+
 })
 export class PortfolioHoldingsComponent {
 
-    portfolioId = signal<number>(0);
-    portfolio = signal<Portfolio | null>(null);
-    portfolioHoldings = signal<PortfolioHolding[] | []>([]);
-    portfolioStats = signal<PortfolioStats>
-      ({
-        total: 0,
-        highestPurchase: null,
-        latestPurchase: null
-      });
+
+  @Input()
+  set id(id: number) {
+    this.portfolioId.set(id);
+  }
   
-    products: any;
-  
-  
-    @Input()
-    set id(id: number) {
-      this.portfolioId.set(id);
-    }
-  
-  
-    constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService) {
-    
-    }
+  @Output()
+  isDialogVisable = new EventEmitter<boolean>();
+
+  portfolioId = signal<number>(0);
+  portfolio = signal<Portfolio | null>(null);
+  portfolioHoldings = signal<PortfolioHolding[] | []>([]);
+  portfolioStats = signal<PortfolioStats>
+    ({
+      total: 0,
+      highestPurchase: null,
+      latestPurchase: null
+    });
+
+  products: any;
 
 
-    ngOnInit() {
-      console.log("ngOnInit");
-      console.log("portfolioId: ", this.portfolioId());
-  
-      this.loadData();
-    }
-  
-  
-    loadData(): void {
-      // get all portfolio along with the assets
-      // may better us portfolio holding
-      this.portfolioService.findById(this.portfolioId()).subscribe({
-        next: (data: Portfolio) => {
-          console.log(data);
-          this.portfolio.set(data);
-        },
-        error: (err) => {
-          console.log(err)
-        },
-      });
-  
-    }
 
-    showDialog(): void {
-      console.log("showDialog");
-    }
+
+
+  constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService, private assetService: AssetService) {
+
+  }
+
+
+  ngOnInit() {
+    console.log("ngOnInit PortfolioHoldingsComponent");
+    console.log("portfolioId: ", this.portfolioId());
+
+    this.loadData();
+  }
+
+
+  loadData(): void {
+    // get all portfolio along with the assets
+    // may better us portfolio holding
+    this.portfolioService.findById(this.portfolioId()).subscribe({
+      next: (data: Portfolio) => {
+        console.log(data);
+        this.portfolio.set(data);
+      },
+      error: (err) => {
+        console.log(err)
+      },
+    });
+
+
+    this.portfolioHoldingService.findAllByPortfolioId(this.portfolioId()).subscribe({
+      next: (data: PortfolioHolding[]) => {
+        console.log(data);
+        this.portfolioHoldings.set(data);
+
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
+
+  }
+
+  showDialog(): void {
+    console.log("showDialog PortfolioHoldingsComponent");
+    this.isDialogVisable.emit(true);
+  }
 }
