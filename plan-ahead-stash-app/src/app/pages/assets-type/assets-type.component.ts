@@ -163,6 +163,6 @@ export class AssetsTypeComponent {
 
 
   showDialog() {
-    this.isDialogVisible = true;
+    this.isDialogVisible = !this.isDialogVisible;
   }
 }

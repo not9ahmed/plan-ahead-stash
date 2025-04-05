@@ -150,7 +150,7 @@
  
             <p-toast />
             <p-confirmdialog />
-            <app-portfolio-holdings [id]="portfolioId()" ></app-portfolio-holdings>
+            <app-portfolio-holdings [id]="portfolioId()" (dialogVisableEvent)="showDialog()" ></app-portfolio-holdings>
        
 
 

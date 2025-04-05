@@ -33,28 +33,45 @@ export class NavbarComponent {
                 separator: true
             },
             {
-                label: 'Documents',
+                label: 'Admin',
                 items: [
                     {
                         label: 'Users Management',
-                        // icon: 'pi pi-plus',
+                        icon: 'pi pi-users',
                         url: '/users'
                     },
                     {
                         label: 'Assets Type',
-                        // icon: 'pi pi-plus',
+                        icon: 'pi pi-money-bill',
                         url: '/assetsType'
                     },
                     {
-                        label: 'Portfolio',
-                        // icon: 'pi pi-plus',
+                        label: 'Portfolios',
+                        icon: 'pi pi-folder',
                         url: '/portfolios'
                     },
                     {
                         label: 'Search',
-                        // icon: 'pi pi-search',
+                        icon: 'pi pi-search',
                         // shortcut: '⌘+S',
                         url: '/about'
+                    }
+                ]
+            },
+            {
+                label: 'User',
+                items: [
+                    {
+                        label: 'Dashboard',
+                        icon: 'pi pi-objects-column',
+                        // shortcut: '⌘+O',
+                        url: '/myportfolios'
+                    },
+                    {
+                        label: 'My Portfolios',
+                        icon: 'pi pi-folder',
+                        // shortcut: '⌘+O',
+                        url: '/myportfolios'
                     }
                 ]
             },
@@ -63,16 +80,16 @@ export class NavbarComponent {
                 items: [
                     {
                         label: 'Settings',
-                        // icon: 'pi pi-cog',
+                        icon: 'pi pi-cog',
                         // shortcut: '⌘+O',
                         url: '/about'
 
                     },
                     {
                         label: 'Logout',
-                        // icon: 'pi pi-sign-out',
+                        icon: 'pi pi-sign-out',
                         // shortcut: '⌘+Q',
-                        url: '/about'
+                        url: '/'
 
                     }
                 ]

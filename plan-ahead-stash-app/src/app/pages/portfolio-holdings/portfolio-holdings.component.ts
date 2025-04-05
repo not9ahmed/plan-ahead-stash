@@ -33,8 +33,9 @@ export class PortfolioHoldingsComponent {
     this.portfolioId.set(id);
   }
   
+  // Child to parent communication
   @Output()
-  isDialogVisable = new EventEmitter<boolean>();
+  dialogVisableEvent = new EventEmitter<boolean>();
 
   portfolioId = signal<number>(0);
   portfolio = signal<Portfolio | null>(null);
@@ -92,8 +93,9 @@ export class PortfolioHoldingsComponent {
 
   }
 
-  showDialog(): void {
+  showDialog() {
     console.log("showDialog PortfolioHoldingsComponent");
-    this.isDialogVisable.emit(true);
+    this.dialogVisableEvent.emit(true);
+    
   }
 }

@@ -222,10 +222,8 @@ export class PortfolioDetailsComponent {
   }
 
   showDialog(): void {
-    console.log("showDialog");
-
-    
-    // this.isDialogVisible.set(!this.isDialogVisible())
+    console.log("showDialog details");
+    this.isDialogVisible.set(!this.isDialogVisible())
 
 
   }

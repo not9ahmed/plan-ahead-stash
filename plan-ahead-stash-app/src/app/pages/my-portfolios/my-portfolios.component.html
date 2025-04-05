@@ -1,9 +1,9 @@
-<div class="portfolio-page">
+<div class="my-portfolios-page">
     <p-toast />
     <p-confirmdialog />
 
     <div>
-        <h2>My Portfolio Page</h2>
+        <h2>My Portfolios Page</h2>
     </div>
 
     <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
@@ -101,8 +101,14 @@
             <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
             <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
                 <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
-                <input pInputText id="userId" class="flex-auto" formControlName="name" />
+                <input pInputText id="name" class="flex-auto" formControlName="name" />
             </div>
+
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="description" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Description</label>
+                <input pInputText id="description" class="flex-auto" formControlName="description" />
+            </div>
+
             <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;" >
                 <label for="userId" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">User</label>
                 <p-select formControlName="userId" [options]="users" optionLabel="username" optionValue="id" placeholder="Select a User" class="w-full md:w-56" [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}'/>
