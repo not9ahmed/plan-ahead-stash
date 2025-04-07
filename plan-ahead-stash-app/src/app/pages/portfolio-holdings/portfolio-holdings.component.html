@@ -18,8 +18,8 @@
 
     <p-table
         [value]="portfolioHoldings()"
-        showGridlines
-        [tableStyle]="{ 'min-width': '50rem' }">
+        
+        responsiveLayout="stack">
             <ng-template #header>
                 <tr>
                     <th>ID</th>
@@ -35,6 +35,9 @@
                     <td>{{ holding.category }}</td>
                     <td>{{ holding.quantity }}</td>
                 </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <h3>No Data</h3>
             </ng-template>
     </p-table>
 </div>

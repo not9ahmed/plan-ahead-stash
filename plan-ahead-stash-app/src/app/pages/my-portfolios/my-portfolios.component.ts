@@ -17,6 +17,7 @@ import { User } from '../../models/user';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PortfolioService } from '../../services/portfolio.service';
 import { UserService } from '../../services/user.service';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 interface Column {
   field: string;
@@ -25,7 +26,7 @@ interface Column {
 
 @Component({
   selector: 'app-my-portfolios',
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule, NavbarComponent],
   templateUrl: './my-portfolios.component.html',
   styleUrl: './my-portfolios.component.css',
   providers: [ConfirmationService, MessageService]
@@ -51,25 +52,6 @@ export class MyPortfoliosComponent {
   constructor(private portfolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.initCols();
     this.loadData();
-
-    // update portfolio
-    // const updateId: number = 9;
-    // const portfolioUpdated: Portfolio = {
-    //   name: "example of me updating",
-    //   userId: 1
-    // };
-
-    // portfolioService.update(updateId, portfolioUpdated).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    //   complete: () => {
-    //     console.log("complete");
-    //   }
-    // });
 
 
   }

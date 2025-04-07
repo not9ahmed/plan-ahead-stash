@@ -1,124 +1,159 @@
-<div class="my-portfolios-page">
-    <p-toast />
-    <p-confirmdialog />
+<div class="home" style="display: flex; flex-direction: column;">
 
-    <div>
-        <h2>My Portfolios Page</h2>
-    </div>
+    <div class="main-content">
+        <app-navbar></app-navbar>
+        <div class="my-portfolios-page">
+            <p-toast />
+            <p-confirmdialog />
 
-    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
-        <ng-template #start>
-            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
-        </ng-template>
+            <div style="padding: 2rem;">
+                <h2>My Portfolios Page
+                    <i class="pi pi-wallet"></i>
+                </h2>
+            </div>
 
-        <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
-        </ng-template>
-    </p-toolbar>
+            <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
 
-    <p-table [columns]="cols" [value]="portfolios" responsiveLayout="stack">
 
-        <!-- <ng-template #caption>
+
+                <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+                    <ng-template #start>
+                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+                    </ng-template>
+
+                    <ng-template #end>
+                        <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+                    </ng-template>
+                </p-toolbar>
+
+                <p-table [columns]="cols" [value]="portfolios" responsiveLayout="stack">
+
+                    <!-- <ng-template #caption>
             <div class="flex items-center justify-between" style="display: flex; justify-content: space-between; align-items: center; ">
                 <span class="text-xl font-bold" style="font-size: 1.25rem;line-height: 1.75rem; font-weight: 700; ">Portfolios</span>
             </div>
         </ng-template> -->
 
-        <ng-template #header let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </ng-template>
+                    <ng-template #header let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </ng-template>
 
 
-        <ng-template #body let-portfolio let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    
-                    @if (col.field !== 'user') {
-                        {{ portfolio[col.field]}}
-                    } @else {
-                        {{ portfolio[col.field].username}}
-                    }
-                </td>
-                <td>
-                    <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
+                    <ng-template #body let-portfolio let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns">
 
-                        <p-button severity="info" icon="pi pi-pencil" (click)="showEditDialog(portfolio.id)"/>
-                        <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, portfolio.id)" />
-                        <a routerLink="{{ '/portfolios/' + portfolio.id}}"  class="p-button font-bold" style="text-decoration: none;">
-                            <i class="pi pi-search"></i>
-                        </a>
-                        <!-- passing the portfolio object -->
-                        <!-- will be very useful for edit -->
-                        <!-- <p-button icon="pi pi-search" (click)="showPortfolio(portfolio)" severity="secondary" rounded /> -->
-                        
+                                @if (col.field !== 'user') {
+                                {{ portfolio[col.field]}}
+                                } @else {
+                                {{ portfolio[col.field].username}}
+                                }
+                            </td>
+                            <td>
+                                <div class="flex flex-wrap gap-4 justify-center"
+                                    style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
+
+                                    <p-button severity="info" icon="pi pi-pencil"
+                                        (click)="showEditDialog(portfolio.id)" />
+                                    <p-button severity="danger" icon="pi pi-trash"
+                                        (click)="confirmDelete($event, portfolio.id)" />
+                                    <a routerLink="{{ '/portfolios/' + portfolio.id}}" class="p-button font-bold"
+                                        style="text-decoration: none;">
+                                        <i class="pi pi-search"></i>
+                                    </a>
+                                    <!-- passing the portfolio object -->
+                                    <!-- will be very useful for edit -->
+                                    <!-- <p-button icon="pi pi-search" (click)="showPortfolio(portfolio)" severity="secondary" rounded /> -->
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </ng-template>
+
+                    <ng-template #footer>
+                        In total there are {{ portfolios ? portfolios.length : 0 }} portfolios.
+                    </ng-template>
+
+                </p-table>
+
+            </div>
+
+            <!-- TODO: Make it as single component -->
+            <!-- Dialog Area for Add -->
+            <p-dialog header="Add Portfolio" [(visible)]="isDialogVisible" class="card"
+                [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
+                <form [formGroup]="portfolioForm" (submit)="handleSubmit()">
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
+                        Required Fields.</span>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="name" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Name</label>
+                        <input pInputText id="userId" class="flex-auto" formControlName="name" />
                     </div>
-                </td>
-            </tr>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="userId" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">User</label>
+                        <p-select formControlName="userId" [options]="users" optionLabel="username" optionValue="id"
+                            placeholder="Select a User" class="w-full md:w-56"
+                            [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}' />
+                    </div>
 
-        </ng-template>
+                    <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                        <p-button label="Save" severity="primary" type="submit" />
+                    </div>
+                </form>
+            </p-dialog>
 
-        <ng-template #footer>
-            In total there are {{ portfolios ? portfolios.length : 0 }} portfolios.
-        </ng-template>
+            <!-- Repeatitive for Edit -->
+            <!-- Dialog Area -->
+            <p-dialog header="Edit Portfolio" [(visible)]="isEditDialogVisible" class="card"
+                [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
 
-    </p-table>
+                <form [formGroup]="portfolioForm" (submit)="handleEditSubmit()">
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
+                        Required Fields.</span>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="name" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Name</label>
+                        <input pInputText id="name" class="flex-auto" formControlName="name" />
+                    </div>
 
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="description" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Description</label>
+                        <input pInputText id="description" class="flex-auto" formControlName="description" />
+                    </div>
 
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="userId" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">User</label>
+                        <p-select formControlName="userId" [options]="users" optionLabel="username" optionValue="id"
+                            placeholder="Select a User" class="w-full md:w-56"
+                            [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}' />
+                    </div>
 
-    <!-- TODO: Make it as single component -->
-    <!-- Dialog Area for Add -->
-    <p-dialog header="Add Portfolio" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
-        <form [formGroup]="portfolioForm" (submit)="handleSubmit()">
-            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
-                <input pInputText id="userId" class="flex-auto" formControlName="name" />
-            </div>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;" >
-                <label for="userId" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">User</label>
-                <p-select formControlName="userId" [options]="users" optionLabel="username" optionValue="id" placeholder="Select a User" class="w-full md:w-56" [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}'/>
-            </div>
+                    <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                        <p-button label="Save" severity="primary" type="submit" />
+                    </div>
+                </form>
+            </p-dialog>
 
-            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
-                <p-button label="Save" severity="primary" type="submit" />
-            </div>
-        </form>
-    </p-dialog>
+        </div>
 
-    <!-- Repeatitive for Edit -->
-    <!-- Dialog Area -->
-    <p-dialog header="Edit Portfolio" [(visible)]="isEditDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
-        
-        <form [formGroup]="portfolioForm" (submit)="handleEditSubmit()">
-            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
-                <input pInputText id="name" class="flex-auto" formControlName="name" />
-            </div>
-
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="description" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Description</label>
-                <input pInputText id="description" class="flex-auto" formControlName="description" />
-            </div>
-
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;" >
-                <label for="userId" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">User</label>
-                <p-select formControlName="userId" [options]="users" optionLabel="username" optionValue="id" placeholder="Select a User" class="w-full md:w-56" [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}'/>
-            </div>
-
-            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
-                <p-button label="Save" severity="primary" type="submit" />
-            </div>
-        </form>
-    </p-dialog>
-
+    </div>
 </div>
