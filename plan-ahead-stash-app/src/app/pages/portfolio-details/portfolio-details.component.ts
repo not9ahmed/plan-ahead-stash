@@ -26,47 +26,6 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { PortfolioHoldingsComponent } from "../portfolio-holdings/portfolio-holdings.component";
 
 
-const dummyProducts = [
-  {
-    id: '1000',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '1001',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-  {
-    id: '1002',
-    code: 'f230fh0g3',
-    name: 'Bamboo Watch',
-    description: 'Product Description',
-    image: 'bamboo-watch.jpg',
-    price: 65,
-    category: 'Accessories',
-    quantity: 24,
-    inventoryStatus: 'INSTOCK',
-    rating: 5
-  },
-]
-
-
-
 @Component({
   selector: 'app-portfolio-details',
   imports: [CommonModule, ReactiveFormsModule, PanelModule, CardModule, DividerModule, TableModule, NavbarComponent, ToolbarModule, ToastModule, ButtonModule, DialogModule, ConfirmDialogModule, InputNumberModule, InputTextModule, SelectModule, DatePickerModule, PortfolioHoldingsComponent],
@@ -93,13 +52,9 @@ export class PortfolioDetailsComponent {
   assets = signal<Asset[]>([]);
 
 
-
-
   // UI Logic
   isDialogVisible = signal<boolean>(false);
   products: any;
-
-
 
 
 

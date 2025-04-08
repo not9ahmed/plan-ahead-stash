@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -33,7 +33,9 @@ interface Column {
 })
 export class MyPortfoliosComponent {
 
-  portfolios: Portfolio[] = [];
+  userId = signal<number>(-1);
+
+  portfolios = signal<Portfolio[]>([]);
   users: User[] = [];
   portfolio?: Portfolio;
   cols: Column[] = [];
@@ -43,17 +45,17 @@ export class MyPortfoliosComponent {
   editPortfolioId: number|null = null;
 
   portfolioForm = new FormGroup({
-    name: new FormControl<string|null>('', [Validators.required]),
-    description: new FormControl<string|null>('', [Validators.required]),
-    userId: new FormControl<number|null>(null, [Validators.required])
+    name: new FormControl<string>('', [Validators.required]),
+    description: new FormControl<string>('', [Validators.required]),
+    userId: new FormControl<number>(-1, [Validators.required])
   })
 
 
   constructor(private portfolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+    
+    this.userId.set(1);
     this.initCols();
     this.loadData();
-
-
   }
 
   initCols() {
@@ -70,10 +72,10 @@ export class MyPortfoliosComponent {
   loadData() {
     
     // find all portfolios by user
-    this.portfolioService.findAllByUserId(6).subscribe({
+    this.portfolioService.findAllByUserId(this.userId()).subscribe({
       next: (data) => {
         console.log(data);
-        this.portfolios = data;
+        this.portfolios.set(data);
       },
       error: (err) => {
         console.log(err);
@@ -111,7 +113,7 @@ export class MyPortfoliosComponent {
 
     // initalize the form
     // by first finding the portfolio from the list
-    const portfolioCurrent = this.portfolios.filter(el => el.id === id)[0];
+    const portfolioCurrent = this.portfolios().filter(el => el.id === id)[0];
 
 
     console.log("portfolioCurrent: ", portfolioCurrent)
@@ -119,7 +121,7 @@ export class MyPortfoliosComponent {
     this.portfolioForm.setValue({
       name: portfolioCurrent.name,
       description: portfolioCurrent.description,
-      userId: portfolioCurrent.user?.id!,
+      userId: this.userId(),
     })
 
     this.editPortfolioId = id;
@@ -184,7 +186,8 @@ export class MyPortfoliosComponent {
   handleSubmit() {
 
     console.log("portfolioForm", this.portfolioForm.value);
-    let { name, description, userId } = this.portfolioForm.value;
+    const { name, description } = this.portfolioForm.value;
+    const formUserId = this.userId();
 
     // create  portfolio
     // const portfolio: Portfolio = {
@@ -192,10 +195,20 @@ export class MyPortfoliosComponent {
     //   userId: 1
     // };
 
-    // verfiy fields are valid
-    if(name && description && userId) {
 
-      const newPortfolio = { name, description, userId };
+    this.portfolioForm.setValue({
+      name: name!,
+      description: description!,
+      userId: this.userId(),
+    })
+
+    console.log("portfolioForm after", this.portfolioForm.value);
+
+
+    // verfiy fields are valid
+    if(name && description) {
+
+      const newPortfolio = { name, description, userId: this.userId() };
 
       this.portfolioService.create(newPortfolio).subscribe({
         
