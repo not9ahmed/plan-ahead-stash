@@ -9,9 +9,9 @@ id = 'f2826498-94a4-4ff8-a5c9-7100de810a62'
 type = 'JSON'
 raw = '''
 {
-  "name": "Sukuk 6 Months Ijara new",
+  "name": "Fixed Deposit 3 Months",
   "assetType": {
-    "id": 17
+    "id": 62
   },  
   "startDate": "2025-09-01T20:23:18.257+00:00",
   "maturityDate": "2025-12-01T20:23:18.257+00:00",

@@ -36,7 +36,6 @@ export class MyPortfoliosComponent {
   userId = signal<number>(-1);
 
   portfolios = signal<Portfolio[]>([]);
-  users: User[] = [];
   portfolio?: Portfolio;
   cols: Column[] = [];
   isDialogVisible: boolean = false;
@@ -85,20 +84,6 @@ export class MyPortfoliosComponent {
       }
     });
 
-
-    // find all users
-    this.userService.findAll().subscribe({
-      next: (data) => {
-        console.log(data);
-        this.users = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('Observer completed');
-      }
-    });
 
   }
 

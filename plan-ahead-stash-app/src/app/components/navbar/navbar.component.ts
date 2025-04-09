@@ -46,6 +46,11 @@ export class NavbarComponent {
                         url: '/assetsType'
                     },
                     {
+                        label: 'Assets',
+                        icon: 'pi pi-money-bill',
+                        url: '/assets'
+                    },
+                    {
                         label: 'Portfolios',
                         icon: 'pi pi-folder',
                         url: '/portfolios'

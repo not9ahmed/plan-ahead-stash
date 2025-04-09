@@ -1,1 +1,77 @@
-<p>assets works!</p>
+<div class="assets-page">
+
+    <!-- Dialog box related to delete -->
+    <p-toast />
+    <p-confirmdialog />
+
+    <div class="Assets-title">
+        <h2>Assets</h2>
+    </div>
+
+    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+        <ng-template #start>
+            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+        </ng-template>
+
+        <ng-template #end>
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="refresh()" severity="secondary" />
+        </ng-template>
+    </p-toolbar>
+
+
+    <p-table [columns]="cols" [value]="assets()" dataKey="id" showGridlines responsiveLayout="stack">
+        <ng-template #header let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{ col.header }}
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowData let-columns="columns" let-editing="editing" let-ri="rowIndex">
+            <tr>
+                <td *ngFor="let col of columns">
+                    @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
+                        {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                    } @else if (col.field == 'assetType') {
+                        {{ rowData[col.field] | json }}
+                    } @else {
+                        {{ rowData[col.field] }}
+                    }
+                </td>
+
+                <td>
+                    <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
+                        <p-button severity="info" icon="pi pi-pencil" />
+                        <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id)"  />
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+    <!-- Dialog Area -->
+    <p-dialog header="Add Asset" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
+
+        <form [formGroup]="assetForm" (submit)="handleSubmit()">
+            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
+                <input pInputText id="name" class="flex-auto" formControlName="name" />
+            </div>
+
+            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;" >
+                <label for="assetType" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Asset Type</label>
+                <p-select formControlName="assetType" [options]="assetsType()" optionLabel="name" optionValue="id" placeholder="Select an Asset Type" class="w-full md:w-56" [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}'/>
+            </div>
+
+            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                <p-button label="Save" severity="primary" type="submit" />
+            </div>
+       </form>
+    </p-dialog>
+</div>

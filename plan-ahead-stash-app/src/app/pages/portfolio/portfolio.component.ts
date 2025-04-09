@@ -55,26 +55,6 @@ export class PortfolioComponent {
     this.initCols();
     this.loadData();
 
-    // update portfolio
-    // const updateId: number = 9;
-    // const portfolioUpdated: Portfolio = {
-    //   name: "example of me updating",
-    //   userId: 1
-    // };
-
-    // portfolioService.update(updateId, portfolioUpdated).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    //   complete: () => {
-    //     console.log("complete");
-    //   }
-    // });
-
-
   }
 
   initCols() {

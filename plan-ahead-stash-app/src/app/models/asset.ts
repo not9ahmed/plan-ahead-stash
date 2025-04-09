@@ -3,7 +3,7 @@ import { AssetType } from "./asset-type";
 export interface Asset {
     id?: number,
     name: string,
-    assetType: AssetType,
+    assetType: AssetType | { id: number},
     startDate: Date,
     maturityDate: Date,
     numberOfDays: number,
