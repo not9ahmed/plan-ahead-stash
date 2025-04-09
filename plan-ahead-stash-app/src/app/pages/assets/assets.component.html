@@ -68,6 +68,14 @@
                 <p-select formControlName="assetType" [options]="assetsType()" optionLabel="name" optionValue="id" placeholder="Select an Asset Type" class="w-full md:w-56" [style]='{"width":"100%","@media (min-width: 768px)":{"width":"14rem"}}'/>
             </div>
 
+
+            <div class="flex items-center gap-4 mb-4"
+            style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                <label for="startDate" class="font-semibold w-24"
+                    style="width: 6rem; font-weight: 600; ">Start Date</label>
+                <p-datepicker inputId="startDate" class="flex-auto" formControlName="startDate" />
+            </div>
+
             <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
                 <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
                 <p-button label="Save" severity="primary" type="submit" />

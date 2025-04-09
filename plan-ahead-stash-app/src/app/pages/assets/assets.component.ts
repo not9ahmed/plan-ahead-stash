@@ -15,6 +15,7 @@ import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
+import { DatePickerModule } from 'primeng/datepicker';
 
 
 interface Column {
@@ -24,7 +25,7 @@ interface Column {
 
 @Component({
   selector: 'app-assets',
-  imports: [CommonModule, ReactiveFormsModule, TableModule, InputTextModule, DialogModule, ToastModule, RouterLink, RouterLinkActive, ConfirmDialogModule, ToolbarModule, ButtonModule, SelectModule],
+  imports: [CommonModule, ReactiveFormsModule, TableModule, InputTextModule, DialogModule, ToastModule, RouterLink, RouterLinkActive, ConfirmDialogModule, ToolbarModule, ButtonModule, SelectModule, DatePickerModule],
   templateUrl: './assets.component.html',
   styleUrl: './assets.component.css',
   providers: [ConfirmationService, MessageService]
@@ -41,8 +42,11 @@ export class AssetsComponent {
 
   // Creating a form
   assetForm = new FormGroup({
-    name: new FormControl<string | null>('', [Validators.required]),
-    assetType: new FormControl<number>(-999, [Validators.required])
+    name: new FormControl<string | null>(null, [Validators.required]),
+    assetType: new FormControl<number | null>(null, [Validators.required]),
+    startDate: new FormControl<Date | null>(null, [Validators.required]),
+    // maturityDate: new FormControl<Date | null>(null, [Validators.required]),
+    // numberOfDays: new FormControl<number | null>(null, [Validators.required])
   })
 
 
@@ -102,9 +106,23 @@ export class AssetsComponent {
     console.log("confirm");
   }
 
+  // call post asste
   handleSubmit() {
     console.log("handleSubmit");
-    console.log("form ", this.assetForm.value)
+    console.log("form ", this.assetForm.value);
+
+    // let { name, assetType, startDate, maturityDate, numberOfDays} = this.assetForm.value;
+
+    // if(name && assetType && startDate && maturityDate && numberOfDays) {
+    //   console.log("valid");
+    // }
+
+    let { name, assetType, startDate} = this.assetForm.value;
+
+    if(name && assetType && startDate) {
+      console.log("valid");
+    }
+
     this.isDialogVisible.set(false);
 
   }
