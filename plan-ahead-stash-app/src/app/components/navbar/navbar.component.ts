@@ -10,23 +10,27 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { RouterLink } from '@angular/router';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
     selector: 'app-navbar',
     imports: [MenuModule, BadgeModule, AvatarModule, InputTextModule, Ripple, CommonModule, RippleModule, ButtonModule, DrawerModule, RouterLink],
     templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.css'
+    styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
 
     items: MenuItem[] | undefined;
 
+    constructor(private globalService: GlobalService) {
+    }
+
     ngOnInit() {
 
-        let mode = localStorage.getItem("mode");
-        if (mode === "dark") {
-            this.toggleDarkMode()
-        }
+        // let mode = localStorage.getItem("mode");
+        // if (mode === "dark") {
+        //     this.toggleDarkMode()
+        // }
 
         this.items = [
             {
@@ -70,7 +74,7 @@ export class NavbarComponent {
                         label: 'Dashboard',
                         icon: 'pi pi-objects-column',
                         // shortcut: '⌘+O',
-                        url: '/myportfolios'
+                        url: '/'
                     },
                     {
                         label: 'My Portfolios',
@@ -116,11 +120,12 @@ export class NavbarComponent {
     }
 
     toggleDarkMode() {
-        const element = document.querySelector('html')!;
-        element.classList.toggle('my-app-dark');
+        // const element = document.querySelector('html')!;
+        // element.classList.toggle('my-app-dark');
 
-        this.isDark = !this.isDark;
-        let mode: string = this.isDark ? "dark" : "light";
-        localStorage.setItem("mode", mode);
+        // this.isDark = !this.isDark;
+        // let mode: string = this.isDark ? "dark" : "light";
+        // localStorage.setItem("mode", mode);
+        this.globalService.toggleDarkMode();
     }
 }

@@ -89,6 +89,7 @@
             <!-- TODO: Make it as single component -->
             <!-- Dialog Area for Add -->
             <p-dialog header="Add Portfolio" [(visible)]="isDialogVisible" class="card"
+                (onHide)="dialogHideEmitter()"
                 [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
                 <form [formGroup]="portfolioForm" (submit)="handleSubmit()">
                     <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
@@ -103,7 +104,7 @@
                     <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
                         <label for="description" class="font-semibold w-24"
                             style="width: 6rem; font-weight: 600; ">Description</label>
-                        <input pInputText id="description" class="flex-auto" formControlName="description" />
+                        <textarea rows="5"cols="30" pTextarea id="description" class="flex-auto" formControlName="description" ></textarea>
                     </div>
 
                     <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
@@ -128,11 +129,10 @@
                         <input pInputText id="name" class="flex-auto" formControlName="name" />
                     </div>
 
-                    <div class="flex items-center gap-4 mb-4"
-                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                    <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; ">
                         <label for="description" class="font-semibold w-24"
                             style="width: 6rem; font-weight: 600; ">Description</label>
-                        <input pInputText id="description" class="flex-auto" formControlName="description" />
+                        <textarea rows="5"cols="30" pTextarea id="description" class="flex-auto" formControlName="description" ></textarea>
                     </div>
 
 

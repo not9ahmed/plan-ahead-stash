@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -8,12 +8,12 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { Portfolio } from '../../models/portfolio';
-import { User } from '../../models/user';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PortfolioService } from '../../services/portfolio.service';
 import { UserService } from '../../services/user.service';
@@ -26,7 +26,7 @@ interface Column {
 
 @Component({
   selector: 'app-my-portfolios',
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, TextareaModule, InputNumberModule, ToolbarModule, DatePickerModule, DialogModule, ConfirmDialogModule, ToastModule, SelectModule, NavbarComponent],
   templateUrl: './my-portfolios.component.html',
   styleUrl: './my-portfolios.component.css',
   providers: [ConfirmationService, MessageService]
@@ -38,7 +38,7 @@ export class MyPortfoliosComponent {
   portfolios = signal<Portfolio[]>([]);
   portfolio?: Portfolio;
   cols: Column[] = [];
-  isDialogVisible: boolean = false;
+  isDialogVisible =  signal<boolean>(false);
   isEditDialogVisible: boolean = false;
 
   editPortfolioId: number|null = null;
@@ -88,7 +88,7 @@ export class MyPortfoliosComponent {
   }
 
   showDialog() {
-    this.isDialogVisible = true;
+    this.isDialogVisible.set(true);
   }
 
   // Reptitivie
@@ -211,7 +211,7 @@ export class MyPortfoliosComponent {
 
           this.portfolioForm.reset();
           this.loadData();
-          this.isDialogVisible = false;
+          this.isDialogVisible.set(false);
 
         },
         error: (err) => {
@@ -281,7 +281,13 @@ export class MyPortfoliosComponent {
 
 
   handleCancel() {
-    this.isDialogVisible = false;
+    this.isDialogVisible.set(false);
+    this.portfolioForm.reset();
+  }
+
+
+  dialogHideEmitter() {
+    console.log("hiddenEmitter");
     this.portfolioForm.reset();
   }
 }

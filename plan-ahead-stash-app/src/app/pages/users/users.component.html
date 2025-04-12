@@ -62,7 +62,7 @@
 
 
     <!-- Dialog Area -->
-    <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}">
+    <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
         
         <form [formGroup]="userForm" (submit)="handleSubmit()">
             <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>

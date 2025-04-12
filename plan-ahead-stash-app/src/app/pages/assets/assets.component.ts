@@ -16,6 +16,7 @@ import { SelectModule } from 'primeng/select';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
 import { DatePickerModule } from 'primeng/datepicker';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 interface Column {
@@ -25,7 +26,7 @@ interface Column {
 
 @Component({
   selector: 'app-assets',
-  imports: [CommonModule, ReactiveFormsModule, TableModule, InputTextModule, DialogModule, ToastModule, RouterLink, RouterLinkActive, ConfirmDialogModule, ToolbarModule, ButtonModule, SelectModule, DatePickerModule],
+  imports: [CommonModule, ReactiveFormsModule, TableModule, InputTextModule, InputNumberModule, DialogModule, ToastModule, RouterLink, RouterLinkActive, ConfirmDialogModule, ToolbarModule, ButtonModule, SelectModule, DatePickerModule],
   templateUrl: './assets.component.html',
   styleUrl: './assets.component.css',
   providers: [ConfirmationService, MessageService]
@@ -45,13 +46,13 @@ export class AssetsComponent {
     name: new FormControl<string | null>(null, [Validators.required]),
     assetType: new FormControl<number | null>(null, [Validators.required]),
     startDate: new FormControl<Date | null>(null, [Validators.required]),
-    // maturityDate: new FormControl<Date | null>(null, [Validators.required]),
-    // numberOfDays: new FormControl<number | null>(null, [Validators.required])
+    maturityDate: new FormControl<Date | null>(null, [Validators.required]),
+    numberOfDays: new FormControl<number | null>(null, [Validators.required])
   })
 
 
 
-  constructor(private assetService: AssetService, private assetTypeService: AssetTypeService) {
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private assetService: AssetService, private assetTypeService: AssetTypeService) {
     this.initCols();
     this.loadData();
   }
@@ -117,19 +118,63 @@ export class AssetsComponent {
     //   console.log("valid");
     // }
 
-    let { name, assetType, startDate} = this.assetForm.value;
+    let { name, assetType, startDate, maturityDate, numberOfDays} = this.assetForm.value;
 
-    if(name && assetType && startDate) {
+    if(name && assetType && startDate && maturityDate && numberOfDays) {
       console.log("valid");
+
+
+      // data to be submitted
+      const newAsset: Asset = {
+        name,
+        assetType: {
+          id: assetType
+        },
+        startDate,
+        maturityDate,
+        numberOfDays
+      }
+
+
+      this.assetService.create(newAsset).subscribe({
+        next: (value) => {
+          // success show pop up 
+          console.log("success");
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Confirmed',
+            detail: 'Asset was created '+ JSON.stringify(value),
+            life: 3000
+          })
+
+          this.assetForm.reset();
+          this.isDialogVisible.set(false);
+          this.loadData();
+
+        },
+        error: (err) => {
+          console.log(err);
+
+          console.log("success");
+          this.messageService.add({
+            severity: 'succdangeress',
+            summary: 'Confirmed',
+            detail: 'Asset was failed '+ JSON.stringify(err),
+            life: 3000
+          })
+
+        }
+
+      })
+      
     }
 
-    this.isDialogVisible.set(false);
 
   }
 
   handleCancel() {
     console.log("handleCancel");
-    this.isDialogVisible.set(true);
+    this.isDialogVisible.set(false);
     this.assetForm.reset();
   }
 }

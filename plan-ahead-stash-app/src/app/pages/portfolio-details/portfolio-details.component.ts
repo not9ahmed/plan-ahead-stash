@@ -54,9 +54,7 @@ export class PortfolioDetailsComponent {
 
   // UI Logic
   isDialogVisible = signal<boolean>(false);
-  products: any;
-
-
+  
 
   portfolioHoldingForm = new FormGroup({
     portfolioId: new FormControl<number>(this.portfolioId(), [Validators.required]),
@@ -179,8 +177,6 @@ export class PortfolioDetailsComponent {
   showDialog(): void {
     console.log("showDialog details");
     this.isDialogVisible.set(!this.isDialogVisible())
-
-
   }
 
 
