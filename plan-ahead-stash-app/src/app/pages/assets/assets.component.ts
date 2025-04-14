@@ -123,11 +123,15 @@ export class AssetsComponent {
 
       // callbacks
       accept: () => {
+        this.handleDelete(id);
         this.messageService.add({
           severity: 'info',
           summary: 'Confirmed',
           detail: 'record deleted'
         })
+
+        this.loadData();
+
       },
       reject: () => {
         this.messageService.add({
@@ -137,6 +141,7 @@ export class AssetsComponent {
         })
       }
     })
+
 
   }
 
@@ -190,7 +195,7 @@ export class AssetsComponent {
 
           console.log("success");
           this.messageService.add({
-            severity: 'succdangeress',
+            severity: 'danger',
             summary: 'Confirmed',
             detail: 'Asset was failed '+ JSON.stringify(err),
             life: 3000
@@ -212,7 +217,16 @@ export class AssetsComponent {
   }
 
 
-  handleDelete(id: number): {
+  handleDelete(id: number) {
+    this.assetService.delete(id).subscribe({
+      next: (data) => {
+        console.log("data: ", data);
+        this.loadData();
 
+      },
+      error: (err) => {
+        console.log("err: ", err);
+      }
+    })
   }
 }

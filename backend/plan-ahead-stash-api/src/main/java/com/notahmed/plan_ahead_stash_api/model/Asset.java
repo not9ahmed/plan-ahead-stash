@@ -27,7 +27,7 @@ public class Asset {
 
 
     // TODO: check the different behaviors for Lazy and Eager
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "asset_type_id", nullable = false)
     private AssetType assetType;
 
