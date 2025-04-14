@@ -105,6 +105,39 @@ export class AssetsComponent {
 
   confirm(event: Event, id: number) {
     console.log("confirm");
+
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Do you want to delete this record?',
+      header: 'Delete Asset ' + id,
+      rejectLabel: 'Cancel',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+
+      // callbacks
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'record deleted'
+        })
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Rejected',
+          detail: 'action was canceled'
+        })
+      }
+    })
+
   }
 
   // call post asste
@@ -176,5 +209,10 @@ export class AssetsComponent {
     console.log("handleCancel");
     this.isDialogVisible.set(false);
     this.assetForm.reset();
+  }
+
+
+  handleDelete(id: number): {
+
   }
 }

@@ -11,7 +11,7 @@ raw = '''
 [
   {
     "portfolio": {
-      id: 10
+      "id": 10
     },
     "asset": {
       "id": 2
@@ -21,8 +21,8 @@ raw = '''
     "purchaseDate": "2025-02-02T20:19:46.298+00:00"
   },
   {
-        "portfolio": {
-      id: 10
+    "portfolio": {
+      "id": 10
     },
     "asset": {
       "id": 2

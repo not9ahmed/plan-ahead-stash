@@ -26,4 +26,7 @@ export class GlobalService {
     let mode: string = this.isDark() ? "dark" : "light";
     this.setMode(mode);
   }
+
+
+  
 }

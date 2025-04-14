@@ -1,0 +1,24 @@
+[
+    {
+        "portfolio": {
+            "id": 10
+        },
+        "asset": {
+            "id": 2
+        },
+        "quantity": 20,
+        "purchasePrice": 1000.10,
+        "purchaseDate": "2025-02-02T20:19:46.298+00:00"
+    },
+    {
+        "portfolio": {
+            "id": 10
+        },
+        "asset": {
+            "id": 2
+        },
+        "quantity": 20,
+        "purchasePrice": 1000.10,
+        "purchaseDate": "2025-02-02T20:19:46.298+00:00"
+    }
+]
