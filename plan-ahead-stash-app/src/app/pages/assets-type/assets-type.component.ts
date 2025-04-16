@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
@@ -11,9 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
 import { RouterModule } from '@angular/router';
+import { assetTypeFormValidator } from '../../validations/asset-type-form-validator.directive';
 
 
 
@@ -36,9 +37,18 @@ export class AssetsTypeComponent {
   cols!: Column[];
 
   // Creating a form
-  assetTypeForm = new FormGroup({
-    name: new FormControl<string | null>('', [Validators.required])
-  })
+  // assetTypeForm = new FormGroup({
+  //   name: new FormControl<string | null>('', [Validators.required])
+  // })
+
+  private formBuilder = inject(FormBuilder);
+  // Creating form with formbuilder
+  assetTypeForm = this.formBuilder.group({
+    name: ['', Validators.required]
+  }, {validators: assetTypeFormValidator});
+
+
+
 
   constructor(private assetTypeService: AssetTypeService, private confirmationService: ConfirmationService, private messageService: MessageService) {
     this.loadData();

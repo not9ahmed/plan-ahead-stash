@@ -1,8 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AssetService } from '../../services/asset.service';
 import { Asset } from '../../models/asset';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
@@ -41,14 +41,30 @@ export class AssetsComponent {
 
   cols: Column[] = [];
 
+  // Form using form builder
+  private formBuilder = inject(FormBuilder);
+
+
   // Creating a form
-  assetForm = new FormGroup({
-    name: new FormControl<string | null>(null, [Validators.required]),
-    assetType: new FormControl<number | null>(null, [Validators.required]),
-    startDate: new FormControl<Date | null>(null, [Validators.required]),
-    maturityDate: new FormControl<Date | null>(null, [Validators.required]),
-    numberOfDays: new FormControl<number | null>(null, [Validators.required])
+  // assetForm = new FormGroup({
+  //   name: new FormControl<string | null>(null, [Validators.required]),
+  //   assetType: new FormControl<number | null>(null, [Validators.required]),
+  //   startDate: new FormControl<Date | null>(null, [Validators.required]),
+  //   maturityDate: new FormControl<Date | null>(null, [Validators.required]),
+  //   numberOfDays: new FormControl<number | null>(null, [Validators.required])
+  // })
+
+
+
+  // Creating a form with form builder
+  assetForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    assetType: [0, Validators.required],
+    startDate: [new Date(), Validators.required],
+    maturityDate: [new Date(), Validators.required],
+    numberOfDays: [0, Validators.required]
   })
+
 
 
 
