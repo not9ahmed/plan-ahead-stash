@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { PortfolioService } from '../../services/portfolio.service';
 import { CommonModule } from '@angular/common';
 import { PanelModule } from 'primeng/panel';
@@ -17,7 +17,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { AssetService } from '../../services/asset.service';
 import { Asset } from '../../models/asset';
@@ -35,6 +35,8 @@ import { PortfolioHoldingsComponent } from "../portfolio-holdings/portfolio-hold
 })
 export class PortfolioDetailsComponent {
 
+formBuilder = inject(FormBuilder);
+
   @Input()
   set id(id: number) {
     this.portfolioId.set(id);
@@ -42,7 +44,7 @@ export class PortfolioDetailsComponent {
 
   portfolioId = signal<number>(0);
   portfolio = signal<Portfolio | null>(null);
-  portfolioHoldings = signal<PortfolioHolding[] | []>([]);
+  portfolioHoldings = signal<PortfolioHolding[]>([]);
   portfolioStats = signal<PortfolioStats>
   ({
     total: 0,
@@ -54,15 +56,31 @@ export class PortfolioDetailsComponent {
 
   // UI Logic
   isDialogVisible = signal<boolean>(false);
+
+  reloadChild = signal<number>(1);
   
 
-  portfolioHoldingForm = new FormGroup({
-    portfolioId: new FormControl<number>(this.portfolioId(), [Validators.required]),
-    assetId: new FormControl<number | null>(null, [Validators.required]),
-    quantity: new FormControl<number | null>(null, [Validators.required]),
-    purchasePrice: new FormControl<number | null>(null, [Validators.required]),
-    purchaseDate: new FormControl<Date | null>(null, [Validators.required]),
+  // Form
+  // portfolioHoldingForm = new FormGroup({
+  //   portfolioId: new FormControl<number>(this.portfolioId(), [Validators.required]),
+  //   assetId: new FormControl<number | null>(null, [Validators.required]),
+  //   quantity: new FormControl<number | null>(null, [Validators.required]),
+  //   purchasePrice: new FormControl<number | null>(null, [Validators.required]),
+  //   purchaseDate: new FormControl<Date | null>(null, [Validators.required]),
+  // });
+
+
+  // Form
+  portfolioHoldingForm = this.formBuilder.group({
+    portfolioId: [this.portfolioId(), Validators.required],
+    assetId: [0, Validators.required],
+    quantity: [0, Validators.required],
+    purchasePrice: [0, Validators.required],
+    purchaseDate: [new Date(), Validators.required],
   });
+
+
+
 
   constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService, private assetService: AssetService) {
   
@@ -174,10 +192,14 @@ export class PortfolioDetailsComponent {
     console.log("handleCancel");
   }
 
+  // Child to parent
   showDialog(): void {
     console.log("showDialog details");
-    this.isDialogVisible.set(!this.isDialogVisible())
+    this.isDialogVisible.set(!this.isDialogVisible());
+    this.reloadChild.set(1);
   }
+
+
 
 
   // Basic Stats can be all in one single function

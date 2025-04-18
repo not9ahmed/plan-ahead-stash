@@ -36,7 +36,7 @@ export class AssetsTypeComponent {
   assetsType: AssetType[] = [];
   cols!: Column[];
 
-  // Creating a form
+  // Form
   // assetTypeForm = new FormGroup({
   //   name: new FormControl<string | null>('', [Validators.required])
   // })
@@ -76,7 +76,7 @@ export class AssetsTypeComponent {
     const {name} = this.assetTypeForm.value;
 
     // if not valid
-    if(!name){
+    if(!name || this.assetTypeForm.errors){
       return;
     }
 

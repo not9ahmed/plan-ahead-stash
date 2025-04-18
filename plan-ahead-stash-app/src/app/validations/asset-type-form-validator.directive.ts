@@ -7,11 +7,10 @@ export const assetTypeFormValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const name = control.get('name');
   
-  console.log("name: ", name);
-
   const nameValue: string = name?.value;
 
-  return name && nameValue.length === 3 ? {hasName: true} : null;
+  // check if there is name and it is of length then add eror
+  return nameValue && nameValue.length === 3 ? {longName: true} : null;
 };
 
 

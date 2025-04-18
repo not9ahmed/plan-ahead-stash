@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output, signal } from '@angular/core';
 import { Portfolio } from '../../models/portfolio';
 import { PortfolioHolding } from '../../models/portfolio-holding';
 import { PortfolioStats } from '../../models/portfolio-stats';
@@ -27,17 +27,13 @@ import { AssetService } from '../../services/asset.service';
 })
 export class PortfolioHoldingsComponent {
 
-
-  @Input()
-  set id(id: number) {
-    this.portfolioId.set(id);
-  }
+  id = input<number>(0);
   
   // Child to parent communication
   @Output()
   dialogVisableEvent = new EventEmitter<boolean>();
 
-  portfolioId = signal<number>(0);
+
   portfolio = signal<Portfolio | null>(null);
   portfolioHoldings = signal<PortfolioHolding[] | []>([]);
   portfolioStats = signal<PortfolioStats>
@@ -46,10 +42,6 @@ export class PortfolioHoldingsComponent {
       highestPurchase: null,
       latestPurchase: null
     });
-
-  products: any;
-
-
 
 
 
@@ -60,7 +52,6 @@ export class PortfolioHoldingsComponent {
 
   ngOnInit() {
     console.log("ngOnInit PortfolioHoldingsComponent");
-    console.log("portfolioId: ", this.portfolioId());
 
     this.loadData();
   }
@@ -69,7 +60,7 @@ export class PortfolioHoldingsComponent {
   loadData(): void {
     // get all portfolio along with the assets
     // may better us portfolio holding
-    this.portfolioService.findById(this.portfolioId()).subscribe({
+    this.portfolioService.findById(this.id()).subscribe({
       next: (data: Portfolio) => {
         console.log(data);
         this.portfolio.set(data);
@@ -80,7 +71,7 @@ export class PortfolioHoldingsComponent {
     });
 
 
-    this.portfolioHoldingService.findAllByPortfolioId(this.portfolioId()).subscribe({
+    this.portfolioHoldingService.findAllByPortfolioId(this.id()).subscribe({
       next: (data: PortfolioHolding[]) => {
         console.log(data);
         this.portfolioHoldings.set(data);
@@ -96,6 +87,5 @@ export class PortfolioHoldingsComponent {
   showDialog() {
     console.log("showDialog PortfolioHoldingsComponent");
     this.dialogVisableEvent.emit(true);
-    
   }
 }

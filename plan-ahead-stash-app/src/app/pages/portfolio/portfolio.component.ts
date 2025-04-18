@@ -1,22 +1,26 @@
-import { Component } from '@angular/core';
-import { PortfolioService } from '../../services/portfolio.service';
-import { Portfolio } from '../../models/portfolio';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { PortfolioService } from '../../services/portfolio.service';
+import { UserService } from '../../services/user.service';
+
+import { Portfolio } from '../../models/portfolio';
+import { User } from '../../models/user';
+
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ToolbarModule } from 'primeng/toolbar';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { ConfirmationService, MessageService, ToastMessageOptions } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user';
-import { RouterModule } from '@angular/router';
+
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 
@@ -35,20 +39,33 @@ interface Column {
 })
 export class PortfolioComponent {
 
-  portfolios: Portfolio[] = [];
-  users: User[] = [];
-  portfolio?: Portfolio;
+  private formBuilder = inject(FormBuilder);
+
   cols: Column[] = [];
-  isDialogVisible: boolean = false;
-  isEditDialogVisible: boolean = false;
 
-  editPortfolioId: number|null = null;
+  portfolios = signal<Portfolio[]>([]);
+  users = signal<User[]>([]);
+  portfolio = signal<Portfolio | null>(null);
+  isDialogVisible = signal<boolean>(false);
+  isEditDialogVisible = signal<boolean>(false);
+  editPortfolioId = signal<number>(999);
 
-  portfolioForm = new FormGroup({
-    name: new FormControl<string|null>('', [Validators.required]),
-    description: new FormControl<string|null>('', [Validators.required]),
-    userId: new FormControl<number|null>(null, [Validators.required])
-  })
+  // Form
+  // portfolioForm = new FormGroup({
+  //   name: new FormControl<string|null>('', [Validators.required]),
+  //   description: new FormControl<string|null>('', [Validators.required]),
+  //   userId: new FormControl<number|null>(null, [Validators.required])
+  // })
+
+
+  portfolioForm = this.formBuilder.group({
+    name: ['', { validators: Validators.required }],
+    description: ['', { validators: Validators.required }],
+    userId: [-999, { validators: Validators.required }]
+  },)
+
+
+
 
 
   constructor(private portfolioService: PortfolioService, private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
@@ -57,24 +74,14 @@ export class PortfolioComponent {
 
   }
 
-  initCols() {
-    this.cols = [
-      { field: "id", header: "ID"},
-      { field: "name", header: "Name"},
-      { field: "description", header: "Description"},
-      { field: "user", header: "User"},
-      { field: "createdDate", header: "Created Date"},
-      { field: "modifiedDate", header: "Modified Date"},
-    ];
-  }
 
   loadData() {
-    
+
     // find all portfolios
     this.portfolioService.findAll().subscribe({
       next: (data) => {
         console.log(data);
-        this.portfolios = data;
+        this.portfolios.set(data);
       },
       error: (err) => {
         console.log(err);
@@ -89,7 +96,7 @@ export class PortfolioComponent {
     this.userService.findAll().subscribe({
       next: (data) => {
         console.log(data);
-        this.users = data;
+        this.users.set(data);
       },
       error: (err) => {
         console.log(err);
@@ -102,7 +109,7 @@ export class PortfolioComponent {
   }
 
   showDialog() {
-    this.isDialogVisible = true;
+    this.isDialogVisible.set(true);
   }
 
   // Reptitivie
@@ -112,7 +119,8 @@ export class PortfolioComponent {
 
     // initalize the form
     // by first finding the portfolio from the list
-    const portfolioCurrent = this.portfolios.filter(el => el.id === id)[0];
+    const portfolioCurrent = this.portfolios()
+    .filter(el => el.id === id)[0];
 
 
     console.log("portfolioCurrent: ", portfolioCurrent)
@@ -123,9 +131,10 @@ export class PortfolioComponent {
       userId: portfolioCurrent.user?.id!,
     })
 
-    this.editPortfolioId = id;
-    this.isEditDialogVisible = true;
+    this.editPortfolioId.set(id);
+    this.isEditDialogVisible.set(true);
   }
+
 
   showPortfolio(portfolio: Portfolio) {
     console.log("portfolio", portfolio);
@@ -166,7 +175,7 @@ export class PortfolioComponent {
           error: (err) => {
             console.log("error");
             console.log(err);
-            
+
           },
           complete: () => {
             console.log("complete");
@@ -194,12 +203,12 @@ export class PortfolioComponent {
     // };
 
     // verfiy fields are valid
-    if(name && description && userId) {
+    if (name && description && userId) {
 
       const newPortfolio = { name, description, userId };
 
       this.portfolioService.create(newPortfolio).subscribe({
-        
+
         // success delete
         next: (data) => {
           const portfolioCreated: Portfolio = data;
@@ -214,7 +223,7 @@ export class PortfolioComponent {
 
           this.portfolioForm.reset();
           this.loadData();
-          this.isDialogVisible = false;
+          this.isDialogVisible.set(false);
 
         },
         error: (err) => {
@@ -245,12 +254,12 @@ export class PortfolioComponent {
     // };
 
     // verfiy fields are valid
-    if(name && description && userId && this.editPortfolioId) {
+    if (name && description && userId && this.editPortfolioId()) {
 
       const newPortfolio = { name, description, userId };
 
-      this.portfolioService.update(this.editPortfolioId, newPortfolio).subscribe({
-        
+      this.portfolioService.update(this.editPortfolioId(), newPortfolio).subscribe({
+
         // success delete
         next: (data) => {
           const portfolioCreated: Portfolio = data;
@@ -265,7 +274,7 @@ export class PortfolioComponent {
 
           this.portfolioForm.reset();
           this.loadData();
-          this.isEditDialogVisible = false;
+          this.isEditDialogVisible.set(false);
 
         },
         error: (err) => {
@@ -284,7 +293,20 @@ export class PortfolioComponent {
 
 
   handleCancel() {
-    this.isDialogVisible = false;
+    this.isDialogVisible.set(false);
     this.portfolioForm.reset();
+  }
+
+
+
+  initCols() {
+    this.cols = [
+      { field: "id", header: "ID" },
+      { field: "name", header: "Name" },
+      { field: "description", header: "Description" },
+      { field: "user", header: "User" },
+      { field: "createdDate", header: "Created Date" },
+      { field: "modifiedDate", header: "Modified Date" },
+    ];
   }
 }
