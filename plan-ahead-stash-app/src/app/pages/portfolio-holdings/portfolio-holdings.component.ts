@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Input, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, input, Output, signal } from '@angular/core';
 import { Portfolio } from '../../models/portfolio';
 import { PortfolioHolding } from '../../models/portfolio-holding';
 import { PortfolioStats } from '../../models/portfolio-stats';
@@ -13,7 +13,6 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AssetService } from '../../services/asset.service';
 
@@ -28,6 +27,7 @@ import { AssetService } from '../../services/asset.service';
 export class PortfolioHoldingsComponent {
 
   id = input<number>(0);
+
   
   // Child to parent communication
   @Output()
@@ -46,7 +46,7 @@ export class PortfolioHoldingsComponent {
 
 
   constructor(private portfolioService: PortfolioService, private portfolioHoldingService: PortfolioHoldingService, private assetService: AssetService) {
-
+    
   }
 
 

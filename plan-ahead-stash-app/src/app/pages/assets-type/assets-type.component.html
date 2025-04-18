@@ -14,12 +14,12 @@
         </ng-template>
 
         <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="refresh()" severity="secondary" />
+            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
         </ng-template>
     </p-toolbar>
 
 
-    <p-table [columns]="cols" [value]="assetsType" dataKey="id" editMode="row" showGridlines responsiveLayout="stack">
+    <p-table [columns]="cols" [value]="assetsType()" dataKey="id" editMode="row" showGridlines responsiveLayout="stack">
         <ng-template #header let-columns>
             <tr>
                 <th *ngFor="let col of columns">

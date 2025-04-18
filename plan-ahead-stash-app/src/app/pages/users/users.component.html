@@ -17,7 +17,7 @@
         </ng-template>
     </p-toolbar>
 
-    <p-table [columns]="cols" [value]="users" showGridlines responsiveLayout="stack">
+    <p-table [columns]="cols" [value]="users()" showGridlines responsiveLayout="stack">
 
         
         <ng-template #header let-columns>
@@ -33,24 +33,17 @@
         <ng-template #body let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    @if (col.field == 'createdDate' || col.field == 'modifiedDate' || col.field == 'dateOfBirth') {
-                    {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                    @if (col.type == 'date' ) {
+                        {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
                     } @else {
-                    {{ rowData[col.field] }}
+                        {{ rowData[col.field] }}
                     }
                 </td>
                 <td>
                     <div class="flex flex-wrap gap-4 justify-center">
 
                         <p-button severity="info" icon="pi pi-pencil" />
-
-                        <!-- <p-button label="Delete" (click)="handleDelete(rowData.id!)"  severity="danger" /> -->
-
-                        <!-- use this for deletion -->
-                        <!-- will pass id also -->
-                        <!-- <p-button (click)="confirm($event, rowData.id)" label="Delete" severity="danger" /> -->
                         <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, rowData.id!)" />
-
 
                     </div>
                 </td>
@@ -62,6 +55,7 @@
 
 
     <!-- Dialog Area -->
+    <!-- Make it as component -->
     <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
         
         <form [formGroup]="userForm" (submit)="handleSubmit()">

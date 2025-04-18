@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
@@ -31,17 +31,13 @@ interface Column {
   providers: [ConfirmationService, MessageService]
 })
 export class AssetsTypeComponent {
-
-  isDialogVisible: boolean = false;
-  assetsType: AssetType[] = [];
   cols!: Column[];
 
-  // Form
-  // assetTypeForm = new FormGroup({
-  //   name: new FormControl<string | null>('', [Validators.required])
-  // })
-
   private formBuilder = inject(FormBuilder);
+
+  isDialogVisible = signal<boolean>(false);
+  assetsType = signal<AssetType[]>([]);
+
   // Creating form with formbuilder
   assetTypeForm = this.formBuilder.group({
     name: ['', Validators.required]
@@ -51,23 +47,32 @@ export class AssetsTypeComponent {
 
 
   constructor(private assetTypeService: AssetTypeService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+    this.initCols()
     this.loadData();
-
-    // make it dynamic
-    this.cols = [
-        { field: 'id', header: 'ID' },
-        { field: 'name', header: 'Name' },
-        { field: 'createdDate', header: 'Created Date' },
-        { field: 'modifiedDate', header: 'Modified Date' }
-    ];
   }
 
   loadData() {
     this.assetTypeService.findAll().subscribe(data => {
       console.log(data);
-      this.assetsType = data;
+      this.assetsType.set(data);
     })
   }
+
+  showDialog(): void {
+    this.isDialogVisible.set(true);
+  }
+
+  hideDialog(): void {
+    this.isDialogVisible.set(false);
+  }
+
+  handleCancel(): void {
+    this.assetTypeForm.reset();
+    this.hideDialog();
+  }
+
+
+
 
   // create new asset type
   handleSubmit() {
@@ -86,15 +91,15 @@ export class AssetsTypeComponent {
     this.assetTypeService.create(newAssetType).subscribe({
       next: (data) => {
         console.log(data);
-        this.isDialogVisible = false;
         this.messageService.add({
           severity: 'success',
           summary: 'Confirmed',
           detail: 'Record created ' + JSON.stringify(data),
           life: 3000
         });
-
-        this.refresh();
+        
+        this.loadData();
+        this.hideDialog()
 
       },
       error: (err) => {
@@ -117,8 +122,7 @@ export class AssetsTypeComponent {
 
     });
 
-    this.isDialogVisible = false;
-
+    this.hideDialog();
     this.assetTypeForm.reset();
   }
 
@@ -134,10 +138,7 @@ export class AssetsTypeComponent {
     })
   }
 
-  handleCancel() {
-    this.assetTypeForm.reset();
-    this.isDialogVisible = false
-  }
+
 
   confirm(event: Event, id: number) {
     this.confirmationService.confirm({
@@ -167,12 +168,15 @@ export class AssetsTypeComponent {
     });
 }
 
-  refresh() {
-    this.loadData();
-  }
 
 
-  showDialog() {
-    this.isDialogVisible = !this.isDialogVisible;
+  initCols() {
+    // make it dynamic
+    this.cols = [
+      { field: 'id', header: 'ID' },
+      { field: 'name', header: 'Name' },
+      { field: 'createdDate', header: 'Created Date' },
+      { field: 'modifiedDate', header: 'Modified Date' }
+  ];
   }
 }

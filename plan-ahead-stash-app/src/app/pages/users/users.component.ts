@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
+import { Column } from '../../types/column';
+
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ToolbarModule } from 'primeng/toolbar';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
-import { DatePickerModule } from 'primeng/datepicker';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-interface Column {
-  field: string;
-  header: string;
-}
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @Component({
@@ -27,19 +26,21 @@ interface Column {
   providers: [ConfirmationService, MessageService]
 })
 export class UsersComponent {
-
-  users: User[] = [];
+  
+  formBuilder = inject(FormBuilder);
+  
   cols!: Column[];
-  isDialogVisible: boolean = false;
+
+  users = signal<User[]>([]);
+  isDialogVisible = signal<boolean>(false);
 
 
-  userForm = new FormGroup({
-    username: new FormControl<string|null>('', [Validators.required]),
-    firstName: new FormControl<string|null>('', [Validators.required]),
-    lastName: new FormControl<string|null>('', [Validators.required]),
-    dateOfBirth: new FormControl<Date|null>(null, [Validators.required]),
+  userForm = this.formBuilder.group({
+    username: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    dateOfBirth: [new Date(), Validators.required],
   });
-
 
 
   constructor(private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
@@ -47,33 +48,33 @@ export class UsersComponent {
     this.loadData();
   }
 
-  initCols() {
-    // make it dynamic
-    // get from the interface the field
-    this.cols = [
-      { field: "id", header: "ID"},
-      { field: "username", header: "Username"},
-      { field: "firstName", header: "First Name"},
-      { field: "lastName", header: "Last Name"},
-      { field: "dateOfBirth", header: "Date of Birth"},
-      { field: "createdDate", header: "Created Date"},
-      { field: "modifiedDate", header: "Modified Date"}
-    ];
+
+  // UI LOGIC
+
+
+  showDialog(): void {
+    this.isDialogVisible.set(true);
   }
 
-  showDialog() {
-    this.isDialogVisible = true; 
+  hideDialog(): void {
+    this.isDialogVisible.set(false);
+  }
+
+  handleCancel(): void {
+    this.userForm.reset();
+    this.hideDialog();
   }
 
 
-  loadData() {
+  loadData(): void {
     this.userService.findAll().subscribe({
       next: (data) => {
         console.log("users", data);
-        this.users = data;      
+        this.users.set(data);     
       },
       error: (err) => {
         console.log(err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong while loading the data' });
       }
     })
   }
@@ -85,7 +86,6 @@ export class UsersComponent {
     console.log("handle submit");
     console.log(this.userForm.value);
 
-
     // verify that fields are filld
     if(username && firstName && lastName && dateOfBirth) {
       console.log("is valid");
@@ -95,14 +95,18 @@ export class UsersComponent {
         next: (data) => {
           console.log(data);
           this.loadData();
-          this.isDialogVisible = false;
-
+          this.hideDialog();
         },
         error: (err) => {
           console.log("error", err);
         }
       })
     }
+
+  }
+
+
+  handleEdit(): void {
 
   }
 
@@ -147,8 +151,19 @@ export class UsersComponent {
 
   }
 
-  handleCancel() {
-    this.isDialogVisible = false;
-    this.userForm.reset();
+
+
+  initCols() {
+    // make it dynamic
+    // get from the interface the field
+    this.cols = [
+      { field: "id", header: "ID", type: "number"},
+      { field: "username", header: "Username", type: "string"},
+      { field: "firstName", header: "First Name", type: "string"},
+      { field: "lastName", header: "Last Name", type: "string"},
+      { field: "dateOfBirth", header: "Date of Birth", type: "date"},
+      { field: "createdDate", header: "Created Date", type: "date"},
+      { field: "modifiedDate", header: "Modified Date", type: "date"}
+    ];
   }
 }
