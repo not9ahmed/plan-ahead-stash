@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
@@ -14,6 +14,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { Message } from 'primeng/message';
+
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -21,21 +23,30 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
+  imports: [CommonModule, JsonPipe, ReactiveFormsModule, Message, NavbarComponent, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]
 })
 export class UsersComponent {
   
-  formBuilder = inject(FormBuilder);
-  
+  // Services
+  private formBuilder = inject(FormBuilder);
+  private userService = inject(UserService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
   cols!: Column[];
 
+  // API states
   users = signal<User[]>([]);
+  
+  // UI states
+  isDataLoaded = signal<boolean>(false);
   isDialogVisible = signal<boolean>(false);
 
 
+  // Can add cross field validation
   userForm = this.formBuilder.group({
     username: ['', Validators.required],
     firstName: ['', Validators.required],
@@ -43,16 +54,32 @@ export class UsersComponent {
     dateOfBirth: [new Date(), Validators.required],
   });
 
+  // Form Accessors
+  get username() {
+    return this.userForm.get("username");
+  }
 
-  constructor(private userService: UserService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  get firstName() {
+    return this.userForm.get("firstName");
+  }
+
+  get lastName() {
+    return this.userForm.get("lastName");
+  }
+
+  get dateOfBirth() {
+    return this.userForm.get("dateOfBirth");
+  }
+
+
+
+  constructor() {
     this.initCols();
     this.loadData();
   }
 
 
   // UI LOGIC
-
-
   showDialog(): void {
     this.isDialogVisible.set(true);
   }
@@ -67,22 +94,39 @@ export class UsersComponent {
   }
 
 
+  /**
+   * Loading data from API
+   */
   loadData(): void {
+
+    this.isDataLoaded.set(false);
+
     this.userService.findAll().subscribe({
       next: (data) => {
+        console.log("isDataLoaded: ", this.isDataLoaded());
         console.log("users", data);
         this.users.set(data);     
+        this.isDataLoaded.set(true);
+        console.log("isDataLoaded: ", this.isDataLoaded());
       },
       error: (err) => {
         console.log(err);
+        this.isDataLoaded.set(false);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong while loading the data' });
       }
-    })
+    });
+
   }
+
+
 
 
   handleSubmit() {
     
+    // validation of form
+    console.log("form ", this.userForm);
+
+
     let {username, firstName, lastName, dateOfBirth} = this.userForm.value;
     console.log("handle submit");
     console.log(this.userForm.value);
@@ -112,11 +156,16 @@ export class UsersComponent {
   }
 
 
-  confirmDelete(event: Event, id: number) {
+  confirmDelete(event: Event, user: User) {
+
+    if(!user || !user.id) return;
+
+    const id = user.id;
+
     this.confirmationService.confirm({
         target: event.target as EventTarget,
-        message: 'Do you want to delete this record?',
-        header: 'Danger Zone' + ", The is id: "+ id,
+        header: 'Delete User',
+        message: `Are you sure you want to delete "${user.username}"?`,
         icon: 'pi pi-info-circle',
         rejectLabel: 'Cancel',
         rejectButtonProps: {

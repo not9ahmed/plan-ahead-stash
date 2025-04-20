@@ -18,14 +18,12 @@
                     <ng-template #start>
                         <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
                     </ng-template>
-
                     <ng-template #end>
                         <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
                     </ng-template>
                 </p-toolbar>
 
                 <p-table [columns]="cols" [value]="users()" showGridlines responsiveLayout="stack">
-
 
                     <ng-template #header let-columns>
                         <tr>
@@ -47,11 +45,11 @@
                                 }
                             </td>
                             <td>
-                                <div class="flex flex-wrap gap-4 justify-center">
+                                <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
 
                                     <p-button severity="info" icon="pi pi-pencil" />
                                     <p-button severity="danger" icon="pi pi-trash"
-                                        (click)="confirmDelete($event, rowData.id!)" />
+                                        (click)="confirmDelete($event, rowData!)" />
 
                                 </div>
                             </td>
@@ -72,11 +70,22 @@
                 <form [formGroup]="userForm" (submit)="handleSubmit()">
                     <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
                         Required Fields.</span>
+
+
+                    @if(username?.invalid && (username?.touched || username?.dirty)) {
+                        <div style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; width: 100%;">
+                            <p-message severity="error">
+                                @if (username?.hasError('required')) {
+                                    <div> Username is required</div>
+                                }
+                            </p-message>
+                        </div>
+                    }
                     <div class="flex items-center gap-4 mb-4"
                         style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
                         <label for="username" class="font-semibold w-24"
                             style="width: 6rem; font-weight: 600; ">Username</label>
-                        <input pInputText id="username" class="flex-auto" formControlName="username" />
+                        <input pInputText id="username" class="flex-auto" formControlName="username" required/>
                     </div>
                     <div class="flex items-center gap-4 mb-4"
                         style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
