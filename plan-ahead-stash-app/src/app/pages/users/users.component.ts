@@ -16,11 +16,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, ReactiveFormsModule, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
+  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]

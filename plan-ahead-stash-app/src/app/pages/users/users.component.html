@@ -1,85 +1,108 @@
-<div class="users-page" style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
+<div class="page">
 
-    <p-toast />
-    <p-confirmdialog />
+    <div class="main-content">
+        <app-navbar></app-navbar>
 
-    <div class="card">
-        <h2>Users Pages</h2>
-    </div>
+        <div class="users-page">
 
-    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
-        <ng-template #start>
-            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
-        </ng-template>
+            <p-toast />
+            <p-confirmdialog />
 
-        <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
-        </ng-template>
-    </p-toolbar>
+            <div style="padding: 0.5rem 1rem;">
+                <h2>Users Pages</h2>
+            </div>
 
-    <p-table [columns]="cols" [value]="users()" showGridlines responsiveLayout="stack">
+            <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
 
-        
-        <ng-template #header let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    @if (col.type == 'date' ) {
-                        {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
-                    } @else {
-                        {{ rowData[col.field] }}
-                    }
-                </td>
-                <td>
-                    <div class="flex flex-wrap gap-4 justify-center">
+                <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+                    <ng-template #start>
+                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+                    </ng-template>
 
-                        <p-button severity="info" icon="pi pi-pencil" />
-                        <p-button severity="danger" icon="pi pi-trash" (click)="confirmDelete($event, rowData.id!)" />
+                    <ng-template #end>
+                        <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+                    </ng-template>
+                </p-toolbar>
 
+                <p-table [columns]="cols" [value]="users()" showGridlines responsiveLayout="stack">
+
+
+                    <ng-template #header let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns">
+                                @if (col.type == 'date' ) {
+                                {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                                } @else {
+                                {{ rowData[col.field] }}
+                                }
+                            </td>
+                            <td>
+                                <div class="flex flex-wrap gap-4 justify-center">
+
+                                    <p-button severity="info" icon="pi pi-pencil" />
+                                    <p-button severity="danger" icon="pi pi-trash"
+                                        (click)="confirmDelete($event, rowData.id!)" />
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </ng-template>
+
+                </p-table>
+
+            </div>
+
+
+            <!-- Dialog Area -->
+            <!-- Make it as component -->
+            <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card"
+                [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
+
+                <form [formGroup]="userForm" (submit)="handleSubmit()">
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
+                        Required Fields.</span>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="username" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Username</label>
+                        <input pInputText id="username" class="flex-auto" formControlName="username" />
                     </div>
-                </td>
-            </tr>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="firstName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">First
+                            Name</label>
+                        <input pInputText id="firstName" class="flex-auto" formControlName="firstName" />
+                    </div>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="lastName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Last
+                            Name</label>
+                        <input pInputText id="lastName" class="flex-auto" formControlName="lastName" />
+                    </div>
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="dateOfBirth" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Date
+                            of Birth</label>
+                        <p-datepicker inputId="dateOfBirth" formControlName="dateOfBirth" />
+                    </div>
+                    <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                        <p-button label="Save" severity="primary" type="submit" />
+                    </div>
+                </form>
+            </p-dialog>
 
-        </ng-template>
-
-    </p-table>
-
-
-    <!-- Dialog Area -->
-    <!-- Make it as component -->
-    <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card" [style]="{'display': 'flex', 'justify-content': 'center'}"  [contentStyle]="{'overflow':'visible'}">
-        
-        <form [formGroup]="userForm" (submit)="handleSubmit()">
-            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required Fields.</span>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="username" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Username</label>
-                <input pInputText id="username" class="flex-auto" formControlName="username" />
-            </div>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="firstName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">First Name</label>
-                <input pInputText id="firstName" class="flex-auto" formControlName="firstName" />
-            </div>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="lastName" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Last Name</label>
-                <input pInputText id="lastName" class="flex-auto" formControlName="lastName" />
-            </div>
-            <div class="flex items-center gap-4 mb-4" style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="dateOfBirth" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Date of Birth</label>
-                <p-datepicker inputId="dateOfBirth" formControlName="dateOfBirth" />
-            </div>
-            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
-                <p-button label="Save" severity="primary" type="submit" />
-            </div>
-       </form>
-    </p-dialog>
+        </div>
+    </div>
 </div>
