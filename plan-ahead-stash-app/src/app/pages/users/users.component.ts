@@ -89,15 +89,8 @@ export class UsersComponent {
 
   // UI LOGIC
   showDialog(isUpdate: 'create' | 'update'): void {
-
-    if(isUpdate === 'create') {
-      this.isUpdateForm.set(false);
-    }
-    
-    if(isUpdate === 'update'){
-      this.isUpdateForm.set(true);
-    }
-    
+    if(isUpdate === 'create') { this.isUpdateForm.set(false); }
+    if(isUpdate === 'update') { this.isUpdateForm.set(true); }
     this.isDialogVisible.set(true);
   }
 
@@ -205,7 +198,7 @@ export class UsersComponent {
   }
 
 
-  handleEdit(): void {
+  handleEdit(userId: number): void {
     this.isFormSubmitted.set(false);
     this.isUpdateForm.set(true);
 
@@ -231,7 +224,7 @@ export class UsersComponent {
     // verify that fields are filled
     let newUser = { username, firstName, lastName, dateOfBirth };
 
-    this.userService.create(newUser).subscribe({
+    this.userService.update(userId, newUser).subscribe({
       next: (data) => {
 
         this.messageService.add({
