@@ -5,8 +5,7 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator, ValidatorF
 export const assetTypeFormValidator: ValidatorFn = (
   control: AbstractControl,
 ): ValidationErrors | null => {
-  const name = control.get('name');
-  
+  const name = control.get('name');  
   const nameValue: string = name?.value;
 
   // check if there is name and it is of length then add eror

@@ -16,7 +16,7 @@
 
                 <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
                     <ng-template #start>
-                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog('create')" />
                     </ng-template>
                     <ng-template #end>
                         <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
@@ -47,7 +47,7 @@
                             <td>
                                 <div class="flex flex-wrap gap-4 justify-center" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
 
-                                    <p-button severity="info" icon="pi pi-pencil" />
+                                    <p-button severity="info" icon="pi pi-pencil" (click)="showDialog('update'); toggleEdit()"/>
                                     <p-button severity="danger" icon="pi pi-trash"
                                         (click)="confirmDelete($event, rowData!)" />
 
@@ -64,20 +64,26 @@
 
             <!-- Dialog Area -->
             <!-- Make it as component -->
-            <p-dialog header="Add User" [(visible)]="isDialogVisible" class="card"
+            <p-dialog [header]="formTitle() + ' User'" [(visible)]="isDialogVisible" class="card"
+                (onHide)="handleCancel()"
                 [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
 
                 <form [formGroup]="userForm" (submit)="handleSubmit()">
                     <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
                         Required Fields.</span>
 
+                        <h3 *ngIf="isFormInvalid()">
+                            Invalid Form: {{ isFormInvalid()}}
+                        </h3>
 
                     @if(username?.invalid && (username?.touched || username?.dirty)) {
                         <div style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; width: 100%;">
-                            <p-message severity="error">
-                                @if (username?.hasError('required')) {
-                                    <div> Username is required</div>
-                                }
+                            <p-message severity="error" *ngIf="username?.hasError('required')">
+                                <div> Username is required</div> 
+                            </p-message>
+
+                            <p-message severity="error" *ngIf="username?.hasError('minlength')">
+                                <div> Username is short</div> 
                             </p-message>
                         </div>
                     }
