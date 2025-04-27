@@ -49,6 +49,11 @@ export class UsersComponent {
   isFormSubmitted = signal<boolean>(false);
   isDialogVisible = signal<boolean>(false);
 
+
+  // User to be Updated
+  userToUpdate = signal<number>(-1);
+
+
   // form action
   isUpdateForm = signal<boolean>(false);
   formTitle = computed<string>(() => this.isUpdateForm() ? "Update" : "Create")
@@ -88,10 +93,29 @@ export class UsersComponent {
 
 
   // UI LOGIC
-  showDialog(isUpdate: 'create' | 'update'): void {
+  showDialog(isUpdate: 'create' | 'update', user?: User): void {
     if(isUpdate === 'create') { this.isUpdateForm.set(false); }
     if(isUpdate === 'update') { this.isUpdateForm.set(true); }
     this.isDialogVisible.set(true);
+  }
+
+  setUpdateUserId(user: User): void {
+    console.log("user: ", user);
+    if(user.id) {
+      this.userToUpdate.set(user.id);
+
+      console.log(user)
+      console.log("form before update: ", this.userForm.value);
+
+      this.userForm.setValue({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        dateOfBirth: new Date(user.dateOfBirth)
+      });
+
+      console.log("form updated: ", this.userForm.value);
+    }
   }
 
   hideDialog(): void {
@@ -159,32 +183,66 @@ export class UsersComponent {
     // verify that fields are filled
     let newUser = { username, firstName, lastName, dateOfBirth };
 
-    this.userService.create(newUser).subscribe({
-      next: (data) => {
 
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Confirmed',
-          detail: "User created " + JSON.stringify(data),
-          life: 3000
-        });
+    if(!this.isUpdateForm()) {
+      this.userService.create(newUser).subscribe({
+        next: (data) => {
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Confirmed',
+            detail: "User created " + JSON.stringify(data),
+            life: 3000
+          });
+  
+          this.userForm.reset();
+          this.hideDialog();
+          this.loadData();
+          this.isFormSubmitted.set(true);
+        },
+        error: (err) => {
+          console.log("error", err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err.error.message + " " + err.error.timestamp,
+            life: 3000
+          });
+          this.isFormSubmitted.set(false);
+        }
+      })
 
-        this.userForm.reset();
-        this.hideDialog();
-        this.loadData();
-        this.isFormSubmitted.set(true);
-      },
-      error: (err) => {
-        console.log("error", err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: err.error.message + " " + err.error.timestamp,
-          life: 3000
-        });
-        this.isFormSubmitted.set(false);
-      }
-    })
+      // handling edit
+    } else if (this.isUpdateForm()) {
+
+
+      this.userService.update(this.userToUpdate(), newUser).subscribe({
+        next: (data) => {
+  
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Confirmed',
+            detail: "User created " + JSON.stringify(data),
+            life: 3000
+          });
+  
+          this.userForm.reset();
+          this.hideDialog();
+          this.loadData();
+          this.isFormSubmitted.set(true);
+        },
+        error: (err) => {
+          console.log("error", err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: err.error.message + " " + err.error.timestamp,
+            life: 3000
+          });
+          this.isFormSubmitted.set(false);
+        }
+      })
+    }
 
 
   }
@@ -198,9 +256,15 @@ export class UsersComponent {
   }
 
 
+  // Refactor the submiit
+  handleCreate(): void {
+
+  }
+
+
   handleEdit(userId: number): void {
-    this.isFormSubmitted.set(false);
     this.isUpdateForm.set(true);
+    this.isFormSubmitted.set(false);
 
     // validation of form
     let { username, firstName, lastName, dateOfBirth } = this.userForm.value;
@@ -221,8 +285,8 @@ export class UsersComponent {
     }
 
 
-    // verify that fields are filled
-    let newUser = { username, firstName, lastName, dateOfBirth };
+    // assign properties to object
+    let newUser: User = { username, firstName, lastName, dateOfBirth };
 
     this.userService.update(userId, newUser).subscribe({
       next: (data) => {
