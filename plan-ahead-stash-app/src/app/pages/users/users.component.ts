@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { UserService } from '../../services/user.service';
@@ -24,7 +24,7 @@ import { userFormValidator } from '../../validations/user-form-validator.directi
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule, JsonPipe, ReactiveFormsModule, Message, NavbarComponent, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
+  imports: [CommonModule, ReactiveFormsModule, Message, NavbarComponent, TableModule, ButtonModule, InputTextModule, DatePickerModule, ToolbarModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
   providers: [ConfirmationService, MessageService]
@@ -57,7 +57,6 @@ export class UsersComponent {
   // form action
   isUpdateForm = signal<boolean>(false);
   formTitle = computed<string>(() => this.isUpdateForm() ? "Update" : "Create")
-
 
   // Can add cross field validation
   userForm = this.formBuilder.group({
@@ -256,12 +255,13 @@ export class UsersComponent {
   }
 
 
-  // Refactor the submiit
+  // Refactor the submit
   handleCreate(): void {
 
   }
 
 
+  // Not used currently
   handleEdit(userId: number): void {
     this.isUpdateForm.set(true);
     this.isFormSubmitted.set(false);
@@ -342,16 +342,15 @@ export class UsersComponent {
 
       accept: () => {
         // this.handleDelete(id);
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
         this.userService.delete(id).subscribe({
           next: (data) => {
-            console.log("DELETED");
             console.log(data);
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
             this.loadData();
           },
           error: (err) => {
-            console.log("ERROR");
             console.log(err);
+            this.messageService.add({ severity: 'error', summary: 'Error Occurred', detail: JSON.stringify(err.error.message) });
           }
         })
 

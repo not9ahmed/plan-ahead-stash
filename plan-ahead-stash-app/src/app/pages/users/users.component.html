@@ -39,7 +39,7 @@
                         <tr>
                             <td *ngFor="let col of columns">
                                 @if (col.type == 'date' ) {
-                                {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy':'UTC' }}
+                                {{ rowData[col.field] | date:'dd/MM/yyyy' }}
                                 } @else {
                                 {{ rowData[col.field] }}
                                 }
