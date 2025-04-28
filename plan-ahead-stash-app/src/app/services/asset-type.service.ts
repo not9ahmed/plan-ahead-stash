@@ -30,7 +30,7 @@ export class AssetTypeService {
     return this.http.put<AssetType>(`${this.API_URL}/${id}`, assetType);
   }
 
-  delete(id: number) {
+  delete(id: number): Observable<null> {
     return this.http.delete<null>(`${this.API_URL}/${id}`);
   }
 
