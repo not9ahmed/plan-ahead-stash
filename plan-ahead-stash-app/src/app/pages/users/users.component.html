@@ -64,7 +64,7 @@
 
             <!-- Dialog Area -->
             <!-- Make it as component -->
-            <p-dialog [header]="formTitle() + ' User'" [(visible)]="isDialogVisible" class="card"
+            <p-dialog [header]="formTitle() + ' User'" [(visible)]="isDialogVisible"
                 (onHide)="handleCancel()"
                 [style]="{'display': 'flex', 'justify-content': 'center'}" [contentStyle]="{'overflow':'visible'}">
 
@@ -72,9 +72,11 @@
                     <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
                         Required Fields.</span>
 
-                        <h3 *ngIf="isFormInvalid()">
-                            Invalid Form: {{ isFormInvalid()}}
-                        </h3>
+                        <div *ngIf="isFormInvalid()">
+                                <p-message severity="error" *ngIf="isFormInvalid()">
+                                    Invalid Form: {{ isFormInvalid()}}
+                                </p-message>
+                        </div>
 
                     @if(username?.invalid && (username?.touched || username?.dirty)) {
                         <div style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; width: 100%;">

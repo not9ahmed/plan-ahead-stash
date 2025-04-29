@@ -1,63 +1,75 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { AssetTypeService } from '../../services/asset-type.service';
 import { AssetType } from '../../models/asset-type';
+import { assetTypeFormValidator } from '../../validations/asset-type-form-validator.directive';
+import { Column } from '../../types/column';
+
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
-import { RouterModule } from '@angular/router';
-import { assetTypeFormValidator } from '../../validations/asset-type-form-validator.directive';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Message } from 'primeng/message';
 
-
-
-interface Column {
-  field: string;
-  header: string;
-}
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule, RouterModule],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule, RouterModule, Message],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css',
   providers: [ConfirmationService, MessageService]
 })
 export class AssetsTypeComponent {
-  cols!: Column[];
-
+  
+  // Services 
   private formBuilder = inject(FormBuilder);
+  private assetTypeService = inject(AssetTypeService);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
 
-  isDialogVisible = signal<boolean>(false);
+  cols!: Column[];
+  
+  // API states
   assetsType = signal<AssetType[]>([]);
 
+  // UI states
+  isDataLoaded = signal<boolean>(false);
+  isDialogVisible = signal<boolean>(false);
+  isFormInvalid = signal<boolean|null>(null);
+  isFormSubmitted = signal<boolean>(false);
+
+  // Form action
+  isUpdateForm = signal<boolean>(false);
+  formTitle = computed<string>(() => this.isUpdateForm() ? "Update" : "Create")
+
+  
   // Creating form with formbuilder
   assetTypeForm = this.formBuilder.group({
-    name: ['', Validators.required]
+    name: ['', [Validators.required, Validators.minLength(5)]]
   }, {validators: assetTypeFormValidator});
 
+  get name() {
+    return this.assetTypeForm.get('name');
+  }
 
 
 
-  constructor(private assetTypeService: AssetTypeService, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor() {
     this.initCols()
     this.loadData();
   }
 
-  loadData() {
-    this.assetTypeService.findAll().subscribe(data => {
-      console.log(data);
-      this.assetsType.set(data);
-    })
-  }
 
+  // UI LOGIC  
   showDialog(): void {
     this.isDialogVisible.set(true);
   }
@@ -71,17 +83,24 @@ export class AssetsTypeComponent {
     this.hideDialog();
   }
 
+  loadData() {
+    this.assetTypeService.findAll().subscribe(data => {
+      console.log(data);
+      this.assetsType.set(data);
+    })
+  }
+
 
 
 
   // create new asset type
   handleSubmit() {
 
-    console.log(this.assetTypeForm);
     const {name} = this.assetTypeForm.value;
 
-    // if not valid
-    if(!name || this.assetTypeForm.errors){
+    // Undefined fields & Invalid form & form level error
+    if(!name || !this.assetTypeForm.valid || this.assetTypeForm.errors) {
+      this.isFormInvalid.set(true);
       return;
     }
 
@@ -94,36 +113,27 @@ export class AssetsTypeComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Confirmed',
-          detail: 'Record created ' + JSON.stringify(data),
+          detail: 'Asset Type created ' + JSON.stringify(data),
           life: 3000
         });
         
+        this.assetTypeForm.reset();
+        this.hideDialog();
         this.loadData();
-        this.hideDialog()
+        this.isFormSubmitted.set(true);
 
       },
       error: (err) => {
-
-        // handle api errors here
-        console.log(err);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: err.error.message + " " + err.error.timestamp,
+          detail: JSON.parse(err.error),
           life: 3000
         });
-
-      },
-      // recently added
-      complete: () => {
-        console.log("complete")
-        // this.isDialogVisible = false;
-      },
+        this.isFormSubmitted.set(false);
+      }
 
     });
-
-    this.hideDialog();
-    this.assetTypeForm.reset();
   }
 
 
@@ -137,7 +147,6 @@ export class AssetsTypeComponent {
       }
     })
   }
-
 
 
   confirm(event: Event, id: number) {
@@ -173,10 +182,10 @@ export class AssetsTypeComponent {
   initCols() {
     // make it dynamic
     this.cols = [
-      { field: 'id', header: 'ID' },
-      { field: 'name', header: 'Name' },
-      { field: 'createdDate', header: 'Created Date' },
-      { field: 'modifiedDate', header: 'Modified Date' }
+      { field: 'id', header: 'ID', type:'number' },
+      { field: 'name', header: 'Name', type:'string' },
+      { field: 'createdDate', header: 'Created Date', type:'date' },
+      { field: 'modifiedDate', header: 'Modified Date', type:'date' }
   ];
   }
 }

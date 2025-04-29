@@ -44,19 +44,16 @@ export class UsersComponent {
 
   // UI states
   isDataLoaded = signal<boolean>(false);
-  // form is invalid
+  isDialogVisible = signal<boolean>(false);
   isFormInvalid = signal<boolean | null>(null);
   isFormSubmitted = signal<boolean>(false);
-  isDialogVisible = signal<boolean>(false);
-
-
-  // User to be Updated
-  userToUpdate = signal<number>(-1);
-
 
   // form action
   isUpdateForm = signal<boolean>(false);
   formTitle = computed<string>(() => this.isUpdateForm() ? "Update" : "Create")
+  
+  // User to be Updated
+  userToUpdate = signal<number>(-1);
 
   // Can add cross field validation
   userForm = this.formBuilder.group({
@@ -102,10 +99,6 @@ export class UsersComponent {
     console.log("user: ", user);
     if(user.id) {
       this.userToUpdate.set(user.id);
-
-      console.log(user)
-      console.log("form before update: ", this.userForm.value);
-
       this.userForm.setValue({
         username: user.username,
         firstName: user.firstName,
@@ -113,7 +106,6 @@ export class UsersComponent {
         dateOfBirth: new Date(user.dateOfBirth)
       });
 
-      console.log("form updated: ", this.userForm.value);
     }
   }
 
@@ -156,31 +148,24 @@ export class UsersComponent {
 
 
   handleSubmit() {
-    console.log("handle submit");
-
     this.isFormSubmitted.set(false);
 
-    // validation of form
+    // Form validation
     let { username, firstName, lastName, dateOfBirth } = this.userForm.value;
 
-
-    console.log("form: ", this.userForm);
-
-    // Null fields
+    // Undefined fields
     if (!username || !firstName || !lastName || !dateOfBirth) {
       this.isFormInvalid.set(true);
       return;
     }
 
     // Error in form level
-    if (this.userForm.errors) {
+    if (this.userForm.errors || !this.userForm.valid) {
       this.isFormInvalid.set(true);
       return;
     }
 
-
-    // verify that fields are filled
-    let newUser = { username, firstName, lastName, dateOfBirth };
+    const newUser: User = { username, firstName, lastName, dateOfBirth };
 
 
     if(!this.isUpdateForm()) {
@@ -231,11 +216,10 @@ export class UsersComponent {
           this.isFormSubmitted.set(true);
         },
         error: (err) => {
-          console.log("error", err);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: err.error.message + " " + err.error.timestamp,
+            detail: JSON.stringify(err.error.message),
             life: 3000
           });
           this.isFormSubmitted.set(false);
