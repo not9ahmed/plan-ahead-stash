@@ -168,6 +168,7 @@ export class UsersComponent {
     const newUser: User = { username, firstName, lastName, dateOfBirth };
 
 
+    // Create Request
     if(!this.isUpdateForm()) {
       this.userService.create(newUser).subscribe({
         next: (data) => {
@@ -196,7 +197,7 @@ export class UsersComponent {
         }
       })
 
-      // handling edit
+    // Edit Request
     } else if (this.isUpdateForm()) {
 
 
