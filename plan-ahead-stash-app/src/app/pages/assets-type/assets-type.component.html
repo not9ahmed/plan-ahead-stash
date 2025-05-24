@@ -1,92 +1,99 @@
-<div style="display: flex; flex-direction: column; gap: 5px; padding: 8px;">
+<div class="page">
 
-    <!-- Dialog box related to delete -->
-    <p-toast />
-    <p-confirmdialog />
+    <div class="main-content">
+        <app-navbar></app-navbar>
 
-    <div class="card">
-        <h2>Assets Type</h2>
-    </div>
+        <div class="assets-type-page">
 
-    <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
-        <ng-template #start>
-            <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
-        </ng-template>
+            <!-- Dialog box related to delete -->
+            <p-toast />
+            <p-confirmdialog />
 
-        <ng-template #end>
-            <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
-        </ng-template>
-    </p-toolbar>
+            <div style="padding: 0.5rem 1rem;">
+                <h2>Assets Type</h2>
+            </div>
 
+            <div style="border: 1px solid var(--p-primary-200); border-radius: 0.5rem; padding: 0.5rem; margin: 1rem;">
+                <p-toolbar styleClass="mb-6" [style]="{'margin-bottom': '1.5rem'}">
+                    <ng-template #start>
+                        <p-button label="New" icon="pi pi-plus" class="mr-2" (click)="showDialog()" />
+                    </ng-template>
 
-    <p-table [columns]="cols" [value]="assetsType()" dataKey="id" editMode="row" showGridlines responsiveLayout="stack">
-        <ng-template #header let-columns>
-            <tr>
-                <th *ngFor="let col of columns">
-                    {{ col.header }}
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-rowData let-columns="columns" let-editing="editing" let-ri="rowIndex">
-            <tr>
-                <td *ngFor="let col of columns">
-                    @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
-                    {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy' }}
-                    } @else {
-                    {{ rowData[col.field] }}
-                    }
-                </td>
+                    <ng-template #end>
+                        <p-button icon="pi pi-refresh" iconPos="bottom" (click)="loadData()" severity="secondary" />
+                    </ng-template>
+                </p-toolbar>
 
-                <td>
-                    <div class="flex flex-wrap gap-4 justify-center"
-                        style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
-                        <p-button severity="info" icon="pi pi-pencil" />
-                        <p-button severity="danger" icon="pi pi-trash" (click)="confirm($event, rowData.id)" />
+                <p-table [columns]="cols" [value]="assetsType()" dataKey="id" editMode="row" showGridlines
+                    responsiveLayout="stack">
+                    <ng-template #header let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">
+                                {{ col.header }}
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-rowData let-columns="columns" let-editing="editing" let-ri="rowIndex">
+                        <tr>
+                            <td *ngFor="let col of columns">
+                                @if (col.field == 'createdDate' || col.field == 'modifiedDate') {
+                                {{ rowData[col.field] | date:'hh:mm:ss dd/MM/yyyy' }}
+                                } @else {
+                                {{ rowData[col.field] }}
+                                }
+                            </td>
 
-                        <a routerLink="{{ '/assetsType/' + rowData.id}}" class="p-button font-bold"
-                            style="text-decoration: none;">
-                            <i class="pi pi-search"></i>
-                        </a>
+                            <td>
+                                <div class="flex flex-wrap gap-4 justify-center"
+                                    style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: left; ">
+                                    <p-button severity="info" icon="pi pi-pencil" />
+                                    <p-button severity="danger" icon="pi pi-trash"
+                                        (click)="confirmDelete($event, rowData.id)" />
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+            </div>
+
+            <!-- Dialog Area -->
+            <p-dialog [header]=" formTitle() + ' Asset Type'" [(visible)]="isDialogVisible" (onHide)="handleCancel()"
+                [style]="{'display': 'flex', 'justify-content': 'center', 'width': '25rem'}">
+
+                <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
+                    <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the
+                        Required
+                        Fields.</span>
+
+                    <!-- Error messages -->
+                    @if(name?.invalid && (name?.touched || name?.dirty)) {
+                    <div style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; width: 100%;">
+                        <p-message severity="error" *ngIf="name?.hasError('required')">
+                            <div>Name is required</div>
+                        </p-message>
+                        <p-message severity="error" *ngIf="name?.hasError('minlength')">
+                            <div>Name is of less than 6 characters</div>
+                        </p-message>
                     </div>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+                    }
 
+                    <div class="flex items-center gap-4 mb-4"
+                        style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
+                        <label for="name" class="font-semibold w-24"
+                            style="width: 6rem; font-weight: 600; ">Name</label>
+                        <input pInputText id="name" class="flex-auto" formControlName="name" />
+                    </div>
+                    <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
+                        <p-button label="Save" severity="primary" type="submit" />
+                    </div>
+                </form>
+            </p-dialog>
 
-    <!-- Dialog Area -->
-    <p-dialog [header]=" formTitle() + ' Asset Type'" [(visible)]="isDialogVisible"
-        (onHide)="handleCancel()"
-        [style]="{'display': 'flex', 'justify-content': 'center', 'width': '25rem'}">
-
-        <form [formGroup]="assetTypeForm" (submit)="handleSubmit()">
-            <span class="p-text-secondary block mb-8" style="display: block; margin-bottom: 8px;">Enter the Required
-                Fields.</span>
-
-            <!-- Error messages -->
-            @if(name?.invalid && (name?.touched || name?.dirty)) {
-                <div style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center; width: 100%;">
-                    <p-message severity="error" *ngIf="name?.hasError('required')">
-                        <div>Name is required</div> 
-                    </p-message>
-                    <p-message severity="error" *ngIf="name?.hasError('minlength')">
-                        <div>Name is of less than 6 characters</div> 
-                    </p-message>
-                </div>
-            }
-
-            <div class="flex items-center gap-4 mb-4"
-                style="display: flex; margin-bottom: 1rem; gap: 1rem; align-items: center;">
-                <label for="name" class="font-semibold w-24" style="width: 6rem; font-weight: 600; ">Name</label>
-                <input pInputText id="name" class="flex-auto" formControlName="name" />
-            </div>
-            <div class="flex justify-end gap-2" style="display: flex; gap: 0.5rem; justify-content: flex-end;">
-                <p-button label="Cancel" severity="secondary" (click)="handleCancel()" />
-                <p-button label="Save" severity="primary" type="submit" />
-            </div>
-        </form>
-    </p-dialog>
+        </div>
+    </div>
 </div>

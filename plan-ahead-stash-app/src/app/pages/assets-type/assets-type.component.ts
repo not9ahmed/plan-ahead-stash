@@ -20,10 +20,13 @@ import { DividerModule } from 'primeng/divider';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Message } from 'primeng/message';
 
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+
+
 
 @Component({
   selector: 'app-assets-type',
-  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule, RouterModule, Message],
+  imports: [CommonModule, TableModule, ButtonModule, FloatLabelModule, ConfirmDialogModule, ToastModule, DialogModule, ToolbarModule, InputTextModule, ReactiveFormsModule, DividerModule, RouterModule, Message, NavbarComponent],
   templateUrl: './assets-type.component.html',
   styleUrl: './assets-type.component.css',
   providers: [ConfirmationService, MessageService]
@@ -139,17 +142,24 @@ export class AssetsTypeComponent {
 
   handleDelete(id: number) {
     this.assetTypeService.delete(id).subscribe({
-      next: () => {
+      next: (data) => {
+        console.log(data);
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
         this.loadData();
       },
-      error: (error) => {
-        console.log(error);
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({ severity: 'error', summary: 'Error Occurred', detail: JSON.stringify(err.error.message) });
       }
     })
   }
 
 
-  confirm(event: Event, id: number) {
+  confirmDelete(event: Event, id: number) {
+
+    // if(!user || !user.id) return;
+
+
     this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Do you want to delete this record?',
@@ -168,8 +178,6 @@ export class AssetsTypeComponent {
 
         accept: () => {
           this.handleDelete(id);
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-
         },
         reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
